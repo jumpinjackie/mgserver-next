@@ -1,0 +1,212 @@
+import "ServiceCommon.proto";
+
+message ApplySchemaRequest {
+    required ResourceIdentifier feature_source = 1;
+    required FeatureSchema schema = 2;
+}
+
+message BeginTransactionRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message BeginTransactionResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message DeleteFeaturesRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message DeleteFeaturesResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message DescribeSchemaRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message DescribeSchemaResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message EnumerateDataStoresRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message EnumerateDataStoresResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message ExecuteSqlNonQueryRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message ExecuteSqlNonQueryResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message GetCapabilitiesRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message GetCapabilitiesResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message GetClassDefinitionRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message GetClassDefinitionResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message GetClassesRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message GetClassesResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message GetConnectionPropertyValuesRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message GetConnectionPropertyValuesResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message GetFeatureProvidersResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message GetFeatureProvidersResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message GetLockedFeaturesRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message GetLongTransactionsRequest {
+
+}
+
+message LongTransaction {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message GetSchemaMappingRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message GetSchemaMappingResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message GetSchemasRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message GetSchemasResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message GetSpatialContextRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+enum SpatialContextExtentType {
+    Static = 1;
+    Dynamic = 2;
+}
+
+message SpatialContext {
+    required string name = 1;
+    optional string coordinate_system = 2;
+    optional string coordinate_system_wkt = 3;
+    optional string description = 4;
+    optional Envelope extent = 5;
+    required SpatialContextExtentType extent_type = 6;
+    required double xy_tolerance = 7;
+    required double z_tolerance = 8;
+}
+
+message InsertFeaturesRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message InsertFeaturesResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message SelectAggregateRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message SelectFeaturesRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message SetLongTransactionRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message SetLongTransactionResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message TestConnectionRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message TestConnectionResponse {
+    required bool ok = 1;
+}
+
+message UpdateFeaturesRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message UpdateFeaturesResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+message UpdateMatchingFeaturesRequest {
+    required ResourceIdentifier feature_source = 1;
+}
+
+message UpdateMatchingFeaturesResponse {
+    optional Error error = 1; //An error if one was raised by the service operation
+}
+
+service MgFeatureService {
+    rpc ApplySchema (ApplySchemaRequest) returns (BasicResponse);
+    rpc BeginTransaction (BeginTransactionRequest) returns (BeginTransactionResponse);
+    rpc CreateFeatureSource (CreateFeatureSourceRequest) returns (BasicResponse);
+    rpc DeleteFeatures (DeleteFeaturesRequest) returns (DeleteFeaturesResponse);
+    rpc DescribeSchema (DescribeSchema) returns (DescribeSchemaResponse);
+    rpc DescribeWfsFeatureType (DescribeWfsFeatureTypeRequest) returns (DescribeWfsFeatureTypeResponse);
+    rpc EnumerateDataStores (EnumerateDataStoresRequest) returns (EnumerateDataStoresResponse);
+    rpc ExecuteSqlNonQuery (ExecuteSqlNonQueryRequest) returns (ExecuteSqlNonQueryResponse);
+    rpc ExecuteSqlQuery (ExecuteSqlQueryRequest) returns (stream DataRecord);
+    rpc GetCapabilities (GetCapabilitiesRequest) returns (GetCapabilitiesResponse);
+    rpc GetClassDefinition (GetClassDefinitionRequest) returns (GetClassDefinitionResponse);
+    rpc GetClasses (GetClassesRequest) returns (GetClassesResponse);
+    rpc GetConnectionPropertyValues (GetConnectionPropertyValuesRequest) returns (GetConnectionPropertyValuesResponse);
+    rpc GetFeatureProviders (GetFeatureProvidersRequest) returns (GetFeatureProvidersResponse);
+    rpc GetLockedFeatures (GetLockedFeaturesRequest) returns (stream FeatureRecord);
+    rpc GetLongTransactions (GetLongTransactionsRequest) returns (stream LongTransaction);
+    rpc GetSchemaMapping (GetSchemaMappingRequest) returns (GetSchemaMappingResponse);
+    rpc GetSchemas (GetSchemasRequest) returns (GetSchemasResponse);
+    rpc GetSpatialContext (GetSpatialContextRequest) returns (stream SpatialContext);
+    rpc GetWfsFeature (GetWfsFeatureRequest) returns (GetWfsFeatureResponse);
+    rpc InsertFeatures (InsertFeaturesRequest) returns (stream FeatureRecord);
+    rpc SelectAggregate (SelectAggregateRequest) returns (stream DataRecord);
+    rpc SelectFeatures (SelectFeaturesRequest) returns (stream FeatureRecord);
+    rpc SetLongTransaction (SetLongTransactionRequest) returns (SetLongTransactionResponse);
+    rpc TestConnection (TestConnectionRequest) returns (TestConnectionResponse);
+    rpc UpdateFeatures (UpdateFeaturesRequest) returns (UpdateFeaturesResponse);
+    rpc UpdateMatchingFeatures (UpdateMatchingFeaturesRequest) returns (UpdateMatchingFeaturesResponse);
+}
