@@ -11,23 +11,11 @@ namespace OSGeo.MapGuide.Services
 {
     public class MgServerResourceService : MgResourceService.MgResourceServiceBase
     {
-        readonly string _contentBasePath;
-        readonly string _dataBasePath;
+        readonly ResourcePathResolver _resolver;
 
-        public MgServerResourceService(string contentBasePath, string dataBasePath)
+        public MgServerResourceService(ResourcePathResolver resolver)
         {
-            _contentBasePath = contentBasePath;
-            _dataBasePath = dataBasePath;
-        }
-
-        private string GetContentPath(ResourceIdentifier resId)
-        {
-            return Path.GetFullPath(Path.Combine(_contentBasePath, resId.Path, $"{resId.Name}.{resId.ResourceType}"));
-        }
-
-        private string GetDataPath(ResourceIdentifier resId, string dataName)
-        {
-            return Path.GetFullPath(Path.Combine(_dataBasePath, resId.Path, dataName));
+            _resolver = resolver;
         }
 
         public override async Task<GetResourceContentResponse> GetResourceContent(GetResourceContentRequest request, ServerCallContext context)
@@ -35,7 +23,7 @@ namespace OSGeo.MapGuide.Services
             var response = new GetResourceContentResponse();
             try
             {
-                var path = GetContentPath(request.Resource);
+                var path = _resolver.GetContentPath(request.Resource);
                 using (var fs = File.OpenRead(path))
                 {
                     var res = new Resource();
@@ -65,7 +53,7 @@ namespace OSGeo.MapGuide.Services
             var response = new BasicResponse();
             try
             {
-                var path = GetContentPath(request.Resource);
+                var path = _resolver.GetContentPath(request.Resource);
                 var parentDir = Path.GetDirectoryName(path);
                 if (!Directory.Exists(parentDir))
                 {
@@ -100,7 +88,7 @@ namespace OSGeo.MapGuide.Services
             var response = new ResourceExistsResponse();
             try
             {
-                var path = GetContentPath(request.Resource);
+                var path = _resolver.GetContentPath(request.Resource);
                 response.Result = File.Exists(path);
             }
             catch (Exception ex)

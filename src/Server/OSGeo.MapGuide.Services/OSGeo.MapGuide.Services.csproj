@@ -90,6 +90,7 @@
     <Compile Include="MgServerRenderingService.cs" />
     <Compile Include="MgServerResourceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourcePathResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

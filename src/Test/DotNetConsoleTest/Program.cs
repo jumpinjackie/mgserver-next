@@ -1,6 +1,8 @@
-﻿using Grpc.Core;
+﻿using Google.Protobuf;
+using Grpc.Core;
 using OSGeo.MapGuide;
 using System;
+using System.IO;
 
 namespace DotNetConsoleTest
 {
@@ -72,6 +74,76 @@ namespace DotNetConsoleTest
                             }
                             break;
                             
+                    }
+                }
+            }
+#if DEBUG
+            string config = "Debug";
+#else
+            string config = "Release";
+#endif
+            var dstPath = Path.GetFullPath($"../../../../Server/mgserver.console/bin/{config}/data/datafiles/Samples/Sheboygan/Data/Parcels.sdf");
+            if (!File.Exists(dstPath))
+            {
+                var dstDir = Path.GetDirectoryName(dstPath);
+                if (!Directory.Exists(dstDir))
+                {
+                    Directory.CreateDirectory(dstDir);
+                }
+                File.Copy($"../../../Data/Sheboygan_Parcels.sdf", dstPath);
+            }
+
+            Console.WriteLine(nameof(MgFeatureService));
+            Console.WriteLine($"  Testing: {nameof(MgFeatureService.MgFeatureServiceClient.TestConnection)}");
+            {
+                var req = new TestConnectionRequest
+                {
+                    FeatureSource = ResourceIdentifier.Parse("Library://Samples/Sheboygan/Data/Parcels.FeatureSource")
+                };
+                var response = featureSvc.TestConnection(req);
+                if (response.Error != null)
+                    Console.WriteLine($"    Error: {response.Error.Name} - {response.Error.Message}");
+                else
+                    Console.WriteLine($"    Result: {response.Result}");
+            }
+            Console.WriteLine($"  Testing: {nameof(MgFeatureService.MgFeatureServiceClient.GetSchemas)}");
+            {
+                var req = new GetSchemasRequest
+                {
+                    FeatureSource = ResourceIdentifier.Parse("Library://Samples/Sheboygan/Data/Parcels.FeatureSource")
+                };
+                var response = featureSvc.GetSchemas(req);
+                if (response.Error != null)
+                {
+                    Console.WriteLine($"    Error: {response.Error.Name} - {response.Error.Message}");
+                }
+                else
+                {
+                    Console.WriteLine($"    Result: {response.Result.Items.Count}");
+                    foreach (var name in response .Result.Items )
+                    {
+                        Console.WriteLine($"      - {name}");
+                    }
+                }
+            }
+            Console.WriteLine($"  Testing: {nameof(MgFeatureService.MgFeatureServiceClient.GetClasses)}");
+            {
+                var req = new GetClassesRequest
+                {
+                    FeatureSource = ResourceIdentifier.Parse("Library://Samples/Sheboygan/Data/Parcels.FeatureSource"),
+                    SchemaName = "SHP_Schema"
+                };
+                var response = featureSvc.GetClasses(req);
+                if (response.Error != null)
+                {
+                    Console.WriteLine($"    Error: {response.Error.Name} - {response.Error.Message}");
+                }
+                else
+                {
+                    Console.WriteLine($"    Result: {response.Result.Items.Count}");
+                    foreach (var name in response.Result.Items)
+                    {
+                        Console.WriteLine($"      - {name}");
                     }
                 }
             }

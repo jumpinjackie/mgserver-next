@@ -19,27 +19,37 @@ namespace mgserver.console
             var contentRoot = Path.Combine(dataRoot, "content");
             var dataFilesRoot = Path.Combine(dataRoot, "datafiles");
 
+            var resolver = new ResourcePathResolver(contentRoot, dataFilesRoot);
+            var serverFeatSvc = new MgServerFeatureService(resolver);
+            var serverResSvc = new MgServerResourceService(resolver);
+            var serverRenderSvc = new MgServerRenderingService();
+
+            var credentials = ServerCredentials.Insecure;
+
             int port = 7000;
             var server = new Server
             {
                 Services =
                 {
-                    MgFeatureService.BindService(new MgServerFeatureService()),
-                    MgResourceService.BindService(new MgServerResourceService(contentRoot, dataFilesRoot)),
-                    MgRenderingService.BindService(new MgServerRenderingService())
+                    MgFeatureService.BindService(serverFeatSvc),
+                    MgResourceService.BindService(serverResSvc),
+                    MgRenderingService.BindService(serverRenderSvc)
                 },
                 Ports =
                 {
-                    new ServerPort("localhost", port, ServerCredentials.Insecure)
+                    new ServerPort("localhost", port, credentials)
                 }
             };
             server.Start();
+
+            serverFeatSvc.InitClientDependencies("localhost", port);
 
             Console.WriteLine("MapGuide Server listening on port " + port);
             Console.WriteLine("Press any key to stop the server...");
             Console.ReadKey();
 
             server.ShutdownAsync().Wait();
+            serverFeatSvc.Teardown();
         }
     }
 }

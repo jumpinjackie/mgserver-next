@@ -45,18 +45,18 @@ message SetResourceRequest {
     Resource content = 2;
     bytes header = 3;
 }
-
+/*
 message SetResourceDataRequest {
     ResourceIdentifier resource = 1;
     string data_name = 2;
     string data_type = 3;
     bytes data = 4;
 }
-
+*/
 service MgResourceService {
     rpc GetResourceContent (GetResourceContentRequest) returns (GetResourceContentResponse);
     rpc EnumerateResources (EnumerateResourcesRequest) returns (EnumerateResourcesResponse);
     rpc ResourceExists (ResourceExistsRequest) returns (ResourceExistsResponse);
     rpc SetResource (SetResourceRequest) returns (BasicResponse);
-    rpc SetResourceData (SetResourceDataRequest) returns (BasicResponse);
+    //rpc SetResourceData (SetResourceDataRequest) returns (BasicResponse);
 }
