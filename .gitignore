@@ -1,7 +1,8 @@
 bin/
 obj/
 src/Common/gRpc/csharp/*.cs
-src/Server/packages
+src/packages
+thirdparty/FDO
 *.user
 *.suo
 .vscode

@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+import "ServiceCommon.proto";
+
+message CoordSysOverride {
+    string name = 1;
+    string coordinate_system = 2;
+}
+
+message FeatureSource {
+    string provider = 1;
+    repeated NameValuePair parameters = 2;
+    repeated CoordSysOverride supplemental_spatial_context_info = 3;
+}

@@ -2,6 +2,17 @@ syntax = "proto3";
 option csharp_namespace = "OSGeo.MapGuide";
 
 import "ServiceCommon.proto";
+import "FeatureSource.proto";
+import "LayerDefinition.proto";
+import "MapDefinition.proto";
+
+message Resource {
+    oneof type {
+        FeatureSource feature_source = 1;
+        LayerDefinition layer_definition = 2;
+        MapDefinition map_definition = 3;
+    }
+}
 
 message EnumerateResourcesRequest {
     ResourceIdentifier resource = 1;
@@ -9,6 +20,15 @@ message EnumerateResourcesRequest {
 
 message EnumerateResourcesResponse {
     Error error = 1;
+}
+
+message GetResourceContentRequest {
+    ResourceIdentifier resource = 1;
+}
+
+message GetResourceContentResponse {
+    Error error = 1;
+    Resource result = 2;
 }
 
 message ResourceExistsRequest {
@@ -22,7 +42,7 @@ message ResourceExistsResponse {
 
 message SetResourceRequest {
     ResourceIdentifier resource = 1;
-    bytes content = 2;
+    Resource content = 2;
     bytes header = 3;
 }
 
@@ -34,6 +54,7 @@ message SetResourceDataRequest {
 }
 
 service MgResourceService {
+    rpc GetResourceContent (GetResourceContentRequest) returns (GetResourceContentResponse);
     rpc EnumerateResources (EnumerateResourcesRequest) returns (EnumerateResourcesResponse);
     rpc ResourceExists (ResourceExistsRequest) returns (ResourceExistsResponse);
     rpc SetResource (SetResourceRequest) returns (BasicResponse);

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+message LayerDefinition {
+    oneof type {
+        VectorLayerDefinition vector = 1;
+        DrawingLayerDefinition drawing = 2;
+        GridLayerDefinition grid = 3;
+    }
+}
+
+message VectorLayerDefinition {
+
+}
+
+message DrawingLayerDefinition {
+
+}
+
+message GridLayerDefinition {
+
+}

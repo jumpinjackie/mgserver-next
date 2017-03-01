@@ -4,18 +4,19 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{71151565-47F0-46EA-A087-CCE4A595FBFE}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OSGeo.MapGuide.Services</RootNamespace>
-    <AssemblyName>OSGeo.MapGuide.Services</AssemblyName>
+    <ProjectGuid>{4A531452-3628-46B8-948C-3CAF959AF18A}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>DotNetConsoleTest</RootNamespace>
+    <AssemblyName>DotNetConsoleTest</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,6 +26,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -39,43 +41,14 @@
     <Reference Include="Grpc.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d754f35622e28bad, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Grpc.Core.1.1.0\lib\net45\Grpc.Core.dll</HintPath>
     </Reference>
-    <Reference Include="OSGeo.FDO">
-      <HintPath>..\..\..\thirdparty\FDO\OSGeo.FDO.dll</HintPath>
-    </Reference>
-    <Reference Include="OSGeo.FDO.Common">
-      <HintPath>..\..\..\thirdparty\FDO\OSGeo.FDO.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="OSGeo.FDO.Geometry">
-      <HintPath>..\..\..\thirdparty\FDO\OSGeo.FDO.Geometry.dll</HintPath>
-    </Reference>
-    <Reference Include="OSGeo.FDO.Providers.MySQL.Overrides">
-      <HintPath>..\..\..\thirdparty\FDO\OSGeo.FDO.Providers.MySQL.Overrides.dll</HintPath>
-    </Reference>
-    <Reference Include="OSGeo.FDO.Providers.ODBC.Overrides">
-      <HintPath>..\..\..\thirdparty\FDO\OSGeo.FDO.Providers.ODBC.Overrides.dll</HintPath>
-    </Reference>
-    <Reference Include="OSGeo.FDO.Providers.Rdbms">
-      <HintPath>..\..\..\thirdparty\FDO\OSGeo.FDO.Providers.Rdbms.dll</HintPath>
-    </Reference>
-    <Reference Include="OSGeo.FDO.Providers.Rdbms.Overrides">
-      <HintPath>..\..\..\thirdparty\FDO\OSGeo.FDO.Providers.Rdbms.Overrides.dll</HintPath>
-    </Reference>
-    <Reference Include="OSGeo.FDO.Providers.SHP.Overrides">
-      <HintPath>..\..\..\thirdparty\FDO\OSGeo.FDO.Providers.SHP.Overrides.dll</HintPath>
-    </Reference>
-    <Reference Include="OSGeo.FDO.Providers.SQLServerSpatial.Overrides">
-      <HintPath>..\..\..\thirdparty\FDO\OSGeo.FDO.Providers.SQLServerSpatial.Overrides.dll</HintPath>
-    </Reference>
-    <Reference Include="OSGeo.FDO.Providers.WMS.Overrides">
-      <HintPath>..\..\..\thirdparty\FDO\OSGeo.FDO.Providers.WMS.Overrides.dll</HintPath>
-    </Reference>
-    <Reference Include="OSGeo.FDO.Spatial">
-      <HintPath>..\..\..\thirdparty\FDO\OSGeo.FDO.Spatial.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Interactive.Async, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Interactive.Async.3.1.1\lib\net45\System.Interactive.Async.dll</HintPath>
+    <Reference Include="System.Interactive.Async, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Interactive.Async.3.1.1\lib\net46\System.Interactive.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -85,18 +58,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ErrorUtil.cs" />
-    <Compile Include="MgServerFeatureService.cs" />
-    <Compile Include="MgServerRenderingService.cs" />
-    <Compile Include="MgServerResourceService.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\gRpc\csharp\OSGeo.MapGuide.csproj">
-      <Project>{76b8658b-821c-4729-b14f-8cce0ca00e01}</Project>
+      <Project>{cdffe7ed-df6d-40ea-a63c-5ed1d15697dd}</Project>
       <Name>OSGeo.MapGuide</Name>
     </ProjectReference>
   </ItemGroup>

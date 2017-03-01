@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+import "ServiceCommon.proto";
+
+message MapDefinition {
+    string name = 1;
+    string coordinate_system = 2;
+    Envelope extents = 3;
+    string background_color = 4;
+    string metadata = 5;
+    repeated MapLayer map_layers = 6;
+    repeated MapLayerGroup map_layer_groups = 7;
+    string tileSetSource = 8;
+}
+
+message MapLayer {
+    string name = 1;
+    string resource_id = 2;
+    bool selectable = 3;
+    bool show_in_legend = 4;
+    string legend_label = 5;
+    bool expand_in_legend = 6;
+    bool visible = 7;
+    string group = 8;
+}
+
+message MapLayerGroup {
+    string name = 1;
+    bool visible = 2;
+    bool show_in_legend = 3;
+    bool expand_in_legend = 4;
+    string legend_label = 5;
+    string group = 6;
+}

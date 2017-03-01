@@ -1,6 +1,11 @@
 syntax = "proto3";
 option csharp_namespace = "OSGeo.MapGuide";
 
+message NameValuePair {
+    string name = 1;
+    string value = 2;
+}
+
 message Envelope {
     /*required*/ double min_x = 1;
     /*required*/ double min_y = 2;
@@ -39,19 +44,19 @@ message DataPropertyDescriptor {
 }
 
 message DataRecordHeader {
-    repeated DataPropertyDescriptor property = 1;
+    repeated DataPropertyDescriptor properties = 1;
 }
 
 message DataRecord { //TODO: Maybe this should be a oneof
     Error error = 1; //An error if one was raised by the service operation. This only exists in the first data record
     DataRecordHeader header = 2; //A data record header describing the structure of the data record. This only exists on the first data record
-    repeated PropertyValue property = 3;  //The property values of the data record
+    repeated PropertyValue values = 3;  //The property values of the data record
 }
 
 message FeatureRecord { //TODO: Maybe this should be a oneof
     Error error = 1; //An error if one was raised by the service operation. This only exists in the first data record
     ClassDefinition header = 2; //A class definition describing the structure of the feature. This only exists on the first feature record
-    repeated PropertyValue property = 3; //The property values of the feature record
+    repeated PropertyValue values = 3; //The property values of the feature record
 }
 
 message ResourceIdentifier {
@@ -69,13 +74,13 @@ message Error {
 }
 
 message StringCollection {
-    repeated string item = 1;
+    repeated string items = 1;
 }
 
 message FeatureSchema {
     /*required*/ string name = 1;
     string description = 2;
-    repeated ClassDefinition class = 3;
+    repeated ClassDefinition classes = 3;
     bool marked_for_delete = 4;
 }
 
@@ -83,7 +88,7 @@ message ClassDefinition {
     /*required*/ string name = 1;
     string description = 2;
     string geom_name = 3;
-    repeated PropertyDefinition property = 4;
+    repeated PropertyDefinition properties = 4;
     bool marked_for_delete = 5;
 }
 
