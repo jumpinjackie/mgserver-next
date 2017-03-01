@@ -1,5 +1,34 @@
-import "ServiceCommon.proto"
+syntax = "proto3";
+option csharp_namespace = "OSGeo.MapGuide";
+
+import "ServiceCommon.proto";
+
+message QueryMapFeaturesRequest {
+
+}
+
+message QueryMapFeaturesResponse {
+
+}
+
+message RenderMapRequest {
+
+}
+
+message RenderMapResponse {
+
+}
+
+message RenderTileRequest {
+
+}
+
+message RenderTileResponse {
+
+}
 
 service MgRenderingService {
-
+    rpc QueryMapFeatures (QueryMapFeaturesRequest) returns (QueryMapFeaturesResponse);
+    rpc RenderMap (RenderMapRequest) returns (RenderMapResponse);
+    rpc RenderTile (RenderTileRequest) returns (RenderTileRequest);
 }

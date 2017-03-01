@@ -1,5 +1,41 @@
-import "ServiceCommon.proto"
+syntax = "proto3";
+option csharp_namespace = "OSGeo.MapGuide";
+
+import "ServiceCommon.proto";
+
+message EnumerateResourcesRequest {
+    ResourceIdentifier resource = 1;
+}
+
+message EnumerateResourcesResponse {
+    Error error = 1;
+}
+
+message ResourceExistsRequest {
+    ResourceIdentifier resource = 1;
+}
+
+message ResourceExistsResponse {
+    Error error = 1;
+    bool result = 2;
+}
+
+message SetResourceRequest {
+    ResourceIdentifier resource = 1;
+    bytes content = 2;
+    bytes header = 3;
+}
+
+message SetResourceDataRequest {
+    ResourceIdentifier resource = 1;
+    string data_name = 2;
+    string data_type = 3;
+    bytes data = 4;
+}
 
 service MgResourceService {
-
+    rpc EnumerateResources (EnumerateResourcesRequest) returns (EnumerateResourcesResponse);
+    rpc ResourceExists (ResourceExistsRequest) returns (ResourceExistsResponse);
+    rpc SetResource (SetResourceRequest) returns (BasicResponse);
+    rpc SetResourceData (SetResourceDataRequest) returns (BasicResponse);
 }

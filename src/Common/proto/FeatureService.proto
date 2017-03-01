@@ -1,120 +1,134 @@
+syntax = "proto3";
+option csharp_namespace = "OSGeo.MapGuide";
+
 import "ServiceCommon.proto";
 
-message CreateFileFeatureSourceParams {
-    required string fdo_provider = 1;
-    required string file_name = 2;
-    required FeatureSchema schema = 3;
-    required SpatialContext spatial_context = 4;
+message CreateFeatureSourceRequest {
+    /*required*/ string fdo_provider = 1;
+    /*required*/ string file_name = 2;
+    /*required*/ FeatureSchema schema = 3;
+    /*required*/ SpatialContext spatial_context = 4;
 }
 
 message ApplySchemaRequest {
-    required ResourceIdentifier feature_source = 1;
-    required FeatureSchema schema = 2;
+    /*required*/ ResourceIdentifier feature_source = 1;
+    /*required*/ FeatureSchema schema = 2;
 }
 
 message BeginTransactionRequest {
-    required ResourceIdentifier feature_source = 1;
+    /*required*/ ResourceIdentifier feature_source = 1;
 }
 
 message BeginTransactionResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
-    optional TransactionRef result = 2;
+    Error error = 1; //An error if one was raised by the service operation
+    TransactionRef result = 2;
 }
 
 message DeleteFeaturesRequest {
-    required ResourceIdentifier feature_source = 1;
-    required string class_name = 2;
-    required string filter = 3;
-    optional TransactionRef transaction = 4;
+    /*required*/ ResourceIdentifier feature_source = 1;
+    /*required*/ string class_name = 2;
+    /*required*/ string filter = 3;
+    TransactionRef transaction = 4;
 }
 
 message DeleteFeaturesResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
-    optional int32 result = 2;
+    Error error = 1; //An error if one was raised by the service operation
+    int32 result = 2;
 }
 
 message DescribeSchemaRequest {
-    required ResourceIdentifier feature_source = 1;
-    required string schema_name = 2;
-    optional StringCollection class_names = 3;
+    /*required*/ ResourceIdentifier feature_source = 1;
+    /*required*/ string schema_name = 2;
+    StringCollection class_names = 3;
 }
 
 message DescribeSchemaResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
+    Error error = 1; //An error if one was raised by the service operation
     repeated FeatureSchema result = 2;
 }
 
 message EnumerateDataStoresRequest {
-    required string fdo_provider = 1;
-    required string connection_string = 2;
+    /*required*/ string fdo_provider = 1;
+    /*required*/ string connection_string = 2;
 }
 
 message EnumerateDataStoresResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
-    required StringCollection result = 2;
+    Error error = 1; //An error if one was raised by the service operation
+    /*required*/ StringCollection result = 2;
 }
 
 message ExecuteSqlNonQueryRequest {
-    required ResourceIdentifier feature_source = 1;
-    required string sql = 2;
-    optional ParameterCollection parameters = 3;
-    optional TransactionRef transaction = 4;
+    /*required*/ ResourceIdentifier feature_source = 1;
+    /*required*/ string sql = 2;
+    ParameterCollection parameters = 3;
+    TransactionRef transaction = 4;
 }
 
 message ExecuteSqlNonQueryResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
-    required int32 result = 2;
+    Error error = 1; //An error if one was raised by the service operation
+    /*required*/ int32 result = 2;
+}
+
+message ExecuteSqlQueryRequest {
+    /*required*/ ResourceIdentifier feature_source = 1;
+    /*required*/ string sql = 2;
+    ParameterCollection parameters = 3;
+    TransactionRef transaction = 4;
 }
 
 message GetCapabilitiesRequest {
-    required string fdo_provider = 1;
-    optional string connection_string = 2;
+    /*required*/ string fdo_provider = 1;
+    string connection_string = 2;
 }
 
 message GetCapabilitiesResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
-    optional FdoProviderCapabilities result = 2;
+    Error error = 1; //An error if one was raised by the service operation
+    FdoProviderCapabilities result = 2;
 }
 
 message GetClassDefinitionRequest {
-    required ResourceIdentifier feature_source = 1;
-    required string schema_name = 2;
-    required string class_name = 3;
+    /*required*/ ResourceIdentifier feature_source = 1;
+    /*required*/ string schema_name = 2;
+    /*required*/ string class_name = 3;
 }
 
 message GetClassDefinitionResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
-    optional ClassDefinition result = 2;
+    Error error = 1; //An error if one was raised by the service operation
+    ClassDefinition result = 2;
 }
 
 message GetClassesRequest {
-    required ResourceIdentifier feature_source = 1;
-    required string schema_name = 2;
+    /*required*/ ResourceIdentifier feature_source = 1;
+    /*required*/ string schema_name = 2;
 }
 
 message GetClassesResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
-    optional StringCollection result = 2;
+    Error error = 1; //An error if one was raised by the service operation
+    StringCollection result = 2;
 }
 
 message GetConnectionPropertyValuesRequest {
-    required string fdo_provider = 1;
-    required string property_name = 2;
-    optional string connection_string = 3;
+    /*required*/ string fdo_provider = 1;
+    /*required*/ string property_name = 2;
+    string connection_string = 3;
 }
 
 message GetConnectionPropertyValuesResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
-    optional StringCollection result = 2;
+    Error error = 1; //An error if one was raised by the service operation
+    StringCollection result = 2;
+}
+
+message GetFeatureProvidersRequest {
+
 }
 
 message GetFeatureProvidersResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
+    Error error = 1; //An error if one was raised by the service operation
     repeated FdoProviderInfo result = 2;
 }
 
 message GetLockedFeaturesRequest {
-    required ResourceIdentifier feature_source = 1;
+    /*required*/ ResourceIdentifier feature_source = 1;
 }
 
 message GetLongTransactionsRequest {
@@ -122,116 +136,116 @@ message GetLongTransactionsRequest {
 }
 
 message GetLongTransactionsResponse {
-    required Error error = 1; //An error if one was raised by the service operation
+    /*required*/ Error error = 1; //An error if one was raised by the service operation
     repeated StringCollection result = 2;
 }
 
 message GetSchemaMappingRequest {
-    required string fdo_provider = 1;
-    optional string connection_string = 2;
+    /*required*/ string fdo_provider = 1;
+    string connection_string = 2;
 }
 
 message GetSchemaMappingResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
-    optional FdoDataStoreConfiguration result = 2;
+    Error error = 1; //An error if one was raised by the service operation
+    FdoDataStoreConfiguration result = 2;
 }
 
 message GetSchemasRequest {
-    required ResourceIdentifier feature_source = 1;
+    /*required*/ ResourceIdentifier feature_source = 1;
 }
 
 message GetSchemasResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
-    optional StringCollection result = 2;
+    Error error = 1; //An error if one was raised by the service operation
+    StringCollection result = 2;
 }
 
 message GetSpatialContextRequest {
-    required ResourceIdentifier feature_source = 1;
+    /*required*/ ResourceIdentifier feature_source = 1;
 }
 
 message GetSpatialContextResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
+    Error error = 1; //An error if one was raised by the service operation
     repeated SpatialContext result = 2;
 }
 
 enum SpatialContextExtentType {
-    Static = 1;
-    Dynamic = 2;
+    Static = 0;
+    Dynamic = 1;
 }
 
 message SpatialContext {
-    required string name = 1;
-    optional string coordinate_system = 2;
-    optional string coordinate_system_wkt = 3;
-    optional string description = 4;
-    optional Envelope extent = 5;
-    required SpatialContextExtentType extent_type = 6;
-    required double xy_tolerance = 7;
-    required double z_tolerance = 8;
+    /*required*/ string name = 1;
+    string coordinate_system = 2;
+    string coordinate_system_wkt = 3;
+    string description = 4;
+    Envelope extent = 5;
+    /*required*/ SpatialContextExtentType extent_type = 6;
+    /*required*/ double xy_tolerance = 7;
+    /*required*/ double z_tolerance = 8;
 }
 
 message InsertFeaturesRequest {
-    required ResourceIdentifier feature_source = 1;
+    /*required*/ ResourceIdentifier feature_source = 1;
 }
 
 message InsertFeaturesResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
+    Error error = 1; //An error if one was raised by the service operation
     repeated FeatureRecord result = 2;
 }
 
 message SelectAggregateRequest {
-    required ResourceIdentifier feature_source = 1;
-    required string class_name = 2;
-    required AggregateQueryOptions options = 3;
+    /*required*/ ResourceIdentifier feature_source = 1;
+    /*required*/ string class_name = 2;
+    /*required*/ AggregateQueryOptions options = 3;
 }
 
 message SelectFeaturesRequest {
-    required ResourceIdentifier feature_source = 1;
-    required string class_name = 2;
-    optional FeatureQueryOptions options = 3;
+    /*required*/ ResourceIdentifier feature_source = 1;
+    /*required*/ string class_name = 2;
+    FeatureQueryOptions options = 3;
 }
 
 message SetLongTransactionRequest {
-    required ResourceIdentifier feature_source = 1;
-    required string name = 2;
+    /*required*/ ResourceIdentifier feature_source = 1;
+    /*required*/ string name = 2;
 }
 
 message SetLongTransactionResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
+    Error error = 1; //An error if one was raised by the service operation
 }
 
 message TestConnectionRequest {
-    required ResourceIdentifier feature_source = 1;
-    //required string fdo_provider = 2;
-    //required string connection_string = 3;
+    /*required*/ ResourceIdentifier feature_source = 1;
+    ///*required*/ string fdo_provider = 2;
+    ///*required*/ string connection_string = 3;
 }
 
 message TestConnectionResponse {
-    optional Error error = 1;
-    optional bool result = 2;
+    Error error = 1;
+    bool result = 2;
 }
 
 message UpdateFeaturesRequest {
-    required ResourceIdentifier feature_source = 1;
+    /*required*/ ResourceIdentifier feature_source = 1;
     repeated FeatureCommand commands = 2;
-    optional TransactionRef transaction = 3;
+    TransactionRef transaction = 3;
 }
 
 message UpdateFeaturesResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
+    Error error = 1; //An error if one was raised by the service operation
     repeated PropertyValue result = 2;
 }
 
 message UpdateMatchingFeaturesRequest {
-    required ResourceIdentifier feature_source = 1;
-    required string class_name = 2;
-    repeated ProeprtyValue properties = 3;
-    optional string filter = 4;
+    /*required*/ ResourceIdentifier feature_source = 1;
+    /*required*/ string class_name = 2;
+    repeated PropertyValue properties = 3;
+    string filter = 4;
 }
 
 message UpdateMatchingFeaturesResponse {
-    optional Error error = 1; //An error if one was raised by the service operation
-    optional int result = 2;
+    Error error = 1; //An error if one was raised by the service operation
+    int32 result = 2;
 }
 
 service MgFeatureService {
@@ -239,8 +253,8 @@ service MgFeatureService {
     rpc BeginTransaction (BeginTransactionRequest) returns (BeginTransactionResponse);
     rpc CreateFeatureSource (CreateFeatureSourceRequest) returns (BasicResponse);
     rpc DeleteFeatures (DeleteFeaturesRequest) returns (DeleteFeaturesResponse);
-    rpc DescribeSchema (DescribeSchema) returns (DescribeSchemaResponse);
-    rpc DescribeWfsFeatureType (DescribeWfsFeatureTypeRequest) returns (DescribeWfsFeatureTypeResponse);
+    rpc DescribeSchema (DescribeSchemaRequest) returns (DescribeSchemaResponse);
+    //rpc DescribeWfsFeatureType (DescribeWfsFeatureTypeRequest) returns (DescribeWfsFeatureTypeResponse);
     rpc EnumerateDataStores (EnumerateDataStoresRequest) returns (EnumerateDataStoresResponse);
     rpc ExecuteSqlNonQuery (ExecuteSqlNonQueryRequest) returns (ExecuteSqlNonQueryResponse);
     rpc ExecuteSqlQuery (ExecuteSqlQueryRequest) returns (stream DataRecord);
@@ -250,11 +264,11 @@ service MgFeatureService {
     rpc GetConnectionPropertyValues (GetConnectionPropertyValuesRequest) returns (GetConnectionPropertyValuesResponse);
     rpc GetFeatureProviders (GetFeatureProvidersRequest) returns (GetFeatureProvidersResponse);
     rpc GetLockedFeatures (GetLockedFeaturesRequest) returns (stream FeatureRecord);
-    rpc GetLongTransactions (GetLongTransactionsRequest) returns (GetLongTransactionsResult);
+    rpc GetLongTransactions (GetLongTransactionsRequest) returns (GetLongTransactionsResponse);
     rpc GetSchemaMapping (GetSchemaMappingRequest) returns (GetSchemaMappingResponse);
     rpc GetSchemas (GetSchemasRequest) returns (GetSchemasResponse);
     rpc GetSpatialContext (GetSpatialContextRequest) returns (GetSpatialContextResponse);
-    rpc GetWfsFeature (GetWfsFeatureRequest) returns (GetWfsFeatureResponse);
+    //rpc GetWfsFeature (GetWfsFeatureRequest) returns (GetWfsFeatureResponse);
     rpc InsertFeatures (InsertFeaturesRequest) returns (stream FeatureRecord);
     rpc SelectAggregate (SelectAggregateRequest) returns (stream DataRecord);
     rpc SelectFeatures (SelectFeaturesRequest) returns (stream FeatureRecord);

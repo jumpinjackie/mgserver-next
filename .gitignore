@@ -1,0 +1,7 @@
+bin/
+obj/
+src/Common/gRpc/csharp/*.cs
+src/Server/packages
+*.user
+*.suo
+.vscode
