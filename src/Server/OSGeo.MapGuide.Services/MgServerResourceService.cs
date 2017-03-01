@@ -38,6 +38,10 @@ namespace OSGeo.MapGuide.Services
                 var path = GetContentPath(request.Resource);
                 using (var fs = File.OpenRead(path))
                 {
+                    var res = new Resource();
+                    res.MergeFrom(fs);
+                    response.Result = res;
+                    /*
                     using (var ms = new MemoryStream())
                     {
                         await fs.CopyToAsync(ms);
@@ -45,6 +49,7 @@ namespace OSGeo.MapGuide.Services
                         var bytes = ms.GetBuffer();
                         response.Result = Resource.Parser.ParseFrom(ms);
                     }
+                    */
                 }
             }
             catch (Exception ex)
@@ -68,7 +73,10 @@ namespace OSGeo.MapGuide.Services
                 }
                 using (var output = File.OpenWrite(path))// new FileStream(path, FileMode.OpenOrCreate))
                 {
-                    request.Content.WriteTo(output);
+                    var bytes = request.Content.ToByteArray();
+                    await output.WriteAsync(bytes, 0, bytes.Length);
+
+                    //request.Content.WriteTo(output);
                     /*
                     using (var ms = new MemoryStream())
                     {   
