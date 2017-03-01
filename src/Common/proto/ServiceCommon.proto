@@ -139,3 +139,87 @@ message GeometricPropertyDefinition {
     optional bool is_read_only = 6;
     optional bool has_elevation = 7;
 }
+
+message TransactionRef {
+    required string id = 1;
+}
+
+message Parameter {
+    required string name = 1;
+    required PropertyValue value = 2;
+}
+
+message ParameterCollection {
+    repeated Parameter values = 1;
+}
+
+message FdoProviderCapabilities {
+
+}
+
+message FdoProviderInfo {
+
+}
+
+message FdoDataStoreConfiguration {
+    
+}
+
+message QueryProperty {
+    oneof type {
+        QueryPropertyIdentifier identifier = 1;
+        QueryPropertyComputed computed = 2;
+    }
+}
+
+message QueryPropertyIdentifier {
+    required string name = 1;
+}
+
+message QueryPropertyComputed {
+    required string alias = 1;
+    required string expression = 2;
+}
+
+message GroupingFilter {
+    required StringCollection group_by = 1;
+    required string having_filter = 2;
+}
+
+message AggregateQueryOptions {
+    repeated QueryProperty properties = 1;
+    optional bool binaryOp = 2;
+    optional int fetch_size = 3;
+    optional string filter = 4;
+    optional bool distinct = 5;
+    optional GroupingFilter group_filter = 6;
+}
+
+message FeatureQueryOptions {
+    repeated QueryProperty properties = 1;
+    optional bool binaryOp = 2;
+    optional int fetch_size = 3;
+    optional string filter = 4;
+}
+
+message FeatureCommand {
+    required string class_name = 2;
+    oneof type {
+        InsertFeaturesCommand insert = 1;
+        UpdateFeaturesCommand update = 2;
+        DeleteFeaturesCommand delete = 3;
+    }
+}
+
+message InsertFeaturesCommand {
+    repeated PropertyValue values = 1;
+}
+
+message UpdateFeaturesCommand {
+    repeated PropertyValue values = 1;
+    optional string filter = 2;
+}
+
+message DeleteFeaturesCommand {
+    optional string filter = 1;
+}
