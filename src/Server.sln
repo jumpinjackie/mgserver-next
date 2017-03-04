@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSGeo.MapGuide.Services", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{AD5ED39B-77ED-45DB-A037-AFD1EBCF8619}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSGeo.MapGuide", "Common\gRpc\csharp\OSGeo.MapGuide.csproj", "{76B8658B-821C-4729-B14F-8CCE0CA00E01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSGeo.MapGuide", "gRpc\csharp\OSGeo.MapGuide.csproj", "{76B8658B-821C-4729-B14F-8CCE0CA00E01}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{C52D586B-F043-4240-A148-B370ECEFA1C7}"
 EndProject

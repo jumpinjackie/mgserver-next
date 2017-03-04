@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26206.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetConsoleTest", "Test\DotNetConsoleTest\DotNetConsoleTest.csproj", "{4A531452-3628-46B8-948C-3CAF959AF18A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSGeo.MapGuide", "Common\gRpc\csharp\OSGeo.MapGuide.csproj", "{CDFFE7ED-DF6D-40EA-A63C-5ED1D15697DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSGeo.MapGuide", "gRpc\csharp\OSGeo.MapGuide.csproj", "{CDFFE7ED-DF6D-40EA-A63C-5ED1D15697DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
