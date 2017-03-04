@@ -21,7 +21,10 @@ message RenderMapRequest {
 
 // An operation response for a RenderMap request
 message RenderMapResponse {
-
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
+    bytes image = 2;
 }
 
 // An operation request to render a tile for a given map
@@ -31,7 +34,10 @@ message RenderTileRequest {
 
 // An operation response for a RenderTile request
 message RenderTileResponse {
-
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
+    bytes tile = 2;
 }
 
 // This class provides services to render a map into an image and other various representations

@@ -3,11 +3,12 @@ option java_package="org.osgeo.mapguide";
 package OSGeo.MapGuide;
 
 import "ServiceCommon.proto";
+import "Fdo.proto";
 
 // An operation request to create a Feature Source
 message CreateFeatureSourceRequest {
     // The FDO provider
-    string fdo_provider = 1;
+    string provider = 1;
     // The file name
     string file_name = 2;
     // The FDO Feature Schema to apply
@@ -81,7 +82,7 @@ message DescribeSchemaResponse {
 // An operation request to enumerate the data stores for a FDO provider
 message EnumerateDataStoresRequest {
     // The FDO provider
-    string fdo_provider = 1;
+    string provider = 1;
     // The FDO connection string
     string connection_string = 2;
 }
@@ -129,7 +130,7 @@ message ExecuteSqlQueryRequest {
 // An operation request to get the capabilities of a FDO provider
 message GetCapabilitiesRequest {
     // The FDO provider
-    string fdo_provider = 1;
+    string provider = 1;
     // An optional FDO connection string
     string connection_string = 2;
 }
@@ -139,7 +140,7 @@ message GetCapabilitiesResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    FdoProviderCapabilities result = 2;
+    ProviderCapabilities result = 2;
 }
 
 // An operation request to get a class definition from a Feature Source
@@ -179,7 +180,7 @@ message GetClassesResponse {
 // An operation request to list the available values for a FDO connection property
 message GetConnectionPropertyValuesRequest {
     // The FDO provider
-    string fdo_provider = 1;
+    string provider = 1;
     // The connection property name
     string property_name = 2;
     // The connection string
@@ -204,7 +205,7 @@ message GetFeatureProvidersResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    repeated FdoProviderInfo result = 2;
+    repeated ProviderInfo result = 2;
 }
 
 // An operation request to get query locked features from a Feature Source
@@ -234,7 +235,7 @@ message GetLongTransactionsResponse {
 // specified provider and partial connection string
 message GetSchemaMappingRequest {
     // The FDO provider
-    string fdo_provider = 1;
+    string provider = 1;
     // The partial or full connection string
     string connection_string = 2;
 }
@@ -244,7 +245,7 @@ message GetSchemaMappingResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    FdoDataStoreConfiguration result = 2;
+    DataStoreConfiguration result = 2;
 }
 
 // An operation request to list the names of all schemas for Feature Source
