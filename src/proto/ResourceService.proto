@@ -2,7 +2,7 @@ syntax = "proto3";
 option java_package="org.osgeo.mapguide";
 package OSGeo.MapGuide;
 
-import "ServiceCommon.proto";
+import "Common.proto";
 import "FeatureSource.proto";
 import "LayerDefinition.proto";
 import "MapDefinition.proto";
@@ -10,9 +10,9 @@ import "MapDefinition.proto";
 // Describes resource content
 message Resource {
     oneof type {
-        FeatureSource feature_source = 1;
-        LayerDefinition layer_definition = 2;
-        MapDefinition map_definition = 3;
+        MdfModel.FeatureSource feature_source = 1;
+        MdfModel.LayerDefinition layer_definition = 2;
+        MdfModel.MapDefinition map_definition = 3;
     }
 }
 

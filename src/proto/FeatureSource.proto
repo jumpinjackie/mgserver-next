@@ -1,8 +1,8 @@
 syntax = "proto3";
-option java_package="org.osgeo.mapguide";
-package OSGeo.MapGuide;
+option java_package="org.osgeo.mapguide.mdfmodel";
+package MdfModel;
 
-import "ServiceCommon.proto";
+import "Common.proto";
 
 // Describes a coordinate system override for a spatial context
 message CoordSysOverride {
@@ -71,7 +71,7 @@ message FeatureSource {
     // The name of the FDO provider
     string provider = 1;
     // A set of connection parameters
-    repeated NameValuePair parameters = 2;
+    repeated OSGeo.MapGuide.NameValuePair parameters = 2;
     // A set of coordinate system overrides
     repeated CoordSysOverride supplemental_spatial_context_info = 3;
     // Configuration information needed for certain providers

@@ -1,6 +1,6 @@
 syntax = "proto3";
-option java_package="org.osgeo.mapguide";
-package OSGeo.MapGuide;
+option java_package="org.osgeo.mapguide.mdfmodel";
+package MdfModel;
 
 message LayerDefinition {
     oneof type {

@@ -2,6 +2,7 @@ bin/
 obj/
 src/gRpc/csharp/*.cs
 src/gRpc/php/OSGeo
+src/gRpc/php/MdfModel
 src/gRpc/php/GPBMetadata
 src/gRpc/java/org
 src/gRpc/cxx/*.pb.cc

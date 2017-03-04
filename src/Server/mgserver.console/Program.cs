@@ -2,11 +2,7 @@
 using OSGeo.MapGuide;
 using OSGeo.MapGuide.Services;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace mgserver.console
 {
@@ -19,14 +15,16 @@ namespace mgserver.console
             var contentRoot = Path.Combine(dataRoot, "content");
             var dataFilesRoot = Path.Combine(dataRoot, "datafiles");
 
+            var hostName = "localhost";
+            var port = 7000;
+            var localChannel = new Channel(hostName, port, ChannelCredentials.Insecure);
+
             var resolver = new ResourcePathResolver(contentRoot, dataFilesRoot);
             var serverFeatSvc = new MgServerFeatureService(resolver);
             var serverResSvc = new MgServerResourceService(resolver);
             var serverRenderSvc = new MgServerRenderingService();
 
             var credentials = ServerCredentials.Insecure;
-
-            int port = 7000;
             var server = new Server
             {
                 Services =
@@ -37,19 +35,19 @@ namespace mgserver.console
                 },
                 Ports =
                 {
-                    new ServerPort("localhost", port, credentials)
+                    new ServerPort(hostName, port, credentials)
                 }
             };
             server.Start();
 
-            serverFeatSvc.InitClientDependencies("localhost", port);
+            serverFeatSvc.InitClientDependencies(localChannel);
 
             Console.WriteLine("MapGuide Server listening on port " + port);
             Console.WriteLine("Press any key to stop the server...");
             Console.ReadKey();
-
+            
             server.ShutdownAsync().Wait();
-            serverFeatSvc.Teardown();
+            localChannel.ShutdownAsync().Wait();
         }
     }
 }

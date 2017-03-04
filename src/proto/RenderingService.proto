@@ -2,7 +2,7 @@ syntax = "proto3";
 option java_package="org.osgeo.mapguide";
 package OSGeo.MapGuide;
 
-import "ServiceCommon.proto";
+import "Common.proto";
 
 // An operation request to identifies those features that meet the specified spatial selection criteria
 message QueryMapFeaturesRequest {

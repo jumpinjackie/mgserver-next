@@ -2,6 +2,7 @@
 using Grpc.Core;
 using OSGeo.MapGuide;
 using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace DotNetConsoleTest
@@ -18,15 +19,18 @@ namespace DotNetConsoleTest
             Console.WriteLine(nameof(MgResourceService));
             Console.WriteLine($"  Testing: {nameof(MgResourceService.MgResourceServiceClient.ResourceExists)}");
             {
+                var sw = new Stopwatch();
+                sw.Start();
                 var response = resSvc.ResourceExists(new ResourceExistsRequest { Resource = ResourceIdentifier.Parse("Library://Samples/Sheboygan/Data/Parcels.FeatureSource") });
+                sw.Stop();
                 if (response.Error != null)
-                    Console.WriteLine($"    Error: {response.Error.Name} - {response.Error.Message}");
+                    Console.WriteLine($"    Error: {response.Error.Name} - {response.Error.Message} ({sw.ElapsedMilliseconds}ms)");
                 else
-                    Console.WriteLine($"    Result: {response.Result}");
+                    Console.WriteLine($"    Result: {response.Result} ({sw.ElapsedMilliseconds}ms)");
             }
             Console.WriteLine($"  Testing: {nameof(MgResourceService.MgResourceServiceClient.SetResource)}");
             {
-                var fs = new FeatureSource
+                var fs = new MdfModel.FeatureSource
                 {
                     Provider = "OSGeo.SDF"
                 };
@@ -39,11 +43,14 @@ namespace DotNetConsoleTest
                         FeatureSource = fs
                     }
                 };
+                var sw = new Stopwatch();
+                sw.Start();
                 var response = resSvc.SetResource(req);
+                sw.Stop();
                 if (response.Error != null)
-                    Console.WriteLine($"    Error: {response.Error.Name} - {response.Error.Message}");
+                    Console.WriteLine($"    Error: {response.Error.Name} - {response.Error.Message} ({sw.ElapsedMilliseconds}ms)");
                 else
-                    Console.WriteLine($"    Result: OK");
+                    Console.WriteLine($"    Result: OK ({sw.ElapsedMilliseconds}ms)");
             }
             Console.WriteLine($"  Testing: {nameof(MgResourceService.MgResourceServiceClient.GetResourceContent)}");
             {
@@ -51,15 +58,18 @@ namespace DotNetConsoleTest
                 {
                     Resource = ResourceIdentifier.Parse("Library://Samples/Sheboygan/Data/Parcels.FeatureSource")
                 };
+                var sw = new Stopwatch();
+                sw.Start();
                 var response = resSvc.GetResourceContent(req);
+                sw.Stop();
                 if (response.Error != null)
                 {
-                    Console.WriteLine($"    Error: {response.Error.Name} - {response.Error.Message}");
+                    Console.WriteLine($"    Error: {response.Error.Name} - {response.Error.Message} ({sw.ElapsedMilliseconds}ms)");
                 }
                 else
                 {
                     var res = response.Result;
-                    Console.WriteLine($"    Type: {res.TypeCase}");
+                    Console.WriteLine($"    Type: {res.TypeCase} ({sw.ElapsedMilliseconds}ms)");
                     switch (res.TypeCase)
                     {
                         case Resource.TypeOneofCase.FeatureSource:
@@ -100,11 +110,14 @@ namespace DotNetConsoleTest
                 {
                     FeatureSource = ResourceIdentifier.Parse("Library://Samples/Sheboygan/Data/Parcels.FeatureSource")
                 };
+                var sw = new Stopwatch();
+                sw.Start();
                 var response = featureSvc.TestConnection(req);
+                sw.Stop();
                 if (response.Error != null)
-                    Console.WriteLine($"    Error: {response.Error.Name} - {response.Error.Message}");
+                    Console.WriteLine($"    Error: {response.Error.Name} - {response.Error.Message} ({sw.ElapsedMilliseconds}ms)");
                 else
-                    Console.WriteLine($"    Result: {response.Result}");
+                    Console.WriteLine($"    Result: {response.Result} ({sw.ElapsedMilliseconds}ms)");
             }
             Console.WriteLine($"  Testing: {nameof(MgFeatureService.MgFeatureServiceClient.GetSchemas)}");
             {
@@ -112,14 +125,17 @@ namespace DotNetConsoleTest
                 {
                     FeatureSource = ResourceIdentifier.Parse("Library://Samples/Sheboygan/Data/Parcels.FeatureSource")
                 };
+                var sw = new Stopwatch();
+                sw.Start();
                 var response = featureSvc.GetSchemas(req);
+                sw.Stop();
                 if (response.Error != null)
                 {
-                    Console.WriteLine($"    Error: {response.Error.Name} - {response.Error.Message}");
+                    Console.WriteLine($"    Error: {response.Error.Name} - {response.Error.Message} ({sw.ElapsedMilliseconds}ms)");
                 }
                 else
                 {
-                    Console.WriteLine($"    Result: {response.Result.Items.Count}");
+                    Console.WriteLine($"    Result: {response.Result.Items.Count} ({sw.ElapsedMilliseconds}ms)");
                     foreach (var name in response .Result.Items )
                     {
                         Console.WriteLine($"      - {name}");
@@ -133,14 +149,17 @@ namespace DotNetConsoleTest
                     FeatureSource = ResourceIdentifier.Parse("Library://Samples/Sheboygan/Data/Parcels.FeatureSource"),
                     SchemaName = "SHP_Schema"
                 };
+                var sw = new Stopwatch();
+                sw.Start();
                 var response = featureSvc.GetClasses(req);
+                sw.Stop();
                 if (response.Error != null)
                 {
-                    Console.WriteLine($"    Error: {response.Error.Name} - {response.Error.Message}");
+                    Console.WriteLine($"    Error: {response.Error.Name} - {response.Error.Message} ({sw.ElapsedMilliseconds}ms)");
                 }
                 else
                 {
-                    Console.WriteLine($"    Result: {response.Result.Items.Count}");
+                    Console.WriteLine($"    Result: {response.Result.Items.Count} ({sw.ElapsedMilliseconds}ms)");
                     foreach (var name in response.Result.Items)
                     {
                         Console.WriteLine($"      - {name}");

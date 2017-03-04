@@ -12,7 +12,6 @@ namespace OSGeo.MapGuide.Services
 {
     public class MgServerFeatureService : MgFeatureService.MgFeatureServiceBase
     {
-        private Channel _channel;
         private MgResourceService.MgResourceServiceClient _resSvc;
         readonly ResourcePathResolver _resolver;
 
@@ -21,20 +20,14 @@ namespace OSGeo.MapGuide.Services
             _resolver = resolver;
         }
 
-        public void InitClientDependencies(string host, int port)
+        public void InitClientDependencies(Channel channel)
         {
-            _channel = new Channel(host, port, ChannelCredentials.Insecure);
-            _resSvc = new MgResourceService.MgResourceServiceClient(_channel);
-        }
-
-        public void Teardown()
-        {
-            _channel.ShutdownAsync().Wait();
+            _resSvc = new MgResourceService.MgResourceServiceClient(channel);
         }
 
         const string DATA_PATH_TOKEN = "%MG_DATA_FILE_PATH%";
 
-        private IConnection CreateFdoConnection(ResourceIdentifier resId, FeatureSource fs)
+        private IConnection CreateFdoConnection(ResourceIdentifier resId, MdfModel.FeatureSource fs)
         {
             var connMgr = FeatureAccessManager.GetConnectionManager();
             var conn = connMgr.CreateConnection(fs.Provider);
@@ -55,7 +48,7 @@ namespace OSGeo.MapGuide.Services
             return conn;
         }
 
-        private async Task<FeatureSource> GetFeatureSourceAsync(ResourceIdentifier resId)
+        private async Task<MdfModel.FeatureSource> GetFeatureSourceAsync(ResourceIdentifier resId)
         {
             var req = new GetResourceContentRequest
             {
