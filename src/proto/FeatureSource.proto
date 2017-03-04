@@ -4,13 +4,20 @@ package OSGeo.MapGuide;
 
 import "ServiceCommon.proto";
 
+// Describes a coordinate system override for a spatial context
 message CoordSysOverride {
+    // The name of the spatial context
     string name = 1;
+    // The coordinate system to override with
     string coordinate_system = 2;
 }
 
+// Describes a connection to a FDO data source
 message FeatureSource {
+    // The name of the FDO provider
     string provider = 1;
+    // A set of connection parameters
     repeated NameValuePair parameters = 2;
+    // A set of coordinate system overrides
     repeated CoordSysOverride supplemental_spatial_context_info = 3;
 }

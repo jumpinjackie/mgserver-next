@@ -4,277 +4,454 @@ package OSGeo.MapGuide;
 
 import "ServiceCommon.proto";
 
+// An operation request to create a Feature Source
 message CreateFeatureSourceRequest {
-    /*required*/ string fdo_provider = 1;
-    /*required*/ string file_name = 2;
-    /*required*/ FeatureSchema schema = 3;
-    /*required*/ SpatialContext spatial_context = 4;
+    // The FDO provider
+    string fdo_provider = 1;
+    // The file name
+    string file_name = 2;
+    // The FDO Feature Schema to apply
+    FeatureSchema schema = 3;
+    // The spatial context to apply
+    SpatialContext spatial_context = 4;
 }
 
+// An operation request to apply a FDO Feature Schema to a given Feature Source
 message ApplySchemaRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
-    /*required*/ FeatureSchema schema = 2;
+    // The Feature Source ID
+    ResourceIdentifier feature_source = 1;
+    // The FDO Feature Schema to apply
+    FeatureSchema schema = 2;
 }
 
+// An operation request to begin a transaction on a Feature Source
 message BeginTransactionRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
+    // The Feature Source ID
+    ResourceIdentifier feature_source = 1;
 }
 
+// An operation response for a BeginTransaction operation
 message BeginTransactionResponse {
-    Error error = 1; //An error if one was raised by the service operation
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
     TransactionRef result = 2;
 }
 
+// An operation request to delete features from a Feature Source
 message DeleteFeaturesRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
-    /*required*/ string class_name = 2;
-    /*required*/ string filter = 3;
+    // The Feature Source ID
+    ResourceIdentifier feature_source = 1;
+    // The FDO class name
+    string class_name = 2;
+    // The FDO filter to delete features
+    // NOTE: This is not an actual SQL WHERE clause. This string will be parsed into an FDO filter expression
+    // tree before query proecssing.
+    string filter = 3;
+    // An optional transaction reference
     TransactionRef transaction = 4;
 }
 
+// An operation response for a DeleteFeatures operation
 message DeleteFeaturesResponse {
-    Error error = 1; //An error if one was raised by the service operation
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
     int32 result = 2;
 }
 
+// An operation request to describe the structure of a Feature Source
 message DescribeSchemaRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
-    /*required*/ string schema_name = 2;
+    // The Feature Source ID
+    ResourceIdentifier feature_source = 1;
+    // The name of the FDO schema
+    string schema_name = 2;
+    // An optional collection of class names to filter down
     StringCollection class_names = 3;
 }
 
+// An operation response for a DescribeSchema operation
 message DescribeSchemaResponse {
-    Error error = 1; //An error if one was raised by the service operation
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
     repeated FeatureSchema result = 2;
 }
 
+// An operation request to enumerate the data stores for a FDO provider
 message EnumerateDataStoresRequest {
-    /*required*/ string fdo_provider = 1;
-    /*required*/ string connection_string = 2;
-}
-
-message EnumerateDataStoresResponse {
-    Error error = 1; //An error if one was raised by the service operation
-    /*required*/ StringCollection result = 2;
-}
-
-message ExecuteSqlNonQueryRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
-    /*required*/ string sql = 2;
-    ParameterCollection parameters = 3;
-    TransactionRef transaction = 4;
-}
-
-message ExecuteSqlNonQueryResponse {
-    Error error = 1; //An error if one was raised by the service operation
-    /*required*/ int32 result = 2;
-}
-
-message ExecuteSqlQueryRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
-    /*required*/ string sql = 2;
-    ParameterCollection parameters = 3;
-    TransactionRef transaction = 4;
-}
-
-message GetCapabilitiesRequest {
-    /*required*/ string fdo_provider = 1;
+    // The FDO provider
+    string fdo_provider = 1;
+    // The FDO connection string
     string connection_string = 2;
 }
 
+// An operation response for a EnumerateDataStores operation
+message EnumerateDataStoresResponse {
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
+    StringCollection result = 2;
+}
+
+// An operation request to execute non-query SQL for a SQL-supporting FDO provider
+message ExecuteSqlNonQueryRequest {
+    // The Feature Source ID
+    ResourceIdentifier feature_source = 1;
+    // The SQL command
+    string sql = 2;
+    // A collection of SQL parameter
+    ParameterCollection parameters = 3;
+    // An optional transaction reference
+    TransactionRef transaction = 4;
+}
+
+// An operation response for a ExecuteSqlNonQuery operation
+message ExecuteSqlNonQueryResponse {
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
+    int32 result = 2;
+}
+
+// An operation request to execute query SQL for a SQL-supporting FDO provider
+message ExecuteSqlQueryRequest {
+    // The Feature Source ID
+    ResourceIdentifier feature_source = 1;
+    // The SQL command
+    string sql = 2;
+    // A collection of SQL parameter
+    ParameterCollection parameters = 3;
+    // An optional transaction reference
+    TransactionRef transaction = 4;
+}
+
+// An operation request to get the capabilities of a FDO provider
+message GetCapabilitiesRequest {
+    // The FDO provider
+    string fdo_provider = 1;
+    // An optional FDO connection string
+    string connection_string = 2;
+}
+
+// An operation response for a GetCapabilities operation
 message GetCapabilitiesResponse {
-    Error error = 1; //An error if one was raised by the service operation
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
     FdoProviderCapabilities result = 2;
 }
 
+// An operation request to get a class definition from a Feature Source
 message GetClassDefinitionRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
-    /*required*/ string schema_name = 2;
-    /*required*/ string class_name = 3;
+    // The Feature Source ID
+    ResourceIdentifier feature_source = 1;
+    // The FDO schema name
+    string schema_name = 2;
+    // The FDO class name
+    string class_name = 3;
 }
 
+// An operation response from a GetClassDefinition request
 message GetClassDefinitionResponse {
-    Error error = 1; //An error if one was raised by the service operation
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
     ClassDefinition result = 2;
 }
 
+// An operation request to list the class names for a FDO schema in a Feature Source
 message GetClassesRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
-    /*required*/ string schema_name = 2;
+    // The Feature Source ID
+    ResourceIdentifier feature_source = 1;
+    // The FDO schema name
+    string schema_name = 2;
 }
 
+// An operation response from a GetClasses request
 message GetClassesResponse {
-    Error error = 1; //An error if one was raised by the service operation
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
     StringCollection result = 2;
 }
 
+// An operation request to list the available values for a FDO connection property
 message GetConnectionPropertyValuesRequest {
-    /*required*/ string fdo_provider = 1;
-    /*required*/ string property_name = 2;
+    // The FDO provider
+    string fdo_provider = 1;
+    // The connection property name
+    string property_name = 2;
+    // The connection string
     string connection_string = 3;
 }
 
+// An operation response for a GetConnectionPropertyValues request
 message GetConnectionPropertyValuesResponse {
-    Error error = 1; //An error if one was raised by the service operation
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
     StringCollection result = 2;
 }
 
+// An operation request to get the installed FDO providers
 message GetFeatureProvidersRequest {
 
 }
 
+// An operation response for a GetFeatureProviders request
 message GetFeatureProvidersResponse {
-    Error error = 1; //An error if one was raised by the service operation
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
     repeated FdoProviderInfo result = 2;
 }
 
+// An operation request to get query locked features from a Feature Source
 message GetLockedFeaturesRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
+    // The feature source ID
+    ResourceIdentifier feature_source = 1;
+    // The FDO class name
+    string class_name = 2;
+    // The query options
+    FeatureQueryOptions options = 3;
 }
 
+// An operation request to get long transactions from a Feature Source
 message GetLongTransactionsRequest {
 
 }
 
+// An operation response for a GetLongTransactions request
 message GetLongTransactionsResponse {
-    /*required*/ Error error = 1; //An error if one was raised by the service operation
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
     repeated StringCollection result = 2;
 }
 
+// An operation request all of the logical to physical schema mappings for the
+// specified provider and partial connection string
 message GetSchemaMappingRequest {
-    /*required*/ string fdo_provider = 1;
+    // The FDO provider
+    string fdo_provider = 1;
+    // The partial or full connection string
     string connection_string = 2;
 }
 
+// An operation response for a GetSchemaMapping request
 message GetSchemaMappingResponse {
-    Error error = 1; //An error if one was raised by the service operation
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
     FdoDataStoreConfiguration result = 2;
 }
 
+// An operation request to list the names of all schemas for Feature Source
 message GetSchemasRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
+    // The Feature Source ID
+    ResourceIdentifier feature_source = 1;
 }
 
+// An operation response for a GetSchemas request
 message GetSchemasResponse {
-    Error error = 1; //An error if one was raised by the service operation
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
     StringCollection result = 2;
 }
 
-message GetSpatialContextRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
+// An operation request to list all spatial contexts for a Feature Source
+message GetSpatialContextsRequest {
+    // The Feature Source ID
+    ResourceIdentifier feature_source = 1;
 }
 
-message GetSpatialContextResponse {
-    Error error = 1; //An error if one was raised by the service operation
+// An operation response for a GetSpatialContext request
+message GetSpatialContextsResponse {
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
     repeated SpatialContext result = 2;
 }
 
+// Describes the type of extent for spatial contexts
 enum SpatialContextExtentType {
+    // The extent is static
     Static = 0;
+    // The extent is dynamic
     Dynamic = 1;
 }
 
+// Describes a spatial context
 message SpatialContext {
-    /*required*/ string name = 1;
+    // The name of the spatial context
+    string name = 1;
+    // The coordinate system name of the spatial context
     string coordinate_system = 2;
+    // The coordinate system WKT of the spatial context
     string coordinate_system_wkt = 3;
+    // The description of the spatial context
     string description = 4;
+    // The bounding box of the spatial context
     Envelope extent = 5;
-    /*required*/ SpatialContextExtentType extent_type = 6;
-    /*required*/ double xy_tolerance = 7;
-    /*required*/ double z_tolerance = 8;
+    // The bounding box extent type
+    SpatialContextExtentType extent_type = 6;
+    // The X/Y coordinate tolerance
+    double xy_tolerance = 7;
+    // The Z coordinate tolerance
+    double z_tolerance = 8;
 }
 
+// An operation to insert features into a Feature Source
 message InsertFeaturesRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
+    // The feature source ID
+    ResourceIdentifier feature_source = 1;
 }
 
+// An operation result for a InsertFeatures request
 message InsertFeaturesResponse {
-    Error error = 1; //An error if one was raised by the service operation
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
     repeated FeatureRecord result = 2;
 }
 
+// An operation request to query features in an aggregated manner from a Feature Source
 message SelectAggregateRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
-    /*required*/ string class_name = 2;
-    /*required*/ AggregateQueryOptions options = 3;
+    // The feature source ID
+    ResourceIdentifier feature_source = 1;
+    // The FDO class name
+    string class_name = 2;
+    // The query options
+    AggregateQueryOptions options = 3;
 }
 
+// An operation request to query features from a Feature Source
 message SelectFeaturesRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
-    /*required*/ string class_name = 2;
+    // The feature source ID
+    ResourceIdentifier feature_source = 1;
+    // The FDO class name
+    string class_name = 2;
+    // The query options
     FeatureQueryOptions options = 3;
 }
 
+// An operation request to set the active long transaction of a Feature Source that supports long transactions
 message SetLongTransactionRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
-    /*required*/ string name = 2;
+    // The feature source ID
+    ResourceIdentifier feature_source = 1;
+    // The long transaction name
+    string name = 2;
 }
 
-message SetLongTransactionResponse {
-    Error error = 1; //An error if one was raised by the service operation
-}
-
+// An operation request to test whether a given Feature Source can be connected to
 message TestConnectionRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
-    ///*required*/ string fdo_provider = 2;
-    ///*required*/ string connection_string = 3;
+    // The feature source ID
+    ResourceIdentifier feature_source = 1;
 }
 
+// An operation response for a TestConnection operation
 message TestConnectionResponse {
+    // An error if one was raised by the service operation
     Error error = 1;
+    // The result of the operation
     bool result = 2;
 }
 
+// An operation request to run a series of feature manipulation commands on a Feature Source
 message UpdateFeaturesRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
+    // The feature source ID
+    ResourceIdentifier feature_source = 1;
+    // The collection of commands to execute
     repeated FeatureCommand commands = 2;
+    // The transaction reference
     TransactionRef transaction = 3;
 }
 
+// An operation response for an UpdateFeatures request
 message UpdateFeaturesResponse {
-    Error error = 1; //An error if one was raised by the service operation
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
     repeated PropertyValue result = 2;
 }
 
+// An operation request to update features in a Feature Source
 message UpdateMatchingFeaturesRequest {
-    /*required*/ ResourceIdentifier feature_source = 1;
-    /*required*/ string class_name = 2;
+    // The feature source ID
+    ResourceIdentifier feature_source = 1;
+    // The FDO class name
+    string class_name = 2;
+    // The collection of properties to update with
     repeated PropertyValue properties = 3;
+    // The FDO filter
     string filter = 4;
 }
 
+// An operation response for a UpdateMatchingFeatures request
 message UpdateMatchingFeaturesResponse {
-    Error error = 1; //An error if one was raised by the service operation
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
     int32 result = 2;
 }
 
+// Provides an abstraction layer for the storage and retrieval of feature data in a technology-independent way.
+// The API lets you determine what storage technologies are available and what capabilities they have. Access
+// to the storage technology is modeled as a connection. For example, you can connect to a file and do simple
+// insertions or connect to a relational database and do transaction-based operations.
 service MgFeatureService {
+    // Creates or updates a feature schema within the specified feature source.
+    // For this method to actually delete any schema elements, the matching elements
+    // in the input schema must be marked for deletion
     rpc ApplySchema (ApplySchemaRequest) returns (BasicResponse);
     rpc BeginTransaction (BeginTransactionRequest) returns (BeginTransactionResponse);
+    // Creates a feature source in the repository identified by the specified resource
+    // identifier, using the given feature source parameters.
     rpc CreateFeatureSource (CreateFeatureSourceRequest) returns (BasicResponse);
     rpc DeleteFeatures (DeleteFeaturesRequest) returns (DeleteFeaturesResponse);
+    // Gets the definitions of one or more schemas contained in the feature source for particular classes.
+    // If the specified schema name or a class name does not exist, this method will throw an exception.
     rpc DescribeSchema (DescribeSchemaRequest) returns (DescribeSchemaResponse);
-    //rpc DescribeWfsFeatureType (DescribeWfsFeatureTypeRequest) returns (DescribeWfsFeatureTypeResponse);
+    // This method enumerates all the providers and if they are FDO enabled for the specified provider and partial connection string.
     rpc EnumerateDataStores (EnumerateDataStoresRequest) returns (EnumerateDataStoresResponse);
+    // Executes SQL statements NOT including SELECT statements.
     rpc ExecuteSqlNonQuery (ExecuteSqlNonQueryRequest) returns (ExecuteSqlNonQueryResponse);
+    // Executes the SQL SELECT statement on the specified feature source.
     rpc ExecuteSqlQuery (ExecuteSqlQueryRequest) returns (stream DataRecord);
+    // Gets the capabilities of an FDO Provider
     rpc GetCapabilities (GetCapabilitiesRequest) returns (GetCapabilitiesResponse);
+    // Gets the class definition for the specified class
     rpc GetClassDefinition (GetClassDefinitionRequest) returns (GetClassDefinitionResponse);
+    // Gets a list of the names of all classes available within a specified schema
     rpc GetClasses (GetClassesRequest) returns (GetClassesResponse);
+    // Gets a set of connection values that are used to make connections to an FDO provider that permits multiple connections.
     rpc GetConnectionPropertyValues (GetConnectionPropertyValuesRequest) returns (GetConnectionPropertyValuesResponse);
+    // Gets a list of the available FDO providers together with other information such as the names of the connection properties for each provider
     rpc GetFeatureProviders (GetFeatureProvidersRequest) returns (GetFeatureProvidersResponse);
+    // Gets the locked features.
     rpc GetLockedFeatures (GetLockedFeaturesRequest) returns (stream FeatureRecord);
+    // Gets all available long transactions for the provider
     rpc GetLongTransactions (GetLongTransactionsRequest) returns (GetLongTransactionsResponse);
+    // This method returns all of the logical to physical schema mappings for the specified provider and partial connection string
     rpc GetSchemaMapping (GetSchemaMappingRequest) returns (GetSchemaMappingResponse);
+    // Gets a list of the names of all of the schemas available in the feature source
     rpc GetSchemas (GetSchemasRequest) returns (GetSchemasResponse);
-    rpc GetSpatialContext (GetSpatialContextRequest) returns (GetSpatialContextResponse);
-    //rpc GetWfsFeature (GetWfsFeatureRequest) returns (GetWfsFeatureResponse);
+    // Gets all of the spatial contexts available in the feature source
+    rpc GetSpatialContexts (GetSpatialContextsRequest) returns (GetSpatialContextsResponse);
+    // Inserts a new feature into the specified feature class of the specified Feature Source
     rpc InsertFeatures (InsertFeaturesRequest) returns (stream FeatureRecord);
+    // Selects groups of features from a feature source and applies filters to each of the groups according to the criteria set in the aggregate query option supplied
     rpc SelectAggregate (SelectAggregateRequest) returns (stream DataRecord);
+    // Selects features from a feature source according to the criteria set in the query options provided
     rpc SelectFeatures (SelectFeaturesRequest) returns (stream FeatureRecord);
-    rpc SetLongTransaction (SetLongTransactionRequest) returns (SetLongTransactionResponse);
+    // Set the active long transaction name for a feature source
+    rpc SetLongTransaction (SetLongTransactionRequest) returns (BasicResponse);
+    // Connects to the Feature Provider specified in the connection string
     rpc TestConnection (TestConnectionRequest) returns (TestConnectionResponse);
+    // Executes commands contained in the given command set
     rpc UpdateFeatures (UpdateFeaturesRequest) returns (UpdateFeaturesResponse);
+    // Updates all features that match the given filter with the specified property values
     rpc UpdateMatchingFeatures (UpdateMatchingFeaturesRequest) returns (UpdateMatchingFeaturesResponse);
 }

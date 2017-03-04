@@ -2,24 +2,36 @@ syntax = "proto3";
 option java_package="org.osgeo.mapguide";
 package OSGeo.MapGuide;
 
+// A name/value pair
 message NameValuePair {
+    // The name
     string name = 1;
+    // The value
     string value = 2;
 }
 
+// Describes a bounding box
 message Envelope {
-    /*required*/ double min_x = 1;
-    /*required*/ double min_y = 2;
-    /*required*/ double max_x = 3;
-    /*required*/ double max_y = 4;
+    // The lower left X coordinate
+    double min_x = 1;
+    // The lower left Y coordinate
+    double min_y = 2;
+    // The upper right Y coordinate
+    double max_x = 3;
+    // The upper right Y coordinate
+    double max_y = 4;
 }
 
+// Describes a basic service operation response
 message BasicResponse {
-    Error error = 1; //An error if one was raised by the service operation
+    //An error if one was raised by the service operation
+    Error error = 1;
 }
 
+// Describes a property value
 message PropertyValue {
-    /*required*/ string name = 1;
+    // The name of the property value
+    string name = 1;
     oneof property_value {
         bool bool_value = 2;
         int32 byte_value = 3;
@@ -39,141 +51,241 @@ message PropertyValue {
     }
 }
 
+// Describes a FDO data property
 message DataPropertyDescriptor {
-    /*required*/ string name = 1;
-    /*required*/ FdoDataType data_type = 2;
+    // The name of the property
+    string name = 1;
+    // The FDO data type
+    FdoDataType data_type = 2;
 }
 
+// Describes a data record header
 message DataRecordHeader {
+    // The collection of data property descriptors
     repeated DataPropertyDescriptor properties = 1;
 }
 
+// A data record from a SQL or Aggregate feature query
 message DataRecord { //TODO: Maybe this should be a oneof
-    Error error = 1; //An error if one was raised by the service operation. This only exists in the first data record
-    DataRecordHeader header = 2; //A data record header describing the structure of the data record. This only exists on the first data record
-    repeated PropertyValue values = 3;  //The property values of the data record
+    //An error if one was raised by the service operation. This only exists in the first data record
+    Error error = 1;
+    //A data record header describing the structure of the data record. This only exists on the first data record
+    DataRecordHeader header = 2;
+    //The property values of the data record
+    repeated PropertyValue values = 3;
 }
 
+// A feature record from a feature query
 message FeatureRecord { //TODO: Maybe this should be a oneof
-    Error error = 1; //An error if one was raised by the service operation. This only exists in the first data record
-    ClassDefinition header = 2; //A class definition describing the structure of the feature. This only exists on the first feature record
-    repeated PropertyValue values = 3; //The property values of the feature record
+    //An error if one was raised by the service operation. This only exists in the first data record
+    Error error = 1;
+    //A class definition describing the structure of the feature. This only exists on the first feature record
+    ClassDefinition header = 2;
+    //The property values of the feature record
+    repeated PropertyValue values = 3;
 }
 
+// Describes a means of accessing a given resource
 message ResourceIdentifier {
-    /*required*/ string name = 1;
-    /*required*/ string path = 2;
-    /*required*/ string repository_name = 3;
-    /*required*/ string repository_type = 4;
-    /*required*/ string resource_type = 5;
+    // The name
+    string name = 1;
+    // The path
+    string path = 2;
+    // The name of the repository
+    string repository_name = 3;
+    // The repository type
+    string repository_type = 4;
+    // The resource type
+    string resource_type = 5;
 }
 
+// Describes an error returned by a service operation
 message Error {
-    /*required*/ string name = 1;
-    /*required*/ string message = 2;
+    // The name of the error
+    string name = 1;
+    // The error message
+    string message = 2;
+    // The stack trace of the service operation implementation that threw the error
     repeated string stack = 3;
 }
 
+// Describes a collection of strings
 message StringCollection {
+    // The list of string items
     repeated string items = 1;
 }
 
+// Describes a FDO feature schema
 message FeatureSchema {
-    /*required*/ string name = 1;
+    // The name of the schema
+    string name = 1;
+    // The schema description
     string description = 2;
+    // The collection of classes
     repeated ClassDefinition classes = 3;
+    // Indicates if this item is marked for deletion. Only used when applying this schema. Ignored otherwise
     bool marked_for_delete = 4;
 }
 
+// Describes a FDO class definition
 message ClassDefinition {
-    /*required*/ string name = 1;
+    // The name of the class
+    string name = 1;
+    // The class description
     string description = 2;
+    // The name of the default designated geometry property
     string geom_name = 3;
+    // The collection of properties
     repeated PropertyDefinition properties = 4;
-    bool marked_for_delete = 5;
+    // The collection of identity property names. The corresponding properties must exist in the property collection
+    repeated string identity_property_names = 5;
+    // Indicates if this item is marked for deletion. Only used when applying this schema. Ignored otherwise
+    bool marked_for_delete = 6;
 }
 
+// Describes a FDO property definition
 message PropertyDefinition {
+    // The name of the property
+    string name = 1;
+    // The description of the property
+    string description = 2;
+    // Indicates if this item is marked for deletion. Only used when applying this schema. Ignored otherwise
+    bool marked_for_delete = 3;
     oneof property_type {
-        DataPropertyDefinition data = 1;
-        GeometricPropertyDefinition geom = 2;
-        RasterPropertyDefinition raster = 3;
+        DataPropertyDefinition data = 4;
+        GeometricPropertyDefinition geom = 5;
+        RasterPropertyDefinition raster = 6;
     }
-    bool marked_for_delete = 4;
 }
 
+// Describes a FDO data type
 enum FdoDataType {
+    // Binary Large Object
     Blob = 0;
+    // Boolean
     Boolean = 1;
+    // Byte. NOTE: Due to protobuf limitation, we use int32 to store such values.
+    // To prevent overflow, you must ensure that you must not store values beyond
+    // the allowed limits of a byte. When reading, you can assume the value lies
+    // within the allowed limits of a byte.
     Byte = 2;
+    // Character Large Object
     Clob = 3;
+    // DateTime
     DateTime = 4;
+    // Decimal
     Decimal = 5;
+    // Double
     Double = 6;
+    // Int16. NOTE: Due to protobuf limitation, we use int32 to store such values.
+    // To prevent overflow, you must ensure that you must not store values beyond
+    // the allowed limits of an int16 (aka. short). When reading, you can assume the value lies
+    // within the allowed limits of an int16.
     Int16 = 7;
+    // Int32
     Int32 = 8;
+    // Int64
     Int64 = 9;
+    // Single
     Single = 10;
+    // String
     String = 11;
 }
 
+// Describes a FDO raster property definition
 message RasterPropertyDefinition {
-    /*required*/ string name = 1;
-    string description = 2;
+    // Indicates if this property is read only
     bool is_read_only = 3;
+    // Indicates if this property is nullable
     bool is_nullable = 4;
+    // The name of the associated spatial context
     string spatial_context = 5;
-    /*required*/ int32 image_x_size = 6;
-    /*required*/ int32 image_y_size = 7;
+    // The X image size
+    int32 image_x_size = 6;
+    // The Y image size
+    int32 image_y_size = 7;
 }
 
+// Describes a FDO data property definition
 message DataPropertyDefinition {
-    /*required*/ string name = 1;
-    string description = 2;
-    /*required*/ FdoDataType data_type = 3;
+    // The FDO data type of this property
+    FdoDataType data_type = 3;
+    // Indicates if this property is read only
     bool is_read_only = 4;
+    // Indicates if this property is nullable
     bool is_nullable = 5;
+    // Indicates if this property is auto-generated
     bool is_autogenerated = 6;
+    // The maximum length of this property. Only applicable if the data type is string
     int32 string_length = 7;
+    // The decimal precision of this property. Only applicable if the data type is decimal
     int32 decimal_precision = 8;
+    // The decimal scale of this property. Only applicable if the data type is decimal
     int32 decimal_scale = 9;
 }
 
+// Describes a FDO geometric property definition
 message GeometricPropertyDefinition {
-    /*required*/ string name = 1;
-    string description = 2;
+    // The name of the associated spatial context
     string spatial_context = 3;
+    // The basic geometry type of this property
     int32 geometry_type = 4;
+    // The specific geometry type of this property
     int32 specific_geometry_type = 5;
+    // Indicates if this property is read only
     bool is_read_only = 6;
+    // Indicates if this property has elevation
     bool has_elevation = 7;
 }
 
+// Describes a reference to an open transaction
 message TransactionRef {
-    /*required*/ string id = 1;
+    // The transaction id
+    string id = 1;
 }
 
+// Describes a parameter
 message Parameter {
-    /*required*/ string name = 1;
-    /*required*/ PropertyValue value = 2;
+    // The name of the parameter value
+    string name = 1;
+    oneof property_value {
+        bool bool_value = 2;
+        int32 byte_value = 3;
+        string datetime_value = 4;
+        float single_value = 5;
+        double double_value = 6;
+        int32 int16_value = 7;
+        int32 int32_value = 8;
+        int64 int64_value = 9;
+        string string_value = 10;
+        bytes blob_value = 11;
+        bytes clob_value = 12;
+        double decimal_value = 16;
+    }
 }
 
+// Describes a colletion of parameters
 message ParameterCollection {
+    // The collection of parameters
     repeated Parameter values = 1;
 }
 
+// Describes the capabilities of a FDO provider
 message FdoProviderCapabilities {
 
 }
 
+// Describes information about a FDO provider
 message FdoProviderInfo {
 
 }
 
+// Describes a configuration document for a FDO provider
 message FdoDataStoreConfiguration {
 
 }
 
+// Describes a feature query property
 message QueryProperty {
     oneof type {
         QueryPropertyIdentifier identifier = 1;
@@ -181,38 +293,96 @@ message QueryProperty {
     }
 }
 
+// Describes a feature property reference by identifier
 message QueryPropertyIdentifier {
-    /*required*/ string name = 1;
+    // The name of the property
+    string name = 1;
 }
 
+// Describes a feature property reference by a computed FDO expression
 message QueryPropertyComputed {
-    /*required*/ string alias = 1;
-    /*required*/ string expression = 2;
+    // The name of the alias
+    string alias = 1;
+    // The FDO expression
+    string expression = 2;
 }
 
+// Describes a grouping filter for an aggregate query
 message GroupingFilter {
-    /*required*/ StringCollection group_by = 1;
-    /*required*/ string having_filter = 2;
+    // The collection of property names to group by
+    StringCollection group_by = 1;
+    // The FDO grouping filter
+    // NOTE: This is not an actual SQL WHERE clause. This string will be parsed into an FDO filter expression
+    // tree before query proecssing.
+    string having_filter = 2;
 }
 
+// Describes the ordering direction for an aggregate or feature query
+enum OrderingDirection {
+    // Order ascending
+    Ascending = 0;
+    // Order descending
+    Descending = 1;
+}
+
+// Describes an ordering option for an aggregate or feature query
+message OrderingOption {
+    // The collection of property names to order by
+    StringCollection order_by = 1;
+    // The direction to order query results
+    OrderingDirection direction = 2;
+}
+
+// Describes query options for an aggregate query
 message AggregateQueryOptions {
+    // A collection of properties to include
     repeated QueryProperty properties = 1;
+    // Indicates whether to join a regular filter with a spatial filter
     bool binaryOp = 2;
+    // For queries that return a large number of objects some feature sources support
+    // improving performance by setting fetch size in order to reduce the number of database server
+    // round trips required to satisfy the selection criteria. Providers that do not use a fetch size
+    // will ignore the fetch size parameter. This does not affect the actual results of queries as it
+    // is a performance tuning parameter
     int32 fetch_size = 3;
+    // The filter for this select operation. The filter acts like the where clause in an SQL Select
+    // statement. Not calling this method causes all instances of the feature class to be selected.
+    // NOTE: This is not an actual SQL WHERE clause. This string will be parsed into an FDO filter expression
+    // tree before query proecssing.
     string filter = 4;
-    bool distinct = 5;
-    GroupingFilter group_filter = 6;
+    // The order (ascending or descending) in which the selected features are returned
+    OrderingOption ordering = 5;
+    // Indicates whether to restrict the values returned by a select operation to be unique
+    bool distinct = 6;
+    // The grouping filter so that the results are grouped
+    GroupingFilter group_filter = 7;
 }
 
+// Describes query options for a standard feature query
 message FeatureQueryOptions {
+    // A collection of properties to include
     repeated QueryProperty properties = 1;
+    // Indicates whether to join a regular filter with a spatial filter
     bool binaryOp = 2;
+    // For queries that return a large number of objects some feature sources support
+    // improving performance by setting fetch size in order to reduce the number of database server
+    // round trips required to satisfy the selection criteria. Providers that do not use a fetch size
+    // will ignore the fetch size parameter. This does not affect the actual results of queries as it
+    // is a performance tuning parameter
     int32 fetch_size = 3;
+    // The filter for this select operation. The filter acts like the where clause in an SQL Select
+    // statement. Not calling this method causes all instances of the feature class to be selected.
+    // NOTE: This is not an actual SQL WHERE clause. This string will be parsed into an FDO filter expression
+    // tree before query proecssing.
     string filter = 4;
+    // The order (ascending or descending) in which the selected features are returned
+    OrderingOption ordering = 5;
 }
 
+// Describes a feature manipulation command
 message FeatureCommand {
-    /*required*/ string class_name = 1;
+    // The FDO class name this command applies to
+    string class_name = 1;
     oneof type {
         InsertFeaturesCommand insert = 2;
         UpdateFeaturesCommand update = 3;
@@ -220,15 +390,26 @@ message FeatureCommand {
     }
 }
 
+// Describes a command to insert a feature
 message InsertFeaturesCommand {
+    // The collection of property values to insert
     repeated PropertyValue values = 1;
 }
 
+// Describes a command to update features
 message UpdateFeaturesCommand {
+    // The collection of property values to update with
     repeated PropertyValue values = 1;
+    // The FDO filter to update features
+    // NOTE: This is not an actual SQL WHERE clause. This string will be parsed into an FDO filter expression
+    // tree before query proecssing.
     string filter = 2;
 }
 
+// Describes a command to delete features
 message DeleteFeaturesCommand {
+    // The FDO filter to delete features
+    // NOTE: This is not an actual SQL WHERE clause. This string will be parsed into an FDO filter expression
+    // tree before query proecssing.
     string filter = 1;
 }

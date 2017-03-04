@@ -7,6 +7,7 @@ import "FeatureSource.proto";
 import "LayerDefinition.proto";
 import "MapDefinition.proto";
 
+// Describes resource content
 message Resource {
     oneof type {
         FeatureSource feature_source = 1;
@@ -15,49 +16,66 @@ message Resource {
     }
 }
 
+// An operation request to enumerate resources
 message EnumerateResourcesRequest {
+    // The resource ID
     ResourceIdentifier resource = 1;
 }
 
+// An operation response for a EnumerateResources request
 message EnumerateResourcesResponse {
+    // An error if one was raised by the service operation
     Error error = 1;
+    // The result of the operation
+    bytes result = 2;
 }
 
+// An operation request to get the content for a given resource
 message GetResourceContentRequest {
+    // The resource ID
     ResourceIdentifier resource = 1;
 }
 
+// An operation response for a GetResourceContent request
 message GetResourceContentResponse {
+    // An error if one was raised by the service operation
     Error error = 1;
+    // The result of the operation
     Resource result = 2;
 }
 
+// An operation request to test whether the specified resource exists
 message ResourceExistsRequest {
+    // The resource ID
     ResourceIdentifier resource = 1;
 }
 
+// An operation response for a ResourceExists request
 message ResourceExistsResponse {
+    // An error if one was raised by the service operation
     Error error = 1;
+    // The result of the operation
     bool result = 2;
 }
 
+// A service operation to set or update the content for a particular resource
 message SetResourceRequest {
+    // The resource ID
     ResourceIdentifier resource = 1;
+    // The resource content
     Resource content = 2;
+    // The resource header
     bytes header = 3;
 }
-/*
-message SetResourceDataRequest {
-    ResourceIdentifier resource = 1;
-    string data_name = 2;
-    string data_type = 3;
-    bytes data = 4;
-}
-*/
+
+// Enables you to manipulate repositories and resources
 service MgResourceService {
+    // Gets the content of the specified resource
     rpc GetResourceContent (GetResourceContentRequest) returns (GetResourceContentResponse);
+    // Enumerates the resources in the specified repository
     rpc EnumerateResources (EnumerateResourcesRequest) returns (EnumerateResourcesResponse);
+    // Checks to see if the specified resource exists
     rpc ResourceExists (ResourceExistsRequest) returns (ResourceExistsResponse);
+    // Adds a new resource to a resource repository, or updates an existing resource
     rpc SetResource (SetResourceRequest) returns (BasicResponse);
-    //rpc SetResourceData (SetResourceDataRequest) returns (BasicResponse);
 }

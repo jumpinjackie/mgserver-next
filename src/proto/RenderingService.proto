@@ -4,32 +4,44 @@ package OSGeo.MapGuide;
 
 import "ServiceCommon.proto";
 
+// An operation request to identifies those features that meet the specified spatial selection criteria
 message QueryMapFeaturesRequest {
 
 }
 
+// An operation response for a QueryMapFeatures request
 message QueryMapFeaturesResponse {
 
 }
 
+// An operation request to render an image for a given map
 message RenderMapRequest {
 
 }
 
+// An operation response for a RenderMap request
 message RenderMapResponse {
 
 }
 
+// An operation request to render a tile for a given map
 message RenderTileRequest {
 
 }
 
+// An operation response for a RenderTile request
 message RenderTileResponse {
 
 }
 
+// This class provides services to render a map into an image and other various representations
 service MgRenderingService {
+    // Identifies those features that meet the specified spatial selection criteria. This operation
+    // is used to implement server-side selection. In addition to a selection set, this operation may
+    // optionally returns attribute information and other related information
     rpc QueryMapFeatures (QueryMapFeaturesRequest) returns (QueryMapFeaturesResponse);
+    // Renders the specified map to the requested format
     rpc RenderMap (RenderMapRequest) returns (RenderMapResponse);
+    // Renders the specified base map tile for the given map.
     rpc RenderTile (RenderTileRequest) returns (RenderTileRequest);
 }
