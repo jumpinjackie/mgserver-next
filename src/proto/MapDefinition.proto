@@ -4,33 +4,58 @@ package OSGeo.MapGuide;
 
 import "ServiceCommon.proto";
 
+// Defines the collection of layers, groupings of layers
 message MapDefinition {
+    // The name of the Map Definition
     string name = 1;
+    // The coordinate system as WKT used by the Map Definition
     string coordinate_system = 2;
+    // A bounding box around the area of the Map Definition
     Envelope extents = 3;
+    // The background color to be used with the MapDefinition
     string background_color = 4;
+    // Metadata regarding the Map Definition
     string metadata = 5;
+    // Zero or more Map Layers that make up the Map Definition. The order of the layers represents the draw order, layers first is the list are drawn over top of layers later in the list
     repeated MapLayer map_layers = 6;
+    // Zero or more Map Layer Groups that make up the Map Definition
     repeated MapLayerGroup map_layer_groups = 7;
+    // A reference to the tile set source to use
     string tileSetSource = 8;
 }
 
+// Describes a map layer, including its group and options about how it should be displayed
 message MapLayer {
+    // The name of the layer
     string name = 1;
+    // Layer Definition ID
     string resource_id = 2;
+    // Whether or not the Layer can be selected
     bool selectable = 3;
+    // Whether or not the Layer should be shown in the legend
     bool show_in_legend = 4;
+    // Label to be shown for the Layer in the legend
     string legend_label = 5;
+    // Whether or not the Layer should be expanded in the legend
     bool expand_in_legend = 6;
+    // Whether this layer's visiblity should be visible or not when it first comes into range
     bool visible = 7;
+    // Group of which the MapLayer is a member of
     string group = 8;
 }
 
+// Describes a map layer group
 message MapLayerGroup {
+    // The name of the group
     string name = 1;
-    bool visible = 2;
-    bool show_in_legend = 3;
-    bool expand_in_legend = 4;
-    string legend_label = 5;
+    // Whether or not the Layer should be shown in the legend
+    bool show_in_legend = 2;
+    // Whether or not the Layer should be expanded in the legend
+    bool expand_in_legend = 3;
+    // Label to be shown for the Layer in the legend
+    string legend_label = 4;
+    // Whether this layer's visiblity should be visible or not when it first comes into range
+    bool visible = 5;
+    // Group of which the MapLayer is a member of
     string group = 6;
 }

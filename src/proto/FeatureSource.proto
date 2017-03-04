@@ -12,6 +12,60 @@ message CoordSysOverride {
     string coordinate_system = 2;
 }
 
+// Enum for join types
+enum RelateType {
+    LeftOuter = 0;
+    RightOuter = 1;
+    Inner = 2;
+    Association = 3;
+}
+
+// Describes a pair of properties to join on
+message RelateProperty {
+    // Name of property (field) in feature (primary) class
+    string feature_class_property = 1;
+    // Name of property (field) in attribute (secondary) class
+    string attribute_class_property = 2;
+}
+
+// Describes a join to another class
+message AttributeRelate {
+    // Collection of pairs of feature class properties (fields) and attribute class properties (fields) that define a join
+    repeated RelateProperty related_property = 1;
+    // Name of class the feature class is joined to
+    string attribute_class = 2;
+    // Identifies the resource id of the attribute class
+    string resource_id = 3;
+    // Name of the relationship that defines a join
+    string name = 4;
+    // Delimiter symbol to be used by the UI to present an extended attribute
+    string attribute_name_delimiter = 5;
+    // Type of the join
+    RelateType relate_type = 6;
+    // Force 1 : 1 in the case of 1 : many
+    bool force_one_to_one = 7;
+}
+
+// Describes a calculated property
+message CalculatedProperty {
+    // Name of property
+    string name = 1;
+    // Expression for the property
+    string expression = 2;
+}
+
+// Describes an extended feature class
+message FeatureSourceExtension {
+    // Name of the extension
+    string name = 1;
+    // The feature class that is being extended; this is the class whose attributes are used for joining other attribute classes
+    string feature_class = 2;
+    // Zero or more calculated properties from attributes from the same feature class
+    repeated CalculatedProperty calculated_properties = 3;
+    // Zero or more relations to join on
+    repeated AttributeRelate related = 4;
+}
+
 // Describes a connection to a FDO data source
 message FeatureSource {
     // The name of the FDO provider
@@ -20,4 +74,10 @@ message FeatureSource {
     repeated NameValuePair parameters = 2;
     // A set of coordinate system overrides
     repeated CoordSysOverride supplemental_spatial_context_info = 3;
+    // Configuration information needed for certain providers
+    string configuration_document = 4;
+    // The long transaction to use when connected to the provider
+    string long_transaction = 5;
+    // A set of extensions for the data source information
+    repeated FeatureSourceExtension extensions = 6;
 }
