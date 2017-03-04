@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ErrorUtil.cs" />
+    <Compile Include="FdoUtils.cs" />
     <Compile Include="MgServerFeatureService.cs" />
     <Compile Include="MgServerRenderingService.cs" />
     <Compile Include="MgServerResourceService.cs" />
