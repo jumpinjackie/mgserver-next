@@ -1,4 +1,6 @@
 syntax = "proto3";
+option java_package="org.osgeo.mapguide";
+package OSGeo.MapGuide;
 
 import "ServiceCommon.proto";
 

@@ -1,6 +1,11 @@
 bin/
 obj/
 src/Common/gRpc/csharp/*.cs
+src/Common/gRpc/php/OSGeo
+src/Common/gRpc/php/GPBMetadata
+src/Common/gRpc/java/org
+src/Common/gRpc/cxx/*.pb.cc
+src/Common/gRpc/cxx/*.pb.h
 src/packages
 thirdparty/FDO
 *.user
