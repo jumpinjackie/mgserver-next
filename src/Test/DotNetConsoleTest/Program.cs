@@ -14,11 +14,11 @@ namespace DotNetConsoleTest
         static void Main(string[] args)
         {
             var channel = new Channel("127.0.0.1:7000", ChannelCredentials.Insecure);
-            var featureSvc = new MgFeatureService.MgFeatureServiceClient(channel);
-            var resSvc = new MgResourceService.MgResourceServiceClient(channel);
-            var renderSvc = new MgRenderingService.MgRenderingServiceClient(channel);
+            var featureSvc = new FeatureService.FeatureServiceClient(channel);
+            var resSvc = new ResourceService.ResourceServiceClient(channel);
+            var renderSvc = new RenderingService.RenderingServiceClient(channel);
 
-            Console.WriteLine($"=== {nameof(MgResourceService)} ===");
+            Console.WriteLine($"=== {nameof(ResourceService)} ===");
             ResourceService_ResourceExists(resSvc);
             ResourceService_SetResource(resSvc);
             ResourceService_GetResourceContent(resSvc);
@@ -39,7 +39,7 @@ namespace DotNetConsoleTest
                 File.Copy($"../../../Data/Sheboygan_Parcels.sdf", dstPath);
             }
 
-            Console.WriteLine($"=== {nameof(MgFeatureService)} ===");
+            Console.WriteLine($"=== {nameof(FeatureService)} ===");
             FeatureService_TestConnection(featureSvc);
             FeatureService_GetSchemas(featureSvc);
             FeatureService_GetClasses(featureSvc);
@@ -53,7 +53,7 @@ namespace DotNetConsoleTest
             Console.Read();
         }
 
-        static void ResourceService_ResourceExists(MgResourceService.MgResourceServiceClient resSvc)
+        static void ResourceService_ResourceExists(ResourceService.ResourceServiceClient resSvc)
         {
             Console.WriteLine($"  Testing: {nameof(ResourceService_ResourceExists)}");
             var sw = new Stopwatch();
@@ -66,7 +66,7 @@ namespace DotNetConsoleTest
                 Console.WriteLine($"    Result: {response.Result} ({sw.ElapsedMilliseconds}ms)");
         }
 
-        static void ResourceService_SetResource(MgResourceService.MgResourceServiceClient resSvc)
+        static void ResourceService_SetResource(ResourceService.ResourceServiceClient resSvc)
         {
             Console.WriteLine($"  Testing: {nameof(ResourceService_SetResource)}");
             var fs = new MdfModel.FeatureSource
@@ -92,7 +92,7 @@ namespace DotNetConsoleTest
                 Console.WriteLine($"    Result: OK ({sw.ElapsedMilliseconds}ms)");
         }
 
-        static void ResourceService_GetResourceContent(MgResourceService.MgResourceServiceClient resSvc)
+        static void ResourceService_GetResourceContent(ResourceService.ResourceServiceClient resSvc)
         {
             Console.WriteLine($"  Testing: {nameof(ResourceService_GetResourceContent)}");
             var req = new GetResourceContentRequest
@@ -129,7 +129,7 @@ namespace DotNetConsoleTest
             }
         }
 
-        static void FeatureService_TestConnection(MgFeatureService.MgFeatureServiceClient featureSvc)
+        static void FeatureService_TestConnection(FeatureService.FeatureServiceClient featureSvc)
         {
             Console.WriteLine($"  Testing: {nameof(FeatureService_TestConnection)}");
             var req = new TestConnectionRequest
@@ -146,7 +146,7 @@ namespace DotNetConsoleTest
                 Console.WriteLine($"    Result: {response.Result} ({sw.ElapsedMilliseconds}ms)");
         }
 
-        static void FeatureService_GetSchemas(MgFeatureService.MgFeatureServiceClient featureSvc)
+        static void FeatureService_GetSchemas(FeatureService.FeatureServiceClient featureSvc)
         {
             Console.WriteLine($"  Testing: {nameof(FeatureService_GetSchemas)}");
             var req = new GetSchemasRequest
@@ -171,7 +171,7 @@ namespace DotNetConsoleTest
             }
         }
 
-        static void FeatureService_GetClasses(MgFeatureService.MgFeatureServiceClient featureSvc)
+        static void FeatureService_GetClasses(FeatureService.FeatureServiceClient featureSvc)
         {
             Console.WriteLine($"  Testing: {nameof(FeatureService_GetClasses)}");
             var req = new GetClassesRequest
@@ -197,7 +197,7 @@ namespace DotNetConsoleTest
             }
         }
 
-        static void FeatureService_SelectFeatures(MgFeatureService.MgFeatureServiceClient featureSvc)
+        static void FeatureService_SelectFeatures(FeatureService.FeatureServiceClient featureSvc)
         {
             Console.WriteLine($"  Testing: {nameof(FeatureService_SelectFeatures)}");
             var req = new SelectFeaturesRequest
@@ -278,7 +278,7 @@ namespace DotNetConsoleTest
             }
         }
 
-        static void FeatureService_SelectFeaturesFiltered(MgFeatureService.MgFeatureServiceClient featureSvc)
+        static void FeatureService_SelectFeaturesFiltered(FeatureService.FeatureServiceClient featureSvc)
         {
             Console.WriteLine($"  Testing: {nameof(FeatureService_SelectFeaturesFiltered)}");
             var req = new SelectFeaturesRequest
@@ -363,7 +363,7 @@ namespace DotNetConsoleTest
             }
         }
 
-        static void FeatureService_SelectAggregate(MgFeatureService.MgFeatureServiceClient featureSvc)
+        static void FeatureService_SelectAggregate(FeatureService.FeatureServiceClient featureSvc)
         {
             Console.WriteLine($"  Testing: {nameof(FeatureService_SelectAggregate)}");
             var req = new SelectAggregateRequest
@@ -443,7 +443,7 @@ namespace DotNetConsoleTest
             }
         }
 
-        static void FeatureService_SelectAggregateFiltered(MgFeatureService.MgFeatureServiceClient featureSvc)
+        static void FeatureService_SelectAggregateFiltered(FeatureService.FeatureServiceClient featureSvc)
         {
             Console.WriteLine($"  Testing: {nameof(FeatureService_SelectAggregateFiltered)}");
             var req = new SelectAggregateRequest

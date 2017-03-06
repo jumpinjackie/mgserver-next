@@ -41,7 +41,7 @@ message RenderTileResponse {
 }
 
 // This class provides services to render a map into an image and other various representations
-service MgRenderingService {
+service RenderingService {
     // Identifies those features that meet the specified spatial selection criteria. This operation
     // is used to implement server-side selection. In addition to a selection set, this operation may
     // optionally returns attribute information and other related information

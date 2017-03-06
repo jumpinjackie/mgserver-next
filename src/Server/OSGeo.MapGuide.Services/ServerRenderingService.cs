@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OSGeo.MapGuide.Services
 {
-    public class MgServerRenderingService : MgRenderingService.MgRenderingServiceBase
+    public class ServerRenderingService : RenderingService.RenderingServiceBase
     {
     }
 }

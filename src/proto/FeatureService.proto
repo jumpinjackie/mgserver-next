@@ -402,7 +402,7 @@ message UpdateMatchingFeaturesResponse {
 // The API lets you determine what storage technologies are available and what capabilities they have. Access
 // to the storage technology is modeled as a connection. For example, you can connect to a file and do simple
 // insertions or connect to a relational database and do transaction-based operations.
-service MgFeatureService {
+service FeatureService {
     // Creates or updates a feature schema within the specified feature source.
     // For this method to actually delete any schema elements, the matching elements
     // in the input schema must be marked for deletion

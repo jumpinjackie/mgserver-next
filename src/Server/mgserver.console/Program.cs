@@ -20,18 +20,18 @@ namespace mgserver.console
             var localChannel = new Channel(hostName, port, ChannelCredentials.Insecure);
 
             var resolver = new ResourcePathResolver(contentRoot, dataFilesRoot);
-            var serverFeatSvc = new MgServerFeatureService(resolver);
-            var serverResSvc = new MgServerResourceService(resolver);
-            var serverRenderSvc = new MgServerRenderingService();
+            var serverFeatSvc = new ServerFeatureService(resolver);
+            var serverResSvc = new ServerResourceService(resolver);
+            var serverRenderSvc = new ServerRenderingService();
 
             var credentials = ServerCredentials.Insecure;
             var server = new Server
             {
                 Services =
                 {
-                    MgFeatureService.BindService(serverFeatSvc),
-                    MgResourceService.BindService(serverResSvc),
-                    MgRenderingService.BindService(serverRenderSvc)
+                    FeatureService.BindService(serverFeatSvc),
+                    ResourceService.BindService(serverResSvc),
+                    RenderingService.BindService(serverRenderSvc)
                 },
                 Ports =
                 {

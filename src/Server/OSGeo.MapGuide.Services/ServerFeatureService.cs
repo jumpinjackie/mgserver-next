@@ -14,19 +14,19 @@ using System.Threading;
 
 namespace OSGeo.MapGuide.Services
 {
-    public class MgServerFeatureService : MgFeatureService.MgFeatureServiceBase
+    public class ServerFeatureService : FeatureService.FeatureServiceBase
     {
-        private MgResourceService.MgResourceServiceClient _resSvc;
+        private ResourceService.ResourceServiceClient _resSvc;
         readonly ResourcePathResolver _resolver;
 
-        public MgServerFeatureService(ResourcePathResolver resolver)
+        public ServerFeatureService(ResourcePathResolver resolver)
         {
             _resolver = resolver;
         }
 
         public void InitClientDependencies(Channel channel)
         {
-            _resSvc = new MgResourceService.MgResourceServiceClient(channel);
+            _resSvc = new ResourceService.ResourceServiceClient(channel);
         }
 
         const string DATA_PATH_TOKEN = "%MG_DATA_FILE_PATH%";

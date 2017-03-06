@@ -9,11 +9,11 @@ using Google.Protobuf;
 
 namespace OSGeo.MapGuide.Services
 {
-    public class MgServerResourceService : MgResourceService.MgResourceServiceBase
+    public class ServerResourceService : ResourceService.ResourceServiceBase
     {
         readonly ResourcePathResolver _resolver;
 
-        public MgServerResourceService(ResourcePathResolver resolver)
+        public ServerResourceService(ResourcePathResolver resolver)
         {
             _resolver = resolver;
         }

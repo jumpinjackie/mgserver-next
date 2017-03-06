@@ -91,9 +91,9 @@
   <ItemGroup>
     <Compile Include="ErrorUtil.cs" />
     <Compile Include="FdoUtils.cs" />
-    <Compile Include="MgServerFeatureService.cs" />
-    <Compile Include="MgServerRenderingService.cs" />
-    <Compile Include="MgServerResourceService.cs" />
+    <Compile Include="ServerFeatureService.cs" />
+    <Compile Include="ServerRenderingService.cs" />
+    <Compile Include="ServerResourceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourcePathResolver.cs" />
   </ItemGroup>
