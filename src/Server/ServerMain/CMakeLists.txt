@@ -1,4 +1,4 @@
-project(MgGrpcCommon CXX)
+project(mgserver CXX)
 cmake_minimum_required(VERSION 3.0)
 
 cmake_policy(SET CMP0054 OLD)
@@ -13,8 +13,6 @@ message(STATUS "Build type is: ${CMAKE_BUILD_TYPE}")
 if(WIN32)
 	add_definitions(-D_WIN32_WINNT=0x600)
 	add_definitions(-DUNICODE -D_UNICODE)
-	#set(CMAKE_CXX_FLAGS_DEBUG "/MTd /Zi /Ob0 /Od /RTC1 /D_ITERATOR_DEBUG_LEVEL=2")
-	#set(CMAKE_CXX_FLAGS_RELEASE "/MT /O2 /Ob2 /DNDEBUG")
 	if(MSVC)
 		if(NOT (MSVC14))
 			message(FATAL_ERROR, "Only MSVC14 (Visual Studio 2015) is supported compiler on Windows")
@@ -27,10 +25,13 @@ endif(WIN32)
 find_package(gRPC REQUIRED)
 find_package(protobuf REQUIRED)
 
+include_directories("../Services")
+
 link_libraries(protobuf::libprotobuf)
 link_libraries(gRPC::grpc++_unsecure)
+link_libraries(MgServices)
 
-file(GLOB SOURCES "*.cc")
+file(GLOB SOURCES "*.cpp")
 file(GLOB HEADERS "*.h")
 
-add_library("${PROJECT_NAME}" SHARED "${SOURCES}")
+add_executable("${PROJECT_NAME}" "${SOURCES}")
