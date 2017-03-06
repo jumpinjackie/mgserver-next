@@ -12,3 +12,4 @@ thirdparty/FDO
 *.user
 *.suo
 .vscode
+.vs
