@@ -1,0 +1,41 @@
+syntax = "proto3";
+option java_package="org.osgeo.mapguide";
+package OSGeo.MapGuide;
+
+import "Common.proto";
+
+// An operation request to identifies those features that meet the specified spatial selection criteria
+message QueryMapFeaturesRequest {
+
+}
+
+// An operation response for a QueryMapFeatures request
+message QueryMapFeaturesResponse {
+
+}
+
+// An operation request to render an image for a given map
+message RenderMapRequest {
+
+}
+
+// An operation response for a RenderMap request
+message RenderMapResponse {
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
+    bytes image = 2;
+}
+
+// An operation request to render a tile for a given map
+message RenderTileRequest {
+
+}
+
+// An operation response for a RenderTile request
+message RenderTileResponse {
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
+    bytes tile = 2;
+}

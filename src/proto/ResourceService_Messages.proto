@@ -1,0 +1,69 @@
+syntax = "proto3";
+option java_package="org.osgeo.mapguide";
+package OSGeo.MapGuide;
+
+import "Common.proto";
+import "FeatureSource.proto";
+import "LayerDefinition.proto";
+import "MapDefinition.proto";
+
+// Describes resource content
+message Resource {
+    oneof type {
+        MdfModel.FeatureSource feature_source = 1;
+        MdfModel.LayerDefinition layer_definition = 2;
+        MdfModel.MapDefinition map_definition = 3;
+    }
+}
+
+// An operation request to enumerate resources
+message EnumerateResourcesRequest {
+    // The resource ID
+    ResourceIdentifier resource = 1;
+}
+
+// An operation response for a EnumerateResources request
+message EnumerateResourcesResponse {
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
+    bytes result = 2;
+}
+
+// An operation request to get the content for a given resource
+message GetResourceContentRequest {
+    // The resource ID
+    ResourceIdentifier resource = 1;
+}
+
+// An operation response for a GetResourceContent request
+message GetResourceContentResponse {
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
+    Resource result = 2;
+}
+
+// An operation request to test whether the specified resource exists
+message ResourceExistsRequest {
+    // The resource ID
+    ResourceIdentifier resource = 1;
+}
+
+// An operation response for a ResourceExists request
+message ResourceExistsResponse {
+    // An error if one was raised by the service operation
+    Error error = 1;
+    // The result of the operation
+    bool result = 2;
+}
+
+// A service operation to set or update the content for a particular resource
+message SetResourceRequest {
+    // The resource ID
+    ResourceIdentifier resource = 1;
+    // The resource content
+    Resource content = 2;
+    // The resource header
+    bytes header = 3;
+}
