@@ -2,26 +2,6 @@ syntax = "proto3";
 option java_package="org.osgeo.mapguide";
 package OSGeo.MapGuide;
 
-// A name/value pair
-message NameValuePair {
-    // The name
-    string name = 1;
-    // The value
-    string value = 2;
-}
-
-// Describes a bounding box
-message Envelope {
-    // The lower left X coordinate
-    double min_x = 1;
-    // The lower left Y coordinate
-    double min_y = 2;
-    // The upper right Y coordinate
-    double max_x = 3;
-    // The upper right Y coordinate
-    double max_y = 4;
-}
-
 // Describes a basic service operation response
 message BasicResponse {
     //An error if one was raised by the service operation

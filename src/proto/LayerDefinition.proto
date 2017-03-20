@@ -2,22 +2,549 @@ syntax = "proto3";
 option java_package="org.osgeo.mapguide.mdfmodel";
 package MdfModel;
 
+/**
+ * SymbolDefinition.proto
+ *
+ * Protobuf message definitions for Symbol definitions
+ *
+ * Based on SymbolDefinition-2.4.0.xsd
+ */
+
+import "MdfCommon.proto";
+import "SymbolDefinition.proto";
+import "WatermarkDefinition.proto";
+
+// Encapsulates the definition of a map layer
 message LayerDefinition {
+    string resource_id = 1;
+    double opacity = 2;
+    repeated WatermarkType watermarks = 3;
     oneof type {
-        VectorLayerDefinition vector = 1;
-        DrawingLayerDefinition drawing = 2;
-        GridLayerDefinition grid = 3;
+        VectorLayerDefinition vector = 4;
+        DrawingLayerDefinition drawing = 5;
+        GridLayerDefinition grid = 6;
     }
 }
 
+// Enumeration describing whether the features are coming from a feature class or named extension
+enum FeatureNameType {
+    FeatureClass = 0;
+    NamedExtension = 1;
+}
+
+// URL information for features
+message UrlData {
+    // The real address of the URL. This can be a string FDO expression
+    string content = 1;
+    // The description of the URL. This can be a string FDO expression
+    string description = 2;
+    // Specify the the override of URL content for a specific feature which can be a string FDO expression
+    string content_override = 3;
+    // Specify the override of URL description for a specific feature which can be a string FDO expression
+    string description_override = 4;
+}
+
+// The possible interpretations of a z offset value
+enum ElevationType {
+    RelativeToGround = 0;
+    Absolute = 1;
+}
+
+// The measurement units that linear sizes are specified in
+enum LengthUnitType {
+    Millimeters = 0;
+    Centimeters = 1;
+    Meters = 2;
+    Kilometers = 3;
+    Inches = 4;
+    Feet = 5;
+    Yards = 6;
+    Miles = 7;
+    Points = 8;
+}
+
+message ElevationSettings {
+    string z_offset = 1;
+    string z_extrusion = 2;
+    ElevationType z_offset_type = 3;
+    LengthUnitType unit = 4; 
+}
+
+// The stylization to be applied to the vector features for a given scale range
+message VectorScaleRange {
+    // The zoomed in part of the scale range.  Defaults to 0 if not specified.  Inclusive
+    double min_scale = 1;
+    // The zoomed out part of the scale range.  Defaults to the application's maximum value if not specified.  Exclusive
+    double max_scale = 2;
+    repeated FeatureStyle feature_styles = 3;
+    // KML elevation settings
+    ElevationSettings elevation_settings = 4;
+}
+
+message FeatureStyle {
+    bool show_in_legend = 1;
+    oneof type {
+        // Area style
+        AreaTypeStyleType area_type_style = 2;
+        // Line style
+        LineTypeStyleType line_type_style = 3;
+        // Point style
+        PointTypeStyleType point_type_style = 4;
+        // Composite style (Advanced Stylization)
+        CompositeTypeStyle composite_type_style = 5;
+    }
+}
+
+// Style specification of a polygon geometry type
+message AreaTypeStyleType {
+    // Rules to define a theme
+    repeated AreaRuleType area_rules = 1;
+}
+
+// Style rule for an area geometry type
+message AreaRuleType {
+    // The label for the Rule to be displayed in the legend
+    string legend_label = 1;
+    // A filter for the Rule.  This is a boolean FDO expression.  Any features that pass this filter are styled using this rule's stylization
+    string filter = 2;
+    // A label for the Rule
+    TextSymbolType label = 3;
+    // The stylization of the polygon geometry
+    AreaSymbolizationFillType area_symbolization_2d = 4;
+}
+
+message AreaSymbolizationFillType {
+    // The style of the polygon fill
+    FillType fill = 1;
+    // The style of the polygon edge
+    StrokeType stroke = 2;
+}
+
+// The possible background styles of a TextSymbol
+enum BackgroundStyleType {
+    BackgroundStyleType_Transparent = 0;
+    BackgroundStyleType_Opaque = 1;
+    BackgroundStyleType_Ghosted = 2;
+}
+
+enum SizeContextType {
+    SizeContextType_MappingUnits = 0;
+    SizeContextType_DeviceUnits = 1;
+}
+
+// SLD supports square, circle, triangle, star, cross, and X
+enum ShapeType {
+    ShapeType_Square = 0;
+    ShapeType_Circle = 1;
+    ShapeType_Triangle = 2;
+    ShapeType_Star = 3;
+    ShapeType_Cross = 4;
+    ShapeType_X = 5;
+}
+
+// Enumerates the allowed UsageContext values
+enum UsageContextType {
+    UsageContextType_Unspecified = 0;
+    UsageContextType_Point = 1;
+    UsageContextType_Line = 2;
+    UsageContextType_Area = 3;
+}
+
+// Enumerates the allowed GeometryContext values
+enum GeometryContextType {
+    GeometryContextType_Unspecified = 0;
+    GeometryContextType_Point = 1;
+    GeometryContextType_LineString = 2;
+    GeometryContextType_Polygon = 3;
+}
+
+// Encapsulates the stylization of a polygon's fill
+message FillType {
+    string fill_pattern = 1;
+    string foreground_color = 2;
+    // The background color.  Not applicable to solid fills
+    string background_color = 3;
+}
+
+// Style specification of a line geometry type
+message LineTypeStyleType {
+    // Rules to define a theme
+    repeated LineRuleType line_rules = 1;
+}
+
+// Style rule for a line geometry type
+message LineRuleType {
+    // The label for the Rule to be displayed in the legend
+    string legend_label = 1;
+    // A filter for the Rule.  This is a boolean FDO expression.  Any features that pass this filter are styled using this rule's stylization
+    string filter = 2;
+    // A label for the Rule
+    TextSymbolType label = 3;
+    repeated StrokeType line_symbolization_2d = 4;
+}
+
+// Encapsulates the stylization of a line
+message StrokeType {
+    string line_style = 1;
+    string thickness = 2;
+    string color = 3;
+    // Unit of measurement that the thickness is specified in
+    LengthUnitType unit = 4;
+    // Whether the sizes are with respect to the earth or the user's display device
+    SizeContextType size_context = 5;
+}
+
+// Style specification of a point geometry type
+message PointTypeStyleType {
+    // Create a text layer
+    bool display_as_text = 1;
+    // Allows labels from any map layer (including the current layer) to obscure features on the current layer
+    bool allow_overpost = 2;
+    // One or more PointRuleType defining the PointStyle
+    repeated PointRuleType point_rules = 3;
+}
+
+// Style rule for a point geometry type
+message PointRuleType {
+    // The label for the Rule to be displayed in the legend
+    string legend_label = 1;
+    // A filter for the Rule.  This is a boolean FDO expression.  Any features that pass this filter are styled using this rule's stylization
+    string filter = 2;
+    // A label for the Rule
+    TextSymbolType label = 3;
+    PointSymbolization2DType point_symbolization_2d = 4;
+}
+
+// The different types of point geometries
+message PointSymbolization2DType {
+    oneof type {
+        MarkSymbolType mark = 1;
+        ImageSymbolType image = 2;
+        FontSymbolType font = 3;
+        W2DSymbolType w2d = 4;
+        BlockSymbolType block = 5;
+    }
+}
+
+// Defines common properties for all symbols
+message SymbolType {
+    // The units that the sizes are specified in
+    LengthUnitType unit = 1;
+    // Whether the sizes are with respect to the earth or the user's display device
+    SizeContextType size_context = 2;
+    // Width of the symbol.  This is a double FDO expression.  Does not apply to font symbols
+    string size_x = 3;
+    // Height of the symbol.  This is a double FDO expression
+    string size_y = 4;
+    // Amount to rotate the symbol in degrees.  This is a double FDO expression.  Does not apply to line labels
+    string rotation = 5;
+    // Hint for the UI only.  When the user enters a constant size for the width or height, the other dimension should be adjusted accordingly.  Does not apply to font symbols or labels
+    bool maintain_aspect = 6;
+    // X offset for the symbol specified in symbol space.  Does not apply to labels
+    string insertion_point_x = 7;
+    // Y offset for the symbol specified in symbol space.  Does not apply to labels
+    string insertion_point_y = 8;
+}
+
+message TextSymbolType {
+    // The text of the TextSymbol.  This is a string FDO expression
+    string text = 1;
+    // The font to use
+    string font_name = 2;
+    // The color of the text
+    string foreground_color = 3;
+    // The text background color
+    string background_color = 4;
+    // The background style
+    BackgroundStyleType background_style = 5;
+    // A string FDO expression for the horizontal alignment.  Must evaluate to one of the HorizontalAlignmentType enums.  Only applicable to text styles
+    string horizontal_alignment = 6;
+    // A string FDO expression for the vertical alignment.  Must evaluate to one of the VerticalAlignmentType enums.  Only applicable to text and line styles
+    string vertical_alignment = 7;
+    // Specifies if the label should be in a bold font
+    string bold = 8;
+    // Specifies if the font should be italicized
+    string italic = 9;
+    // Specifies if the text should be underlined.
+    string underlined = 10;
+    // Optional element which specifies that a more advanced labeling algorithm should be used with the AJAX viewer
+    AdvancedPlacement advanced_placement = 11;
+}
+
+// Optional element which specifies that a more advanced labeling algorithm should be used with the AJAX viewer
+message AdvancedPlacement {
+    // The maximum amount any label is allowed to shrink in order to fit into the feature.  For example, 0.8 means that the label can shrink until it is 80% of the original size.  1.0 means that the label cannot shrink.  If not specified, the application should assume 1.0.  If set to 0.0 or less then the advanced placement option is disabled
+    double scale_limit = 1;
+}
+
+// Stylization of a predefined shape (ShapeType)
+message MarkSymbolType {
+    ShapeType shape = 1;
+    // No fill is drawn if not specified
+    FillType fill = 2;
+    // No edge is drawn if not specified
+    StrokeType edge = 3;
+}
+
+// Symbols that are comprised of a raster
+message ImageSymbolType {
+    // Reference to the image
+    ImageRefOrContent image = 1;
+}
+
+message ResourceDataItemRef {
+    // The reference to the resource
+    string resource_id = 1;
+    // If ResourceId specifies a library, this identifies the name of a library item
+    string library_item_name = 2;
+}
+
+message ImageRefOrContent {
+    oneof type {
+        // Reference to the image
+        ResourceDataItemRef image_ref = 1;
+        // BinHex data for image
+        bytes binary = 2;
+    }
+}
+
+// Symbols that are specified by a font and character
+message FontSymbolType {
+    // If the font is not installed, the actual font used is application dependent
+    string font_name = 1;
+    string character = 2;
+    bool bold = 3;
+    bool italic = 4;
+    bool underlined = 5;
+    string foreground_color = 6;
+}
+
+// A symbol using a W2D stream
+message W2DSymbolType {
+    ResourceDataItemRef w2d_symbol = 1;
+    // If specified all polygon fills in the symbol are drawn in this color
+    string fill_color = 2;
+    // If specified all lines in the symbol are drawn in this color
+    string line_color = 3;
+    // If specified all text in the symbol is drawn in this color
+    string text_color = 4;
+}
+
+// A block symbol
+message BlockSymbolType {
+    string drawing_name = 1;
+    string block_name = 2;
+    // Static color
+    string block_color = 3;
+    // Static color
+    string layer_color = 4;
+}
+
+// A style specification consisting of composite rules
+message CompositeTypeStyle {
+    repeated CompositeRule composite_rules = 1;
+}
+
+message CompositeRule {
+    // The label for the Rule to be displayed in the legend
+    string legend_label = 1;
+    // A filter for the Rule.  This is a boolean FDO expression.  Any features that pass this filter are styled using this rule's stylization
+    string filter = 2;
+    CompositeSymbolization composite_symbolization = 3;
+}
+
+// Stylization attributes of a point, line, or area feature
+message CompositeSymbolization {
+    // The symbol instances used for stylization
+    SymbolInstance symbol_instance = 1;
+}
+
+// An instance of a symbol
+message SymbolInstance {
+    oneof type {
+        // A library reference to an existing SymbolDefinition, either simple or compound.
+        string resource_id = 1;
+        // An inlined SimpleSymbolDefinition
+        SimpleSymbolDefinition simple_symbol_definition = 2;
+        // An inlined CompoundSymbolDefinition
+        CompoundSymbolDefinition compound_symbol_definition = 3;
+    }
+    // Specifies all parameter overrides for this symbol instance
+    repeated Override parameter_overrides = 4;
+    // The additional amount to scale the symbol horizontally in symbol space.  Defaults to 1 if not specified
+    string scale_x = 5;
+    // The additional amount to scale the symbol vertically in symbol space.  Defaults to 1 if not specified
+    string scale_y = 6;
+    // Specifies the additional amount to offset the symbol horizontally, in mm in device units, after scaling and rotation have been applied.  Applies only to point symbols.  Defaults to 0 if not specified
+    string insertion_offset_x = 7;
+    // Specifies the additional amount to offset the symbol vertically, in mm in device units, after scaling and rotation have been applied.  Applies only to point symbols.  Defaults to 0 if not specified
+    string insertion_offset_y = 8;
+    // Specifies whether the symbol sizes are with respect to the map or the user's display device.  Defaults to device units
+    SizeContextType size_context = 9;
+    // Boolean value which specifies whether the symbol is drawn as part of a final rendering pass (e.g. for labeling).  This must evaluate to True or False (default)
+    string draw_list = 10;
+    // Boolean value which specifies whether to render this symbol only if its graphical extent does not overlap the exclusion region.  If the positioning algorithm generates multiple candidate symbol positions and this setting is True, then only the first non-overlapping candidate is rendered.  This must evaluate to True or False (default).
+    string check_exclusion_region = 11;
+    // Boolean value which specifies whether the graphical extent for this symbol instance is added to the exclusion region (if it is rendered).  Symbols which check the exclusion region will not draw on top of this symbol.  This must evaluate to True or False (default)
+    string add_to_exclusion_region = 12;
+    // Specifies the algorithm used to generate candidate positions for the symbol.  If specified this must evaluate to one of: Default, EightSurrounding, or PathLabels.  Default means generate one position using the feature geometry (used for normal rendering).  EightSurrounding means generate eight candidate labels surrounding the feature geometry (used when labeling point features).  PathLabels means generate periodic labels which follow the feature geometry (used when labeling linestring features)
+    string positioning_algorithm = 13;
+    // The optional rendering pass in which this symbol instance draws.  If specified this must be greater than or equal to zero.  Defaults to 0
+    string rendering_pass = 14;
+    // Specifies which usage in the symbol should be the active one.  Defaults to Unspecified
+    UsageContextType usage_context = 15;
+    // Specifies which geometry type this symbol instance applies to.  Defaults to Unspecified
+    GeometryContextType geometry_context = 16;
+}
+
+// Provides legend labeling information for a theme
+message ThemeLabel {
+    // The legend description for the theme
+    string description = 1;
+    // The default legend format to use for each category in the theme
+    string category_format = 2;
+}
+
+// A parameter override
+message Override {
+    // The name of the symbol definition containing the parameter being overridden
+    string symbol_name = 1;
+    // The identifier of the parameter being overridden
+    string parameter_identifier = 2;
+    // The override value for the parameter
+    string parameter_value = 3;
+    // An optional theme label for this override
+    ThemeLabel theme_label = 4;
+}
+
+// A layer with a vector data source; and stylization specification for the datum's geometry types
 message VectorLayerDefinition {
-
+    // Either a feature class or named extension
+    string feature_name = 1;
+    FeatureNameType feature_name_type = 2;
+    // A boolean FDO expression that specifies which features to return.  No filter means pass all features through
+    string filter = 3;
+    // Specifies which properties to expose to the user and its corresponding friendly name
+    repeated NameValuePair property_mapping = 4;
+    // Specifies the geometry property that should be used to get the geometries
+    string geometry = 5;
+    // The optional URL information associated with each feature
+    UrlData url_data = 6;
+    // The text to put into the tooltip for displayed features.  This is a string FDO expression
+    string tooltip = 7;
+    // The stylization to be applied to the features for a given scale range
+    repeated VectorScaleRange vector_scale_ranges = 8;
 }
 
+// A layer with a drawing (i.e., DWF) data source
 message DrawingLayerDefinition {
-
+    string sheet = 1;
+    string layer_filter = 2;
+    double min_scale = 3;
+    double max_scale = 4;
 }
 
+// A layer with a raster or grid data source
 message GridLayerDefinition {
+    string feature_name = 1;
+    // Specifies the raster property that should be used to get the raster data
+    string raster = 2;
+    // A boolean FDO expression that specifies which features to return.  No filter means pass all features through
+    string filter = 3;
+    repeated GridScaleRangeType grid_scale_ranges = 4;
+}
 
+// Defines how to scale numbers into a color channel
+message ChannelBandType {
+    // Name of the band
+    string band = 1;
+    // Default is low value found in band.  Band values less than this are snapped to this number
+    double low_band = 2;
+    // Default is high value found in band.  Band values greater than this are snapped to this number
+    double high_band = 3;
+    // Default is 0.  Range is 0:255. LowBand is mapped to this number.
+    // LowChannel can be greater than HighChannel. Due to protobuf limitations you must ensure 
+    // the value you specify lies within the range of 0-255
+    int32 low_channel = 4;
+    // Default is 255.  Range is 0:255. Due to protobuf limitation you must ensure the value 
+    // you specify lies within the range of 0-255
+    int32 high_channel = 5;
+}
+
+// Specifies a color using distinct RGB values
+message GridColorBandsType {
+    ChannelBandType red_band = 1;
+    ChannelBandType green_band = 2;
+    ChannelBandType blue_band = 3;
+}
+
+// The color to use for a grid rule
+message GridColorType {
+    oneof type {
+        // Explicit ARGB color
+        string explicit_color = 1;
+        string band = 2;
+        GridColorBandsType bands = 3;
+    }  
+}
+
+// Encapsulate a style for a grid source
+message GridColorRuleType {
+    // The label for the Rule to be displayed in the legend
+    string legend_label = 1;
+    // A filter for the Rule.  This is a boolean FDO expression.  Any features that pass this filter are styled using this rule's stylization
+    string filter = 2;
+    // A label for the Rule.  Does not apply to GridColorRule
+    TextSymbolType label = 3;
+    GridColorType color = 4;
+}
+
+// Specifies how to shade given a band and a light source
+message HillShadeType {
+    // Name of the band used for the computation
+    string band = 1;
+    // Azimuth of the sun in degrees
+    double azimuth = 2;
+    // Altitude of the sun in degrees
+    double altitude = 3;
+    // The scale factor applied to the band prior to computing hillshade.  Defaults to 1 if not specified
+    double scale_factor = 4;
+}
+
+// Specifies how to style each pixel
+message GridColorStyleType {
+    HillShadeType hill_shade = 1;
+    // If a pixel color prior to factoring in HillShade is this value then the pixel is transparent
+    // TOOD: Type in original xsd undocumented. Assuming string
+    string transparency_color = 2;
+    // Default is 0
+    double brightness_factor = 3;
+    // Default is 0
+    double contrast_factor = 4;
+    repeated GridColorRuleType color_rules = 5;
+}
+
+// Specifies how to calculate pixel elevations
+message GridSurfaceStyleType {
+    // Band to use for 3D data
+    string band = 1;
+    // Determines which input value is mapped to zero elevation.  Defaults to 0 if not specified
+    double zero_value = 2;
+    // Determines how to scale the inputs into a consistent elevation.  Defaults to 1 if not specified
+    double scale_factor = 3;
+    // The default color to use if no ColorStyle is defined at a pixel
+    string default_color = 4;
+}
+
+// The stylization for a specified scale range
+message GridScaleRangeType {
+    // The zoomed in part of the scale range.  Defaults to 0 if not specified.  Inclusive
+    double min_scale = 1;
+    // The zoomed out part of the scale range.  Defaults to the application's maximum value if not specified.  Exclusive
+    double max_scale = 2;
+    // Defines the height field of the grid
+    GridSurfaceStyleType surface_style = 3;
+    GridColorStyleType color_style = 4;
+    // When the user has zoomed in by this amount, a request for more detailed raster data is made
+    double rebuild_factor = 5;
 }

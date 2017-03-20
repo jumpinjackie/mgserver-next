@@ -1,0 +1,21 @@
+syntax = "proto3";
+option java_package="org.osgeo.mapguide.mdfmodel";
+package MdfModel;
+
+/**
+ * SymbolDefinition.proto
+ *
+ * Protobuf message definitions for Symbol definitions
+ *
+ * Based on SymbolDefinition-2.4.0.xsd
+ */
+
+import "MdfCommon.proto";
+
+message SimpleSymbolDefinition {
+
+}
+
+message CompoundSymbolDefinition {
+
+}

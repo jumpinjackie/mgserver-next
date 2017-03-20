@@ -2,6 +2,7 @@ syntax = "proto3";
 option java_package="org.osgeo.mapguide";
 package OSGeo.MapGuide;
 
+import "MdfCommon.proto";
 import "Common.proto";
 import "Fdo.proto";
 
@@ -295,7 +296,7 @@ message SpatialContext {
     // The description of the spatial context
     string description = 4;
     // The bounding box of the spatial context
-    Envelope extent = 5;
+    MdfModel.Envelope extent = 5;
     // The bounding box extent type
     SpatialContextExtentType extent_type = 6;
     // The X/Y coordinate tolerance

@@ -1,0 +1,116 @@
+syntax = "proto3";
+option java_package="org.osgeo.mapguide.mdfmodel";
+package MdfModel;
+
+/**
+ * WatermarkDefinition.proto
+ *
+ * Protobuf message definitions for Watermark definitions
+ *
+ * Based on WatermarkDefinition-2.4.0.xsd
+ */
+
+import "MdfCommon.proto";
+import "SymbolDefinition.proto";
+
+// The specification of a watermark
+message WatermarkDefinition {
+    oneof content {
+        SimpleSymbolDefinition simple_symbol_definition = 1;
+        CompoundSymbolDefinition compound_symbol_definition = 2;
+    }
+    WatermarkAppearanceType appearance = 3;
+    oneof position {
+        XYPositionType xy_position = 4;
+        TilePositionType tile_position = 5;
+    }
+}
+
+// Specifies the context in which the watermark is displayed
+enum UsageType {
+    // Watermark is displayed in WMS
+    UsageType_WMS = 0;
+    // Watermark is displayed in AJAX or Fusion viewers
+    UsageType_Viewer = 1;
+    // Watermark is displayed in all contexts
+    UsageType_All = 2;
+}
+
+// Enumerates the allowed length units for a watermark position
+enum UnitType {
+    UnitType_Inches = 0;
+    UnitType_Centimeters = 1;
+    UnitType_Millimeters = 2;
+    UnitType_Pixels = 3;
+    UnitType_Points = 4;
+}
+
+// Enumerates the allowed horizontal alignment values for a watermark position
+enum HorizontalAlignmentType {
+    HorizontalAlignmentType_Left = 0;
+    HorizontalAlignmentType_Center = 1;
+    HorizontalAlignmentType_Right = 2;
+}
+
+// Enumerates the allowed vertical alignments for a watermark position
+enum VerticalAlignmentType {
+    VerticalAlignmentType_Top = 0;
+    VerticalAlignmentType_Center = 1;
+    VerticalAlignmentType_Bottom = 2;
+}
+
+// Defines the horizontal position of a watermark
+message HorizontalPositionType {
+    // The horizontal offset for the position
+    double offset = 1;
+    // The unit for the offset
+    UnitType unit = 2;
+    // The horizontal alignment for the position
+    HorizontalAlignmentType alignment = 3;
+}
+
+// Defines the vertical position of a watermark
+message VerticalPositionType {
+    // The vertical offset for the position
+    double offset = 1;
+    // The unit for the offset
+    UnitType unit = 2;
+    // The vertical alignment for the positio
+    VerticalAlignmentType alignment = 3;
+}
+
+// Positions a watermark at a single X/Y location
+message XYPositionType {
+    // The position along the X-axis
+    HorizontalPositionType x_position = 1;
+    // The position along the Y-axis
+    VerticalPositionType y_position = 2;
+}
+
+// Positions a watermark according to a regular grid
+message TilePositionType {
+    // The width of each tile in the grid
+    double tile_width = 1;
+    // The height of each tile in the grid
+    double tile_height = 2;
+    // The horizontal position of the watermark within a tile
+    HorizontalPositionType horizontal_position = 3;
+    // The vertical position of the watermark within a tile
+    VerticalPositionType vertical_position = 4;
+}
+
+message WatermarkAppearanceType {
+    double transparency = 1;
+    double rotation = 2;
+}
+
+message WatermarkType {
+    string name = 1;
+    string resource_id = 2;
+    UsageType usage = 3;
+    WatermarkAppearanceType apperance_override = 4;
+    oneof position_override {
+        XYPositionType xy_position = 5;
+        TilePositionType tile_position = 6;
+    }
+}

@@ -2,7 +2,15 @@ syntax = "proto3";
 option java_package="org.osgeo.mapguide.mdfmodel";
 package MdfModel;
 
-import "Common.proto";
+/**
+ * MapDefinition.proto
+ *
+ * Protobuf message definitions for Map definitions
+ *
+ * Based on MapDefinition-3.0.0.xsd
+ */
+
+import "MdfCommon.proto";
 
 // Defines the collection of layers, groupings of layers
 message MapDefinition {
@@ -11,7 +19,7 @@ message MapDefinition {
     // The coordinate system as WKT used by the Map Definition
     string coordinate_system = 2;
     // A bounding box around the area of the Map Definition
-    OSGeo.MapGuide.Envelope extents = 3;
+    Envelope extents = 3;
     // The background color to be used with the MapDefinition
     string background_color = 4;
     // Metadata regarding the Map Definition
