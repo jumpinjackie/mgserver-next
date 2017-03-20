@@ -292,13 +292,6 @@ message ImageSymbolType {
     ImageRefOrContent image = 1;
 }
 
-message ResourceDataItemRef {
-    // The reference to the resource
-    string resource_id = 1;
-    // If ResourceId specifies a library, this identifies the name of a library item
-    string library_item_name = 2;
-}
-
 message ImageRefOrContent {
     oneof type {
         // Reference to the image
