@@ -10,7 +10,7 @@ package MdfModel;
  * Based on MapDefinition-3.0.0.xsd
  */
 
-import "MdfCommon.proto";
+import "MdfModel/MdfCommon.proto";
 
 // Defines the collection of layers, groupings of layers
 message MapDefinition {

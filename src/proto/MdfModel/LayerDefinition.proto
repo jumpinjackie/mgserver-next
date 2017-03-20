@@ -10,9 +10,9 @@ package MdfModel;
  * Based on SymbolDefinition-2.4.0.xsd
  */
 
-import "MdfCommon.proto";
-import "SymbolDefinition.proto";
-import "WatermarkDefinition.proto";
+import "MdfModel/MdfCommon.proto";
+import "MdfModel/SymbolDefinition.proto";
+import "MdfModel/WatermarkDefinition.proto";
 
 // Encapsulates the definition of a map layer
 message LayerDefinition {

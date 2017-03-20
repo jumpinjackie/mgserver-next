@@ -10,8 +10,8 @@ package MdfModel;
  * Based on WatermarkDefinition-2.4.0.xsd
  */
 
-import "MdfCommon.proto";
-import "SymbolDefinition.proto";
+import "MdfModel/MdfCommon.proto";
+import "MdfModel/SymbolDefinition.proto";
 
 // The specification of a watermark
 message WatermarkDefinition {

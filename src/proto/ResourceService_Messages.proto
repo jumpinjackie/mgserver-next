@@ -3,9 +3,11 @@ option java_package="org.osgeo.mapguide";
 package OSGeo.MapGuide;
 
 import "Common.proto";
-import "FeatureSource.proto";
-import "LayerDefinition.proto";
-import "MapDefinition.proto";
+import "MdfModel/FeatureSource.proto";
+import "MdfModel/LayerDefinition.proto";
+import "MdfModel/MapDefinition.proto";
+import "MdfModel/SymbolDefinition.proto";
+import "MdfModel/WatermarkDefinition.proto";
 
 // Describes resource content
 message Resource {
@@ -13,6 +15,8 @@ message Resource {
         MdfModel.FeatureSource feature_source = 1;
         MdfModel.LayerDefinition layer_definition = 2;
         MdfModel.MapDefinition map_definition = 3;
+        MdfModel.SymbolDefinition symbol_definition = 4;
+        MdfModel.WatermarkDefinition watermark_definition = 5;
     }
 }
 

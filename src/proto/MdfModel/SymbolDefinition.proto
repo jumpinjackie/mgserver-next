@@ -10,7 +10,14 @@ package MdfModel;
  * Based on SymbolDefinition-2.4.0.xsd
  */
 
-import "MdfCommon.proto";
+import "MdfModel/MdfCommon.proto";
+
+message SymbolDefinition {
+    oneof type {
+        SimpleSymbolDefinition simple = 1;
+        CompoundSymbolDefinition compound = 2;
+    }
+}
 
 message SimpleSymbolDefinition {
     // The name of the symbol

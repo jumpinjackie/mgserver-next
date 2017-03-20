@@ -2,7 +2,7 @@ syntax = "proto3";
 option java_package="org.osgeo.mapguide.mdfmodel";
 package MdfModel;
 
-import "MdfCommon.proto";
+import "MdfModel/MdfCommon.proto";
 
 // Describes a coordinate system override for a spatial context
 message CoordSysOverride {
