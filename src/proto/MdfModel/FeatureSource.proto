@@ -14,10 +14,10 @@ message CoordSysOverride {
 
 // Enum for join types
 enum RelateType {
-    LeftOuter = 0;
-    RightOuter = 1;
-    Inner = 2;
-    Association = 3;
+    RelateType_LeftOuter = 0;
+    RelateType_RightOuter = 1;
+    RelateType_Inner = 2;
+    RelateType_Association = 3;
 }
 
 // Describes a pair of properties to join on

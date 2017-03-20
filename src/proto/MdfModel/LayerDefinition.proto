@@ -28,8 +28,8 @@ message LayerDefinition {
 
 // Enumeration describing whether the features are coming from a feature class or named extension
 enum FeatureNameType {
-    FeatureClass = 0;
-    NamedExtension = 1;
+    FeatureNameType_FeatureClass = 0;
+    FeatureNameType_NamedExtension = 1;
 }
 
 // URL information for features
@@ -46,21 +46,21 @@ message UrlData {
 
 // The possible interpretations of a z offset value
 enum ElevationType {
-    RelativeToGround = 0;
-    Absolute = 1;
+    ElevationType_RelativeToGround = 0;
+    ElevationType_Absolute = 1;
 }
 
 // The measurement units that linear sizes are specified in
 enum LengthUnitType {
-    Millimeters = 0;
-    Centimeters = 1;
-    Meters = 2;
-    Kilometers = 3;
-    Inches = 4;
-    Feet = 5;
-    Yards = 6;
-    Miles = 7;
-    Points = 8;
+    LengthUnitType_Millimeters = 0;
+    LengthUnitType_Centimeters = 1;
+    LengthUnitType_Meters = 2;
+    LengthUnitType_Kilometers = 3;
+    LengthUnitType_Inches = 4;
+    LengthUnitType_Feet = 5;
+    LengthUnitType_Yards = 6;
+    LengthUnitType_Miles = 7;
+    LengthUnitType_Points = 8;
 }
 
 message ElevationSettings {

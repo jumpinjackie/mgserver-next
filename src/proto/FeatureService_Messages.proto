@@ -280,9 +280,9 @@ message GetSpatialContextsResponse {
 // Describes the type of extent for spatial contexts
 enum SpatialContextExtentType {
     // The extent is static
-    Static = 0;
+    SpatialContextExtentType_Static = 0;
     // The extent is dynamic
-    Dynamic = 1;
+    SpatialContextExtentType_Dynamic = 1;
 }
 
 // Describes a spatial context
