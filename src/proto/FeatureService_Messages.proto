@@ -13,9 +13,9 @@ message CreateFeatureSourceRequest {
     // The file name
     string file_name = 2;
     // The FDO Feature Schema to apply
-    FeatureSchema schema = 3;
+    OSGeo.FDO.FeatureSchema schema = 3;
     // The spatial context to apply
-    SpatialContext spatial_context = 4;
+    OSGeo.FDO.SpatialContext spatial_context = 4;
 }
 
 // An operation request to apply a FDO Feature Schema to a given Feature Source
@@ -23,7 +23,7 @@ message ApplySchemaRequest {
     // The Feature Source ID
     ResourceIdentifier feature_source = 1;
     // The FDO Feature Schema to apply
-    FeatureSchema schema = 2;
+    OSGeo.FDO.FeatureSchema schema = 2;
 }
 
 // An operation request to begin a transaction on a Feature Source
@@ -37,7 +37,7 @@ message BeginTransactionResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    TransactionRef result = 2;
+    OSGeo.FDO.TransactionRef result = 2;
 }
 
 // An operation request to delete features from a Feature Source
@@ -51,7 +51,7 @@ message DeleteFeaturesRequest {
     // tree before query proecssing.
     string filter = 3;
     // An optional transaction reference
-    TransactionRef transaction = 4;
+    OSGeo.FDO.TransactionRef transaction = 4;
 }
 
 // An operation response for a DeleteFeatures operation
@@ -69,7 +69,7 @@ message DescribeSchemaRequest {
     // The name of the FDO schema
     string schema_name = 2;
     // An optional collection of class names to filter down
-    StringCollection class_names = 3;
+    repeated string class_names = 3;
 }
 
 // An operation response for a DescribeSchema operation
@@ -77,7 +77,7 @@ message DescribeSchemaResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    repeated FeatureSchema result = 2;
+    repeated OSGeo.FDO.FeatureSchema result = 2;
 }
 
 // An operation request to enumerate the data stores for a FDO provider
@@ -93,7 +93,7 @@ message EnumerateDataStoresResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    StringCollection result = 2;
+    repeated string result = 2;
 }
 
 // An operation request to execute non-query SQL for a SQL-supporting FDO provider
@@ -103,9 +103,9 @@ message ExecuteSqlNonQueryRequest {
     // The SQL command
     string sql = 2;
     // A collection of SQL parameter
-    ParameterCollection parameters = 3;
+    OSGeo.FDO.ParameterCollection parameters = 3;
     // An optional transaction reference
-    TransactionRef transaction = 4;
+    OSGeo.FDO.TransactionRef transaction = 4;
 }
 
 // An operation response for a ExecuteSqlNonQuery operation
@@ -123,9 +123,9 @@ message ExecuteSqlQueryRequest {
     // The SQL command
     string sql = 2;
     // A collection of SQL parameter
-    ParameterCollection parameters = 3;
+    OSGeo.FDO.ParameterCollection parameters = 3;
     // An optional transaction reference
-    TransactionRef transaction = 4;
+    OSGeo.FDO.TransactionRef transaction = 4;
 }
 
 // An operation request to get the capabilities of a FDO provider
@@ -141,7 +141,7 @@ message GetCapabilitiesResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    ProviderCapabilities result = 2;
+    OSGeo.FDO.ProviderCapabilities result = 2;
 }
 
 // An operation request to get a class definition from a Feature Source
@@ -159,7 +159,7 @@ message GetClassDefinitionResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    ClassDefinition result = 2;
+    OSGeo.FDO.ClassDefinition result = 2;
 }
 
 // An operation request to list the class names for a FDO schema in a Feature Source
@@ -175,7 +175,7 @@ message GetClassesResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    StringCollection result = 2;
+    repeated string result = 2;
 }
 
 // An operation request to list the available values for a FDO connection property
@@ -193,7 +193,7 @@ message GetConnectionPropertyValuesResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    StringCollection result = 2;
+    repeated string result = 2;
 }
 
 // An operation request to get the installed FDO providers
@@ -206,7 +206,7 @@ message GetFeatureProvidersResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    repeated ProviderInfo result = 2;
+    repeated OSGeo.FDO.ProviderInfo result = 2;
 }
 
 // An operation request to get query locked features from a Feature Source
@@ -216,7 +216,7 @@ message GetLockedFeaturesRequest {
     // The FDO class name
     string class_name = 2;
     // The query options
-    FeatureQueryOptions options = 3;
+    OSGeo.FDO.FeatureQueryOptions options = 3;
 }
 
 // An operation request to get long transactions from a Feature Source
@@ -229,7 +229,7 @@ message GetLongTransactionsResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    repeated StringCollection result = 2;
+    repeated string result = 2;
 }
 
 // An operation request all of the logical to physical schema mappings for the
@@ -246,7 +246,7 @@ message GetSchemaMappingResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    DataStoreConfiguration result = 2;
+    OSGeo.FDO.DataStoreConfiguration result = 2;
 }
 
 // An operation request to list the names of all schemas for Feature Source
@@ -260,7 +260,7 @@ message GetSchemasResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    StringCollection result = 2;
+    repeated string result = 2;
 }
 
 // An operation request to list all spatial contexts for a Feature Source
@@ -274,35 +274,7 @@ message GetSpatialContextsResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    repeated SpatialContext result = 2;
-}
-
-// Describes the type of extent for spatial contexts
-enum SpatialContextExtentType {
-    // The extent is static
-    SpatialContextExtentType_Static = 0;
-    // The extent is dynamic
-    SpatialContextExtentType_Dynamic = 1;
-}
-
-// Describes a spatial context
-message SpatialContext {
-    // The name of the spatial context
-    string name = 1;
-    // The coordinate system name of the spatial context
-    string coordinate_system = 2;
-    // The coordinate system WKT of the spatial context
-    string coordinate_system_wkt = 3;
-    // The description of the spatial context
-    string description = 4;
-    // The bounding box of the spatial context
-    MdfModel.Envelope extent = 5;
-    // The bounding box extent type
-    SpatialContextExtentType extent_type = 6;
-    // The X/Y coordinate tolerance
-    double xy_tolerance = 7;
-    // The Z coordinate tolerance
-    double z_tolerance = 8;
+    repeated OSGeo.FDO.SpatialContext result = 2;
 }
 
 // An operation to insert features into a Feature Source
@@ -316,7 +288,7 @@ message InsertFeaturesResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    repeated FeatureRecord result = 2;
+    repeated OSGeo.FDO.FeatureRecord result = 2;
 }
 
 // An operation request to query features in an aggregated manner from a Feature Source
@@ -326,7 +298,7 @@ message SelectAggregateRequest {
     // The FDO class name
     string class_name = 2;
     // The query options
-    AggregateQueryOptions options = 3;
+    OSGeo.FDO.AggregateQueryOptions options = 3;
 }
 
 // An operation request to query features from a Feature Source
@@ -336,7 +308,7 @@ message SelectFeaturesRequest {
     // The FDO class name
     string class_name = 2;
     // The query options
-    FeatureQueryOptions options = 3;
+    OSGeo.FDO.FeatureQueryOptions options = 3;
 }
 
 // An operation request to set the active long transaction of a Feature Source that supports long transactions
@@ -366,9 +338,9 @@ message UpdateFeaturesRequest {
     // The feature source ID
     ResourceIdentifier feature_source = 1;
     // The collection of commands to execute
-    repeated FeatureCommand commands = 2;
+    repeated OSGeo.FDO.FeatureCommand commands = 2;
     // The transaction reference
-    TransactionRef transaction = 3;
+    OSGeo.FDO.TransactionRef transaction = 3;
 }
 
 // An operation response for an UpdateFeatures request
@@ -376,7 +348,7 @@ message UpdateFeaturesResponse {
     // An error if one was raised by the service operation
     Error error = 1;
     // The result of the operation
-    repeated PropertyValue result = 2;
+    repeated OSGeo.FDO.PropertyValue result = 2;
 }
 
 // An operation request to update features in a Feature Source
@@ -386,7 +358,7 @@ message UpdateMatchingFeaturesRequest {
     // The FDO class name
     string class_name = 2;
     // The collection of properties to update with
-    repeated PropertyValue properties = 3;
+    repeated OSGeo.FDO.PropertyValue properties = 3;
     // The FDO filter
     string filter = 4;
 }

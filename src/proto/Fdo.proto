@@ -1,15 +1,16 @@
 syntax = "proto3";
-option java_package="org.osgeo.mapguide";
-package OSGeo.MapGuide;
+option java_package="org.osgeo.fdo";
+package OSGeo.FDO;
 
 import "Common.proto";
+import "MdfModel/MdfCommon.proto";
 
 // Describes a FDO data property
 message DataPropertyDescriptor {
     // The name of the property
     string name = 1;
     // The FDO data type
-    FdoLogicalPropertyType property_type = 2;
+    LogicalPropertyType property_type = 2;
 }
 
 // Describes a data record header
@@ -21,7 +22,7 @@ message DataRecordHeader {
 // A data record from a SQL or Aggregate feature query
 message DataRecord { //TODO: Maybe this should be a oneof
     //An error if one was raised by the service operation. This only exists in the first data record
-    Error error = 1;
+    OSGeo.MapGuide.Error error = 1;
     //A data record header describing the structure of the data record. This only exists on the first data record
     DataRecordHeader header = 2;
     //The property values of the data record. This exists on the records beyond the first
@@ -31,7 +32,7 @@ message DataRecord { //TODO: Maybe this should be a oneof
 // A feature record from a feature query
 message FeatureRecord { //TODO: Maybe this should be a oneof
     //An error if one was raised by the service operation. This only exists in the first data record
-    Error error = 1;
+    OSGeo.MapGuide.Error error = 1;
     //A class definition describing the structure of the feature. This only exists on the first feature record
     ClassDefinition header = 2;
     //The property values of the feature record. This exists on the records beyond the first
@@ -82,74 +83,74 @@ message PropertyDefinition {
 }
 
 // Describes a FDO data type
-enum FdoDataType {
+enum DataType {
     // Binary Large Object
-    Blob = 0;
+    DataType_Blob = 0;
     // Boolean
-    Boolean = 1;
+    DataType_Boolean = 1;
     // Byte. NOTE: Due to protobuf limitation, we use int32 to store such values.
     // To prevent overflow, you must ensure that you must not store values beyond
     // the allowed limits of a byte. When reading, you can assume the value lies
     // within the allowed limits of a byte.
-    Byte = 2;
+    DataType_Byte = 2;
     // Character Large Object
-    Clob = 3;
+    DataType_Clob = 3;
     // DateTime
-    DateTime = 4;
+    DataType_DateTime = 4;
     // Decimal
-    Decimal = 5;
+    DataType_Decimal = 5;
     // Double
-    Double = 6;
+    DataType_Double = 6;
     // Int16. NOTE: Due to protobuf limitation, we use int32 to store such values.
     // To prevent overflow, you must ensure that you must not store values beyond
     // the allowed limits of an int16 (aka. short). When reading, you can assume the value lies
     // within the allowed limits of an int16.
-    Int16 = 7;
+    DataType_Int16 = 7;
     // Int32
-    Int32 = 8;
+    DataType_Int32 = 8;
     // Int64
-    Int64 = 9;
+    DataType_Int64 = 9;
     // Single
-    Single = 10;
+    DataType_Single = 10;
     // String
-    String = 11;
+    DataType_String = 11;
 }
 
-enum FdoLogicalPropertyType {
+enum LogicalPropertyType {
     // Data - Binary Large Object
-    Data_Blob = 0;
+    LogicalPropertyType_Data_Blob = 0;
     // Data - Boolean
-    Data_Boolean = 1;
+    LogicalPropertyType_Data_Boolean = 1;
     // Data - Byte. NOTE: Due to protobuf limitation, we use int32 to store such values.
     // To prevent overflow, you must ensure that you must not store values beyond
     // the allowed limits of a byte. When reading, you can assume the value lies
     // within the allowed limits of a byte.
-    Data_Byte = 2;
+    LogicalPropertyType_Data_Byte = 2;
     // Data - Character Large Object
-    Data_Clob = 3;
+    LogicalPropertyType_Data_Clob = 3;
     // Data - DateTime
-    Data_DateTime = 4;
+    LogicalPropertyType_Data_DateTime = 4;
     // Data - Decimal
-    Data_Decimal = 5;
+    LogicalPropertyType_Data_Decimal = 5;
     // Data - Double
-    Data_Double = 6;
+    LogicalPropertyType_Data_Double = 6;
     // Data - Int16. NOTE: Due to protobuf limitation, we use int32 to store such values.
     // To prevent overflow, you must ensure that you must not store values beyond
     // the allowed limits of an int16 (aka. short). When reading, you can assume the value lies
     // within the allowed limits of an int16.
-    Data_Int16 = 7;
+    LogicalPropertyType_Data_Int16 = 7;
     // Data - Int32
-    Data_Int32 = 8;
+    LogicalPropertyType_Data_Int32 = 8;
     // Data - Int64
-    Data_Int64 = 9;
+    LogicalPropertyType_Data_Int64 = 9;
     // Data - Single
-    Data_Single = 10;
+    LogicalPropertyType_Data_Single = 10;
     // Data - String
-    Data_String = 11;
+    LogicalPropertyType_Data_String = 11;
     // Geometric
-    Geometric = 12;
+    LogicalPropertyType_Geometric = 12;
     // Raster
-    Raster = 13;
+    LogicalPropertyType_Raster = 13;
 }
 
 // Describes a FDO raster property definition
@@ -169,7 +170,7 @@ message RasterPropertyDefinition {
 // Describes a FDO data property definition
 message DataPropertyDefinition {
     // The FDO data type of this property
-    FdoDataType data_type = 3;
+    DataType data_type = 3;
     // Indicates if this property is read only
     bool is_read_only = 4;
     // Indicates if this property is nullable
@@ -184,28 +185,28 @@ message DataPropertyDefinition {
     int32 decimal_scale = 9;
 }
 
-enum FdoGeometryType {
-    Unknown = 0;
-    Points = 1;
-    Curves = 2;
-    Surfaces = 4;
-    Solids = 8;
-    All = 15;
+enum GeometryType {
+    GeometryType_Unknown = 0;
+    GeometryType_Points = 1;
+    GeometryType_Curves = 2;
+    GeometryType_Surfaces = 4;
+    GeometryType_Solids = 8;
+    GeometryType_All = 15;
 }
 
-enum FdoSpecificGeometryType {
-    None = 0;
-    Point = 1;
-    LineString = 2;
-    Polygon = 3;
-    MultiPoint = 4;
-    MultiLineString = 5;
-    MultiPolygon = 6;
-    MultiGeometry = 7;
-    CurveString = 10;
-    CurvePolygon = 11;
-    MultiCurveString = 12;
-    MultiCurvePolygon = 13;
+enum SpecificGeometryType {
+    SpecificGeometryType_None = 0;
+    SpecificGeometryType_Point = 1;
+    SpecificGeometryType_LineString = 2;
+    SpecificGeometryType_Polygon = 3;
+    SpecificGeometryType_MultiPoint = 4;
+    SpecificGeometryType_MultiLineString = 5;
+    SpecificGeometryType_MultiPolygon = 6;
+    SpecificGeometryType_MultiGeometry = 7;
+    SpecificGeometryType_CurveString = 10;
+    SpecificGeometryType_CurvePolygon = 11;
+    SpecificGeometryType_MultiCurveString = 12;
+    SpecificGeometryType_MultiCurvePolygon = 13;
 }
 
 // Describes a FDO geometric property definition
@@ -213,9 +214,9 @@ message GeometricPropertyDefinition {
     // The name of the associated spatial context
     string spatial_context = 3;
     // The basic geometry type of this property
-    FdoGeometryType geometry_type = 4;
+    GeometryType geometry_type = 4;
     // The specific geometry type of this property
-    repeated FdoSpecificGeometryType specific_geometry_type = 5;
+    repeated SpecificGeometryType specific_geometry_type = 5;
     // Indicates if this property is read only
     bool is_read_only = 6;
     // Indicates if this property has elevation
@@ -294,7 +295,7 @@ message QueryPropertyComputed {
 // Describes a grouping filter for an aggregate query
 message GroupingFilter {
     // The collection of property names to group by
-    StringCollection group_by = 1;
+    repeated string group_by = 1;
     // The FDO grouping filter
     // NOTE: This is not an actual SQL WHERE clause. This string will be parsed into an FDO filter expression
     // tree before query proecssing.
@@ -312,7 +313,7 @@ enum OrderingDirection {
 // Describes an ordering option for an aggregate or feature query
 message OrderingOption {
     // The collection of property names to order by
-    StringCollection order_by = 1;
+    repeated string order_by = 1;
     // The direction to order query results
     OrderingDirection direction = 2;
 }
@@ -419,4 +420,32 @@ message PropertyValue {
         bytes raster_value = 15;
         double decimal_value = 16;
     }
+}
+
+// Describes the type of extent for spatial contexts
+enum SpatialContextExtentType {
+    // The extent is static
+    SpatialContextExtentType_Static = 0;
+    // The extent is dynamic
+    SpatialContextExtentType_Dynamic = 1;
+}
+
+// Describes a spatial context
+message SpatialContext {
+    // The name of the spatial context
+    string name = 1;
+    // The coordinate system name of the spatial context
+    string coordinate_system = 2;
+    // The coordinate system WKT of the spatial context
+    string coordinate_system_wkt = 3;
+    // The description of the spatial context
+    string description = 4;
+    // The bounding box of the spatial context
+    MdfModel.Envelope extent = 5;
+    // The bounding box extent type
+    SpatialContextExtentType extent_type = 6;
+    // The X/Y coordinate tolerance
+    double xy_tolerance = 7;
+    // The Z coordinate tolerance
+    double z_tolerance = 8;
 }

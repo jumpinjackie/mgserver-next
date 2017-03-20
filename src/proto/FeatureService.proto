@@ -28,7 +28,7 @@ service FeatureService {
     // Executes SQL statements NOT including SELECT statements.
     rpc ExecuteSqlNonQuery (ExecuteSqlNonQueryRequest) returns (ExecuteSqlNonQueryResponse);
     // Executes the SQL SELECT statement on the specified feature source.
-    rpc ExecuteSqlQuery (ExecuteSqlQueryRequest) returns (stream DataRecord);
+    rpc ExecuteSqlQuery (ExecuteSqlQueryRequest) returns (stream OSGeo.FDO.DataRecord);
     // Gets the capabilities of an FDO Provider
     rpc GetCapabilities (GetCapabilitiesRequest) returns (GetCapabilitiesResponse);
     // Gets the class definition for the specified class
@@ -40,7 +40,7 @@ service FeatureService {
     // Gets a list of the available FDO providers together with other information such as the names of the connection properties for each provider
     rpc GetFeatureProviders (GetFeatureProvidersRequest) returns (GetFeatureProvidersResponse);
     // Gets the locked features.
-    rpc GetLockedFeatures (GetLockedFeaturesRequest) returns (stream FeatureRecord);
+    rpc GetLockedFeatures (GetLockedFeaturesRequest) returns (stream OSGeo.FDO.FeatureRecord);
     // Gets all available long transactions for the provider
     rpc GetLongTransactions (GetLongTransactionsRequest) returns (GetLongTransactionsResponse);
     // This method returns all of the logical to physical schema mappings for the specified provider and partial connection string
@@ -50,11 +50,11 @@ service FeatureService {
     // Gets all of the spatial contexts available in the feature source
     rpc GetSpatialContexts (GetSpatialContextsRequest) returns (GetSpatialContextsResponse);
     // Inserts a new feature into the specified feature class of the specified Feature Source
-    rpc InsertFeatures (InsertFeaturesRequest) returns (stream FeatureRecord);
+    rpc InsertFeatures (InsertFeaturesRequest) returns (stream OSGeo.FDO.FeatureRecord);
     // Selects groups of features from a feature source and applies filters to each of the groups according to the criteria set in the aggregate query option supplied
-    rpc SelectAggregate (SelectAggregateRequest) returns (stream DataRecord);
+    rpc SelectAggregate (SelectAggregateRequest) returns (stream OSGeo.FDO.DataRecord);
     // Selects features from a feature source according to the criteria set in the query options provided
-    rpc SelectFeatures (SelectFeaturesRequest) returns (stream FeatureRecord);
+    rpc SelectFeatures (SelectFeaturesRequest) returns (stream OSGeo.FDO.FeatureRecord);
     // Set the active long transaction name for a feature source
     rpc SetLongTransaction (SetLongTransactionRequest) returns (BasicResponse);
     // Connects to the Feature Provider specified in the connection string
