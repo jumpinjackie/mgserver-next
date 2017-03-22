@@ -1,8 +1,7 @@
 #ifndef SERVER_FEATURE_SERVICE_H
 #define SERVER_FEATURE_SERVICE_H
 
-#include "DllExport.h"
-#include "../../gRpc/cxx/FeatureService.grpc.pb.h"
+#include "gRpc/FeatureService.grpc.pb.h"
 
 using namespace OSGeo::MapGuide;
 

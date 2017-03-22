@@ -1,8 +1,7 @@
 #ifndef SERVER_RESOURCE_SERVICE_H
 #define SERVER_RESOURCE_SERVICE_H
 
-#include "DllExport.h"
-#include "../../gRpc/cxx/ResourceService.grpc.pb.h"
+#include "gRpc/ResourceService.grpc.pb.h"
 
 using namespace OSGeo::MapGuide;
 

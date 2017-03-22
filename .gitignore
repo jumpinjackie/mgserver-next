@@ -7,6 +7,10 @@ src/gRpc/php/GPBMetadata
 src/gRpc/java/org
 src/gRpc/cxx/*.pb.cc
 src/gRpc/cxx/*.pb.h
+src/gRpc/cxx/MdfModel
+src/Server/Services/gRpc/*.pb.cc
+src/Server/Services/gRpc/*.pb.h
+src/Server/Services/gRpc/MdfModel
 src/packages
 thirdparty/FDO
 *.user

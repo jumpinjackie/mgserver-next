@@ -1,8 +1,7 @@
 #ifndef SERVER_RENDERING_SERVICE_H
 #define SERVER_RENDERING_SERVICE_H
 
-#include "DllExport.h"
-#include "../../gRpc/cxx/RenderingService.grpc.pb.h"
+#include "gRpc/RenderingService.grpc.pb.h"
 
 using namespace OSGeo::MapGuide;
 
