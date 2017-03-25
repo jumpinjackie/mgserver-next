@@ -1,6 +1,4 @@
 @echo off
-SET GRPC_TOOLS=D:\Workspace\vcpkg\installed\x64-windows\tools
-
 echo [grpc]: .net Server/Client
 %GRPC_TOOLS%\protoc.exe -Isrc/proto --csharp_opt=file_extension=.g.cs --csharp_out src/gRpc/csharp --grpc_out src/gRpc/csharp --plugin=protoc-gen-grpc=%GRPC_TOOLS%\grpc_csharp_plugin.exe src\proto\*.proto src\proto\MdfModel\*.proto
 echo [grpc]: PHP Client

@@ -1,5 +1,4 @@
 @echo off
-
 echo [clean]: .net Server/Client
 if exist %CD%\src\gRpc\csharp\bin rd /S /Q %CD%\src\gRpc\csharp\bin
 if exist %CD%\src\gRpc\csharp\obj rd /S /Q %CD%\src\gRpc\csharp\obj
