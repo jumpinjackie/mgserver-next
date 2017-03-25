@@ -13,6 +13,17 @@ src/Server/Services/gRpc/*.pb.h
 src/Server/Services/gRpc/MdfModel
 src/packages
 thirdparty/FDO
+build/src
+build/CMakeFiles
+build/Debug
+build/Release
+build/Win32
+build/Win32_Debug
+build/*.filters
+build/*.sln
+build/*.vcxproj
+build/*.txt
+build/*.cmake
 *.user
 *.suo
 .vscode

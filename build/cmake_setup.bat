@@ -19,16 +19,17 @@ goto error
 :setup_config
 if "%2" == "" goto error
 if "%2" == "Debug" (
-    set CONF=%1
+    set CONF=%2
     goto ready
 )
 if "%2" == "Release" (
-    set CONF=%1
+    set CONF=%2
     goto ready
 )
 
 :ready
 set BUILD_DIR=%PLAT%_%CONF%
+if not exist %BUILD_DIR% mkdir %BUILD_DIR%
 cmake -G %CMAKE_GENERATOR% -B%BUILD_DIR% -DCMAKE_BUILD_TYPE=%CONF% -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake ..
 goto done
 
