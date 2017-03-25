@@ -30,5 +30,7 @@ link_libraries(MgProtoMessages)
 
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} /FIServicesDllExport.h /FIMessagesDllExport.h")
 add_definitions(-DSERVICES_EXPORTS)
+# Suppress protobuf-induced warning spam
+add_definitions(/wd4267 /wd4251 /wd4275)
 
 add_library(${PROJECT_NAME} SHARED ${MgServices_SOURCES})

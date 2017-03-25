@@ -21,6 +21,8 @@ set(MgProtoMessages_SOURCES
 
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} /FIMessagesDllExport.h")
 add_definitions(-DPROTO_MESSAGES_EXPORTS)
+# Suppress protobuf-induced warning spam
+add_definitions(/wd4267 /wd4251 /wd4275)
 link_libraries(protobuf::libprotobuf)
 
 add_library(${PROJECT_NAME} SHARED ${MgProtoMessages_SOURCES})
