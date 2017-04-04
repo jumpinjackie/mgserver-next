@@ -11,6 +11,9 @@ set(CMAKE_DEBUG_POSTFIX "d")
 set(MG_GRPC_CXX_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/gRpc/cxx")
 set(MG_COMMON_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/Common")
 set(MG_SERVICES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/Server/Services")
+set(MG_OEM_AGG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/agg-2.4")
+set(MG_OEM_AGG_INCLUDE_DIR "${MG_OEM_AGG_DIR}/include")
+set(MG_OEM_AGG_SOURCE_DIR "${MG_OEM_AGG_DIR}/src")
 
 message(STATUS "Build type is: ${CMAKE_BUILD_TYPE}")
 
@@ -35,5 +38,13 @@ message(STATUS "Using protobuf ${Protobuf_VERSION}")
 # gRPC
 find_package(gRPC CONFIG REQUIRED)
 message(STATUS "Using gRPC ${gRPC_VERSION}")
+
+#freetype
+find_package(freetype CONFIG REQUIRED)
+find_path(FREETYPE_INCLUDE NAMES "ft2build.h")
+
+#libgd
+find_package(libgd CONFIG REQUIRED)
+find_path(GD_INCLUDE NAMES "gd.h")
 
 add_subdirectory(src)
