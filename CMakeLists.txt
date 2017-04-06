@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 
-cmake_policy(SET CMP0054 OLD)
+if(COMMAND cmake_policy)
+    cmake_policy(SET CMP0003 NEW)
+    cmake_policy(SET CMP0054 OLD)
+endif(COMMAND cmake_policy)
 
 set(MG_VERSION_MAJOR 1)
 set(MG_VERSION_MINOR 0)
@@ -30,6 +33,31 @@ if(WIN32)
     endif(MSVC)
 endif(WIN32)
 
+# FDO
+find_path(FDO_INCLUDE NAMES "Fdo.h"
+    PATHS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/Fdo/Inc
+    NO_DEFAULT_PATH
+    NO_CMAKE_ENVIRONMENT_PATH
+    NO_CMAKE_PATH
+    NO_SYSTEM_ENVIRONMENT_PATH
+    NO_CMAKE_SYSTEM_PATH
+    NO_CMAKE_FIND_ROOT_PATH)
+if(NOT FDO_INCLUDE)
+    message(FATAL_ERROR, "FDO include path not found")
+endif()
+
+find_library(FDO_LIBRARY NAMES FDO
+    PATHS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/Fdo/Lib
+    NO_DEFAULT_PATH
+    NO_CMAKE_ENVIRONMENT_PATH
+    NO_CMAKE_PATH
+    NO_SYSTEM_ENVIRONMENT_PATH
+    NO_CMAKE_SYSTEM_PATH
+    NO_CMAKE_FIND_ROOT_PATH)
+if(NOT FDO_LIBRARY)
+    message(FATAL_ERROR, "FDO library path not found")
+endif()
+
 # Protobuf
 set(protobuf_MODULE_COMPATIBLE ON CACHE BOOL "")
 find_package(Protobuf CONFIG REQUIRED)
@@ -44,7 +72,7 @@ find_package(freetype CONFIG REQUIRED)
 find_path(FREETYPE_INCLUDE NAMES "ft2build.h")
 
 #libgd
-find_package(libgd CONFIG REQUIRED)
 find_path(GD_INCLUDE NAMES "gd.h")
+find_library(GD_LIBRARY NAMES libgd)
 
 add_subdirectory(src)

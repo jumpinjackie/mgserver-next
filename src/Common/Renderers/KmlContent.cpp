@@ -48,7 +48,7 @@ void KmlContent::EndDocument()
 }
 
 
-void KmlContent::WriteString(const char* szString, streamsize length, bool lineBreak)
+void KmlContent::WriteString(const char* szString, std::streamsize length, bool lineBreak)
 {
     m_content.sputn(szString, length);
     if (lineBreak)
