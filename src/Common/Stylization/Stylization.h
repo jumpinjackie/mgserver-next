@@ -25,61 +25,12 @@
 #include "StylizationDefs.h"
 
 // MDF headers
-#include "MdfModel.h"
-#include "MdfOwnerCollection.h"
+#include "MdfModel/MdfCommon.pb.h"
+#include "MdfModel/LayerDefinition.pb.h"
+#include "MdfModel/SymbolDefinition.pb.h"
+#include "MdfModel/WatermarkDefinition.pb.h"
 
-#include "MapDefinition.h"
-
-#include "DrawingLayerDefinition.h"
-#include "GridLayerDefinition.h"
-#include "VectorLayerDefinition.h"
-
-#include "IFeatureTypeStyleVisitor.h"
-#include "CompositeTypeStyle.h"
-#include "AreaTypeStyle.h"
-#include "LineTypeStyle.h"
-#include "PointTypeStyle.h"
-#include "AreaRule.h"
-#include "LineRule.h"
-#include "PointRule.h"
-
-#include "CompositeSymbolization.h"
-#include "AreaSymbolization2D.h"
-#include "LineSymbolization2D.h"
-#include "PointSymbolization2D.h"
-#include "Fill.h"
-#include "Stroke.h"
-#include "ISymbolVisitor.h"
-#include "BlockSymbol.h"
-#include "FontSymbol.h"
-#include "ImageSymbol.h"
-#include "MarkSymbol.h"
-#include "TextSymbol.h"
-#include "W2DSymbol.h"
-
-#include "SimpleSymbolDefinition.h"
-#include "CompoundSymbolDefinition.h"
-#include "ISymbolDefinitionVisitor.h"
-#include "IGraphicElementVisitor.h"
-#include "AreaUsage.h"
-#include "LineUsage.h"
-#include "PointUsage.h"
-#include "Path.h"
-#include "Image.h"
-#include "Text.h"
-#include "Override.h"
-
-#include "WatermarkDefinition.h"
-#include "WatermarkAppearance.h"
-#include "WatermarkInstance.h"
-#include "WatermarkPosition.h"
-#include "XYWatermarkPosition.h"
-#include "TileWatermarkPosition.h"
-#include "WatermarkXOffset.h"
-#include "WatermarkYOffset.h"
-#include "WatermarkOffsetUnit.h"
-
-#include "Base64.h"
+//#include "Base64.h"
 
 // FDO headers
 #pragma warning(push)

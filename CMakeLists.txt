@@ -58,6 +58,31 @@ if(NOT FDO_LIBRARY)
     message(FATAL_ERROR, "FDO library path not found")
 endif()
 
+# FDO Expression Engine
+find_path(FDO_EXPRENG_INCLUDE NAMES "FdoExpressionEngine.h"
+    PATHS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/Fdo/Inc/ExpressionEngine
+    NO_DEFAULT_PATH
+    NO_CMAKE_ENVIRONMENT_PATH
+    NO_CMAKE_PATH
+    NO_SYSTEM_ENVIRONMENT_PATH
+    NO_CMAKE_SYSTEM_PATH
+    NO_CMAKE_FIND_ROOT_PATH)
+if(NOT FDO_EXPRENG_INCLUDE)
+    message(FATAL_ERROR, "FDO Expression Engine include path not found")
+endif()
+
+find_library(FDO_EXPRENG_LIBRARY NAMES ExpressionEngine
+    PATHS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/Fdo/Lib
+    NO_DEFAULT_PATH
+    NO_CMAKE_ENVIRONMENT_PATH
+    NO_CMAKE_PATH
+    NO_SYSTEM_ENVIRONMENT_PATH
+    NO_CMAKE_SYSTEM_PATH
+    NO_CMAKE_FIND_ROOT_PATH)
+if(NOT FDO_EXPRENG_LIBRARY)
+    message(FATAL_ERROR, "FDO Expression Engine library path not found")
+endif()
+
 # Protobuf
 set(protobuf_MODULE_COMPATIBLE ON CACHE BOOL "")
 find_package(Protobuf CONFIG REQUIRED)
