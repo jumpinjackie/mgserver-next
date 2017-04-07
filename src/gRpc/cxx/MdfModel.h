@@ -1,6 +1,8 @@
 #ifndef MDF_MODEL_H
 #define MDF_MODEL_H
 
+#include <string>
+
 #define MDFMODEL_NAMESPACE          MdfModel
 #define BEGIN_NAMESPACE_MDFMODEL    namespace MdfModel {
 #define END_NAMESPACE_MDFMODEL      }

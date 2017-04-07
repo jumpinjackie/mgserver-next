@@ -36,3 +36,8 @@
 #define _isnan    isnan
 
 #endif
+
+#include "MdfModel.h"
+#include "MdfModel/LayerDefinition.pb.h"
+#include "MdfModel/SymbolDefinition.pb.h"
+#include "MdfModel/WatermarkDefinition.pb.h"

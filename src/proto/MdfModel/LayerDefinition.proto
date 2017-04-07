@@ -449,7 +449,7 @@ message GridLayerDefinition {
     string raster = 2;
     // A boolean FDO expression that specifies which features to return.  No filter means pass all features through
     string filter = 3;
-    repeated GridScaleRangeType grid_scale_ranges = 4;
+    repeated GridScaleRange grid_scale_ranges = 4;
 }
 
 // Defines how to scale numbers into a color channel
@@ -487,7 +487,7 @@ message GridColorType {
 }
 
 // Encapsulate a style for a grid source
-message GridColorRuleType {
+message GridColorRule {
     // The label for the Rule to be displayed in the legend
     string legend_label = 1;
     // A filter for the Rule.  This is a boolean FDO expression.  Any features that pass this filter are styled using this rule's stylization
@@ -498,7 +498,7 @@ message GridColorRuleType {
 }
 
 // Specifies how to shade given a band and a light source
-message HillShadeType {
+message HillShade {
     // Name of the band used for the computation
     string band = 1;
     // Azimuth of the sun in degrees
@@ -510,8 +510,8 @@ message HillShadeType {
 }
 
 // Specifies how to style each pixel
-message GridColorStyleType {
-    HillShadeType hill_shade = 1;
+message GridColorStyle {
+    HillShade hill_shade = 1;
     // If a pixel color prior to factoring in HillShade is this value then the pixel is transparent
     // TOOD: Type in original xsd undocumented. Assuming string
     string transparency_color = 2;
@@ -519,11 +519,11 @@ message GridColorStyleType {
     double brightness_factor = 3;
     // Default is 0
     double contrast_factor = 4;
-    repeated GridColorRuleType color_rules = 5;
+    repeated GridColorRule color_rules = 5;
 }
 
 // Specifies how to calculate pixel elevations
-message GridSurfaceStyleType {
+message GridSurfaceStyle {
     // Band to use for 3D data
     string band = 1;
     // Determines which input value is mapped to zero elevation.  Defaults to 0 if not specified
@@ -535,14 +535,14 @@ message GridSurfaceStyleType {
 }
 
 // The stylization for a specified scale range
-message GridScaleRangeType {
+message GridScaleRange {
     // The zoomed in part of the scale range.  Defaults to 0 if not specified.  Inclusive
     double min_scale = 1;
     // The zoomed out part of the scale range.  Defaults to the application's maximum value if not specified.  Exclusive
     double max_scale = 2;
     // Defines the height field of the grid
-    GridSurfaceStyleType surface_style = 3;
-    GridColorStyleType color_style = 4;
+    GridSurfaceStyle surface_style = 3;
+    GridColorStyle color_style = 4;
     // When the user has zoomed in by this amount, a request for more detailed raster data is made
     double rebuild_factor = 5;
 }

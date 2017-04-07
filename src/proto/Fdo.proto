@@ -441,7 +441,7 @@ message SpatialContext {
     // The description of the spatial context
     string description = 4;
     // The bounding box of the spatial context
-    MdfModel.Envelope extent = 5;
+    MdfModel.Box2D extent = 5;
     // The bounding box extent type
     SpatialContextExtentType extent_type = 6;
     // The X/Y coordinate tolerance

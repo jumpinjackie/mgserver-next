@@ -11,7 +11,7 @@ message NameValuePair {
 }
 
 // Describes a bounding box
-message Envelope {
+message Box2D {
     // The lower left X coordinate
     double min_x = 1;
     // The lower left Y coordinate

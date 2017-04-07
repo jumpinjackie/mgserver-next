@@ -21,6 +21,7 @@
 #include "Stylization.h"
 #include "RendererStyles.h"
 #include "RS_FeatureReader.h"
+#include "MdfModel/LayerDefinition.pb.h"
 
 class LineBuffer;
 class LineBufferPool;
