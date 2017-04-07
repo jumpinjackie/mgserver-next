@@ -108,7 +108,7 @@ message AreaRule {
     // A filter for the Rule.  This is a boolean FDO expression.  Any features that pass this filter are styled using this rule's stylization
     string filter = 2;
     // A label for the Rule
-    TextSymbolType label = 3;
+    TextSymbol label = 3;
     // The stylization of the polygon geometry
     AreaSymbolization2D area_symbolization_2d = 4;
 }
@@ -169,17 +169,17 @@ message Fill {
 // Style specification of a line geometry type
 message LineTypeStyle {
     // Rules to define a theme
-    repeated LineRuleType line_rules = 1;
+    repeated LineRule line_rules = 1;
 }
 
 // Style rule for a line geometry type
-message LineRuleType {
+message LineRule {
     // The label for the Rule to be displayed in the legend
     string legend_label = 1;
     // A filter for the Rule.  This is a boolean FDO expression.  Any features that pass this filter are styled using this rule's stylization
     string filter = 2;
     // A label for the Rule
-    TextSymbolType label = 3;
+    TextSymbol label = 3;
     LineSymbolization2D line_symbolization_2d = 4;
 }
 
@@ -205,18 +205,18 @@ message PointTypeStyle {
     bool display_as_text = 1;
     // Allows labels from any map layer (including the current layer) to obscure features on the current layer
     bool allow_overpost = 2;
-    // One or more PointRuleType defining the PointStyle
-    repeated PointRuleType point_rules = 3;
+    // One or more PointRule defining the PointStyle
+    repeated PointRule point_rules = 3;
 }
 
 // Style rule for a point geometry type
-message PointRuleType {
+message PointRule {
     // The label for the Rule to be displayed in the legend
     string legend_label = 1;
     // A filter for the Rule.  This is a boolean FDO expression.  Any features that pass this filter are styled using this rule's stylization
     string filter = 2;
     // A label for the Rule
-    TextSymbolType label = 3;
+    TextSymbol label = 3;
     PointSymbolization2D point_symbolization_2d = 4;
 }
 
@@ -251,7 +251,7 @@ message SymbolType {
     string insertion_point_y = 8;
 }
 
-message TextSymbolType {
+message TextSymbol {
     // The text of the TextSymbol.  This is a string FDO expression
     string text = 1;
     // The font to use
@@ -453,7 +453,7 @@ message GridLayerDefinition {
 }
 
 // Defines how to scale numbers into a color channel
-message ChannelBandType {
+message ChannelBand {
     // Name of the band
     string band = 1;
     // Default is low value found in band.  Band values less than this are snapped to this number
@@ -471,9 +471,9 @@ message ChannelBandType {
 
 // Specifies a color using distinct RGB values
 message GridColorBandsType {
-    ChannelBandType red_band = 1;
-    ChannelBandType green_band = 2;
-    ChannelBandType blue_band = 3;
+    ChannelBand red_band = 1;
+    ChannelBand green_band = 2;
+    ChannelBand blue_band = 3;
 }
 
 // The color to use for a grid rule
@@ -493,7 +493,7 @@ message GridColorRule {
     // A filter for the Rule.  This is a boolean FDO expression.  Any features that pass this filter are styled using this rule's stylization
     string filter = 2;
     // A label for the Rule.  Does not apply to GridColorRule
-    TextSymbolType label = 3;
+    TextSymbol label = 3;
     GridColorType color = 4;
 }
 
