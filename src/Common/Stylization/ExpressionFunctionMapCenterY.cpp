@@ -44,7 +44,8 @@ FdoFunctionDefinition* ExpressionFunctionMapCenterY::GetFunctionDefinition()
 {
     if (!m_functionDefinition)
     {
-        STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionMAPCENTERY_Description");
+        //STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionMAPCENTERY_Description");
+        STRING funcDesc = L"Returns the Y coordinate of the view center of the currently rendered map";
 
         FdoPtr<FdoArgumentDefinitionCollection> args = FdoArgumentDefinitionCollection::Create();
         m_functionDefinition = FdoFunctionDefinition::Create(L"MAPCENTERY", // NOXLATE
@@ -64,6 +65,7 @@ FdoLiteralValue* ExpressionFunctionMapCenterY::Evaluate(FdoLiteralValueCollectio
     // make sure we have zero arguments
     if (literalValues->GetCount() != 0)
     {
+        /*
         MgResources* resources = MgResources::GetInstance();
         assert(NULL != resources);
 
@@ -73,6 +75,8 @@ FdoLiteralValue* ExpressionFunctionMapCenterY::Evaluate(FdoLiteralValueCollectio
         message = resources->FormatMessage(message, &arguments);
 
         throw FdoExpressionException::Create(message.c_str());
+        */
+        throw FdoExpressionException::Create(L"Incorrect number of arguments for function MAPCENTERY");
     }
 
     return FDO_SAFE_ADDREF(m_yValue);

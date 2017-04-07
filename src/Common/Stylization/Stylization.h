@@ -25,6 +25,8 @@
 #include "StylizationDefs.h"
 
 // MDF headers
+#include "MdfModel.h"
+#include "Base64.h"
 #include "MdfModel/MdfCommon.pb.h"
 #include "MdfModel/LayerDefinition.pb.h"
 #include "MdfModel/SymbolDefinition.pb.h"

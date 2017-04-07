@@ -67,7 +67,7 @@ message ElevationSettings {
     string z_offset = 1;
     string z_extrusion = 2;
     ElevationType z_offset_type = 3;
-    LengthUnitType unit = 4; 
+    LengthUnitType unit = 4;
 }
 
 // The stylization to be applied to the vector features for a given scale range
@@ -76,33 +76,33 @@ message VectorScaleRange {
     double min_scale = 1;
     // The zoomed out part of the scale range.  Defaults to the application's maximum value if not specified.  Exclusive
     double max_scale = 2;
-    repeated FeatureStyle feature_styles = 3;
+    repeated FeatureTypeStyle feature_styles = 3;
     // KML elevation settings
     ElevationSettings elevation_settings = 4;
 }
 
-message FeatureStyle {
+message FeatureTypeStyle {
     bool show_in_legend = 1;
     oneof type {
         // Area style
-        AreaTypeStyleType area_type_style = 2;
+        AreaTypeStyle area_type_style = 2;
         // Line style
-        LineTypeStyleType line_type_style = 3;
+        LineTypeStyle line_type_style = 3;
         // Point style
-        PointTypeStyleType point_type_style = 4;
+        PointTypeStyle point_type_style = 4;
         // Composite style (Advanced Stylization)
         CompositeTypeStyle composite_type_style = 5;
     }
 }
 
 // Style specification of a polygon geometry type
-message AreaTypeStyleType {
+message AreaTypeStyle {
     // Rules to define a theme
-    repeated AreaRuleType area_rules = 1;
+    repeated AreaRule area_rules = 1;
 }
 
 // Style rule for an area geometry type
-message AreaRuleType {
+message AreaRule {
     // The label for the Rule to be displayed in the legend
     string legend_label = 1;
     // A filter for the Rule.  This is a boolean FDO expression.  Any features that pass this filter are styled using this rule's stylization
@@ -110,14 +110,14 @@ message AreaRuleType {
     // A label for the Rule
     TextSymbolType label = 3;
     // The stylization of the polygon geometry
-    AreaSymbolizationFillType area_symbolization_2d = 4;
+    AreaSymbolization2D area_symbolization_2d = 4;
 }
 
-message AreaSymbolizationFillType {
+message AreaSymbolization2D {
     // The style of the polygon fill
-    FillType fill = 1;
+    Fill fill = 1;
     // The style of the polygon edge
-    StrokeType stroke = 2;
+    Stroke stroke = 2;
 }
 
 // The possible background styles of a TextSymbol
@@ -127,9 +127,9 @@ enum BackgroundStyleType {
     BackgroundStyleType_Ghosted = 2;
 }
 
-enum SizeContextType {
-    SizeContextType_MappingUnits = 0;
-    SizeContextType_DeviceUnits = 1;
+enum SizeContext {
+    SizeContext_MappingUnits = 0;
+    SizeContext_DeviceUnits = 1;
 }
 
 // SLD supports square, circle, triangle, star, cross, and X
@@ -159,7 +159,7 @@ enum GeometryContextType {
 }
 
 // Encapsulates the stylization of a polygon's fill
-message FillType {
+message Fill {
     string fill_pattern = 1;
     string foreground_color = 2;
     // The background color.  Not applicable to solid fills
@@ -167,7 +167,7 @@ message FillType {
 }
 
 // Style specification of a line geometry type
-message LineTypeStyleType {
+message LineTypeStyle {
     // Rules to define a theme
     repeated LineRuleType line_rules = 1;
 }
@@ -180,22 +180,27 @@ message LineRuleType {
     string filter = 2;
     // A label for the Rule
     TextSymbolType label = 3;
-    repeated StrokeType line_symbolization_2d = 4;
+    LineSymbolization2D line_symbolization_2d = 4;
+}
+
+// Line symbolization settings
+message LineSymbolization2D {
+    repeated Stroke strokes = 1;
 }
 
 // Encapsulates the stylization of a line
-message StrokeType {
+message Stroke {
     string line_style = 1;
     string thickness = 2;
     string color = 3;
     // Unit of measurement that the thickness is specified in
     LengthUnitType unit = 4;
     // Whether the sizes are with respect to the earth or the user's display device
-    SizeContextType size_context = 5;
+    SizeContext size_context = 5;
 }
 
 // Style specification of a point geometry type
-message PointTypeStyleType {
+message PointTypeStyle {
     // Create a text layer
     bool display_as_text = 1;
     // Allows labels from any map layer (including the current layer) to obscure features on the current layer
@@ -212,17 +217,17 @@ message PointRuleType {
     string filter = 2;
     // A label for the Rule
     TextSymbolType label = 3;
-    PointSymbolization2DType point_symbolization_2d = 4;
+    PointSymbolization2D point_symbolization_2d = 4;
 }
 
 // The different types of point geometries
-message PointSymbolization2DType {
+message PointSymbolization2D {
     oneof type {
-        MarkSymbolType mark = 1;
-        ImageSymbolType image = 2;
-        FontSymbolType font = 3;
-        W2DSymbolType w2d = 4;
-        BlockSymbolType block = 5;
+        MarkSymbol mark = 1;
+        ImageSymbol image = 2;
+        FontSymbol font = 3;
+        W2DSymbol w2d = 4;
+        BlockSymbol block = 5;
     }
 }
 
@@ -231,7 +236,7 @@ message SymbolType {
     // The units that the sizes are specified in
     LengthUnitType unit = 1;
     // Whether the sizes are with respect to the earth or the user's display device
-    SizeContextType size_context = 2;
+    SizeContext size_context = 2;
     // Width of the symbol.  This is a double FDO expression.  Does not apply to font symbols
     string size_x = 3;
     // Height of the symbol.  This is a double FDO expression
@@ -278,16 +283,16 @@ message AdvancedPlacement {
 }
 
 // Stylization of a predefined shape (ShapeType)
-message MarkSymbolType {
+message MarkSymbol {
     ShapeType shape = 1;
     // No fill is drawn if not specified
-    FillType fill = 2;
+    Fill fill = 2;
     // No edge is drawn if not specified
-    StrokeType edge = 3;
+    Stroke edge = 3;
 }
 
 // Symbols that are comprised of a raster
-message ImageSymbolType {
+message ImageSymbol {
     // Reference to the image
     ImageRefOrContent image = 1;
 }
@@ -302,7 +307,7 @@ message ImageRefOrContent {
 }
 
 // Symbols that are specified by a font and character
-message FontSymbolType {
+message FontSymbol {
     // If the font is not installed, the actual font used is application dependent
     string font_name = 1;
     string character = 2;
@@ -313,7 +318,7 @@ message FontSymbolType {
 }
 
 // A symbol using a W2D stream
-message W2DSymbolType {
+message W2DSymbol {
     ResourceDataItemRef w2d_symbol = 1;
     // If specified all polygon fills in the symbol are drawn in this color
     string fill_color = 2;
@@ -324,7 +329,7 @@ message W2DSymbolType {
 }
 
 // A block symbol
-message BlockSymbolType {
+message BlockSymbol {
     string drawing_name = 1;
     string block_name = 2;
     // Static color
@@ -373,7 +378,7 @@ message SymbolInstance {
     // Specifies the additional amount to offset the symbol vertically, in mm in device units, after scaling and rotation have been applied.  Applies only to point symbols.  Defaults to 0 if not specified
     string insertion_offset_y = 8;
     // Specifies whether the symbol sizes are with respect to the map or the user's display device.  Defaults to device units
-    SizeContextType size_context = 9;
+    SizeContext size_context = 9;
     // Boolean value which specifies whether the symbol is drawn as part of a final rendering pass (e.g. for labeling).  This must evaluate to True or False (default)
     string draw_list = 10;
     // Boolean value which specifies whether to render this symbol only if its graphical extent does not overlap the exclusion region.  If the positioning algorithm generates multiple candidate symbol positions and this setting is True, then only the first non-overlapping candidate is rendered.  This must evaluate to True or False (default).
@@ -456,10 +461,10 @@ message ChannelBandType {
     // Default is high value found in band.  Band values greater than this are snapped to this number
     double high_band = 3;
     // Default is 0.  Range is 0:255. LowBand is mapped to this number.
-    // LowChannel can be greater than HighChannel. Due to protobuf limitations you must ensure 
+    // LowChannel can be greater than HighChannel. Due to protobuf limitations you must ensure
     // the value you specify lies within the range of 0-255
     int32 low_channel = 4;
-    // Default is 255.  Range is 0:255. Due to protobuf limitation you must ensure the value 
+    // Default is 255.  Range is 0:255. Due to protobuf limitation you must ensure the value
     // you specify lies within the range of 0-255
     int32 high_channel = 5;
 }
@@ -478,7 +483,7 @@ message GridColorType {
         string explicit_color = 1;
         string band = 2;
         GridColorBandsType bands = 3;
-    }  
+    }
 }
 
 // Encapsulate a style for a grid source

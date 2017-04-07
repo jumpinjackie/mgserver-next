@@ -44,7 +44,8 @@ FdoFunctionDefinition* ExpressionFunctionMapCenterX::GetFunctionDefinition()
 {
     if (!m_functionDefinition)
     {
-        STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionMAPCENTERX_Description");
+        //STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionMAPCENTERX_Description");
+        STRING funcDesc = L"Returns the X coordinate of the view center of the currently rendered map";
 
         FdoPtr<FdoArgumentDefinitionCollection> args = FdoArgumentDefinitionCollection::Create();
         m_functionDefinition = FdoFunctionDefinition::Create(L"MAPCENTERX", // NOXLATE
@@ -64,6 +65,7 @@ FdoLiteralValue* ExpressionFunctionMapCenterX::Evaluate(FdoLiteralValueCollectio
     // make sure we have zero arguments
     if (literalValues->GetCount() != 0)
     {
+        /*
         MgResources* resources = MgResources::GetInstance();
         assert(NULL != resources);
 
@@ -73,6 +75,8 @@ FdoLiteralValue* ExpressionFunctionMapCenterX::Evaluate(FdoLiteralValueCollectio
         message = resources->FormatMessage(message, &arguments);
 
         throw FdoExpressionException::Create(message.c_str());
+        */
+        throw FdoExpressionException::Create(L"Incorrect number of arguments for function MAPCENTERX");
     }
 
     return FDO_SAFE_ADDREF(m_xValue);

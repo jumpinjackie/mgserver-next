@@ -25,6 +25,8 @@
 #include "SE_BufferPool.h"
 #include <cmath>
 
+using namespace MDFMODEL_NAMESPACE;
+
 extern void ProcessStylizerException(FdoException* exception, int line, wchar_t* file);
 
 ///////////////////////////////////////////////////////////////////////////////

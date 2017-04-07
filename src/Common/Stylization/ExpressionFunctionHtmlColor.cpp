@@ -45,10 +45,16 @@ FdoFunctionDefinition* ExpressionFunctionHtmlColor::GetFunctionDefinition()
 {
     if (!m_functionDefinition)
     {
+        /*
         STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionHTMLCOLOR_Description");
         STRING rValDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionHTMLCOLOR_RValueDescription");
         STRING gValDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionHTMLCOLOR_GValueDescription");
         STRING bValDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionHTMLCOLOR_BValueDescription");
+        */
+        STRING funcDesc = L"HTML Color generation function";
+        STRING rValDesc = L"Red value";
+        STRING gValDesc = L"Green value";
+        STRING bValDesc = L"Blue value";
 
         FdoPtr<FdoArgumentDefinition> arg1 = FdoArgumentDefinition::Create(L"rValue", rValDesc.c_str(), FdoDataType_Int32); // NOXLATE
         FdoPtr<FdoArgumentDefinition> arg2 = FdoArgumentDefinition::Create(L"gValue", gValDesc.c_str(), FdoDataType_Int32); // NOXLATE
@@ -76,6 +82,7 @@ FdoLiteralValue* ExpressionFunctionHtmlColor::Evaluate(FdoLiteralValueCollection
     // make sure we have three arguments
     if (literalValues->GetCount() != 3)
     {
+        /*
         MgResources* resources = MgResources::GetInstance();
         assert(NULL != resources);
 
@@ -85,6 +92,8 @@ FdoLiteralValue* ExpressionFunctionHtmlColor::Evaluate(FdoLiteralValueCollection
         message = resources->FormatMessage(message, &arguments);
 
         throw FdoExpressionException::Create(message.c_str());
+        */
+        throw FdoExpressionException::Create(L"Incorrect number of arguments for function HTMLCOLOR");
     }
 
     FdoPtr<FdoLiteralValue> arg1 = literalValues->GetItem(0);

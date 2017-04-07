@@ -44,7 +44,8 @@ FdoFunctionDefinition* ExpressionFunctionMapName::GetFunctionDefinition()
 {
     if (!m_functionDefinition)
     {
-        STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionMAPNAME_Description");
+        //STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionMAPNAME_Description");
+        STRING funcDesc = L"Returns the active map name";
 
         FdoPtr<FdoArgumentDefinitionCollection> args = FdoArgumentDefinitionCollection::Create();
         m_functionDefinition = FdoFunctionDefinition::Create(L"MAPNAME", // NOXLATE
@@ -64,6 +65,7 @@ FdoLiteralValue* ExpressionFunctionMapName::Evaluate(FdoLiteralValueCollection* 
     // make sure we have zero arguments
     if (literalValues->GetCount() != 0)
     {
+        /*
         MgResources* resources = MgResources::GetInstance();
         assert(NULL != resources);
 
@@ -73,6 +75,8 @@ FdoLiteralValue* ExpressionFunctionMapName::Evaluate(FdoLiteralValueCollection* 
         message = resources->FormatMessage(message, &arguments);
 
         throw FdoExpressionException::Create(message.c_str());
+        */
+        throw FdoExpressionException::Create(L"Incorrect number of arguments for function MAPNAME");
     }
 
     return FDO_SAFE_ADDREF(m_mapNameValue);

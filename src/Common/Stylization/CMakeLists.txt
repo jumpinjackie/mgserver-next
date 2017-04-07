@@ -1,6 +1,7 @@
 project(MgStylization CXX)
 
 include_directories(${MG_GRPC_CXX_DIR})
+include_directories(${MG_COMMON_DIR}/Core)
 include_directories(${PROJECT_NAME} PRIVATE ${FDO_INCLUDE})
 include_directories(${PROJECT_NAME} PRIVATE ${FDO_EXPRENG_INCLUDE})
 
