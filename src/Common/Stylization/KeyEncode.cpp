@@ -199,15 +199,12 @@ void KeyEncode::WriteChar(char c)
 void KeyEncode::WriteString(const wchar_t* src)
 {
     std::string sutf8;
-    /*
     #ifdef _WIN32
     const XMLCh* srcX = W2X(src);
     UnicodeString::UTF16toUTF8(srcX, sutf8);
     #else
     UnicodeString::UTF32toUTF8((const LCh*)src, sutf8);
     #endif
-    */
-    UnicodeString::WideCharToMultiByte(src, sutf8);
     size_t nUsed = sutf8.length();
     WriteBytes((unsigned char*)sutf8.c_str(), nUsed+1);
 }

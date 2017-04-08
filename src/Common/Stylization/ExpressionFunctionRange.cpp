@@ -68,21 +68,12 @@ FdoFunctionDefinition* ExpressionFunctionRange::GetFunctionDefinition()
 {
     if (!m_functionDefinition)
     {
-        /*
         STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionRANGE_Description");
         STRING expVDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionRANGE_ExpressionDescription");
         STRING defVDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionRANGE_DefaultValueDescription");
         STRING minVDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionRANGE_MinDescription");
         STRING maxVDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionRANGE_MaxDescription");
         STRING valVDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionRANGE_ValueDescription");
-        */
-        STRING funcDesc = L"Range table for style theming";
-        STRING expVDesc = L"Key expression";
-        STRING defVDesc = L"Default value returned if expression does not fall into any of the ranges";
-        STRING minVDesc = L"Inclusive minimum of range that can be matched by the key expression";
-        STRING maxVDesc = L"Exclusive maximum of range that can be matched by the key expression";
-        STRING valVDesc = L"Value that is returned when the key expression matches the associated range";
-
 
         // the expression builder treats all numerical types the same, so only use Doubles for numerical arguments
         FdoPtr<FdoArgumentDefinition> argExpString = FdoArgumentDefinition::Create(L"expression"  , expVDesc.c_str(), FdoDataType_String); // NOXLATE
@@ -121,7 +112,6 @@ FdoLiteralValue* ExpressionFunctionRange::Evaluate(FdoLiteralValueCollection *li
     // make sure we have 2 or more arguments, and that there are 2 plus a multiple of 3
     if (literalValues->GetCount() < 2 || (literalValues->GetCount()-2) % 3 != 0)
     {
-        /*
         MgResources* resources = MgResources::GetInstance();
         assert(NULL != resources);
 
@@ -131,8 +121,6 @@ FdoLiteralValue* ExpressionFunctionRange::Evaluate(FdoLiteralValueCollection *li
         message = resources->FormatMessage(message, &arguments);
 
         throw FdoExpressionException::Create(message.c_str());
-        */
-        throw FdoExpressionException::Create(L"Incorrect number of arguments for function RANGE");
     }
 
     // the first parameter is the key we seek

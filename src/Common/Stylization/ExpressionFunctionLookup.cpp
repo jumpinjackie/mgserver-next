@@ -66,18 +66,11 @@ FdoFunctionDefinition* ExpressionFunctionLookup::GetFunctionDefinition()
 {
     if (!m_functionDefinition)
     {
-        /*
         STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionLOOKUP_Description");
         STRING expVDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionLOOKUP_ExpressionDescription");
         STRING defVDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionLOOKUP_DefaultValueDescription");
         STRING indVDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionLOOKUP_IndexDescription");
         STRING valVDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionLOOKUP_ValueDescription");
-        */
-        STRING funcDesc = L"Lookup table for style theming";
-        STRING expVDesc = L"Key expression";
-        STRING defVDesc = L"Default value returned if expression does not evaluate to any of the keys";
-        STRING indVDesc = L"Lookup index that can be matched by the key expression";
-        STRING valVDesc = L"Value that is returned when the key expression matches the associated index";
 
         // the expression builder treats all numerical types the same, so only use Doubles for numerical arguments
         FdoPtr<FdoArgumentDefinition> argExpString = FdoArgumentDefinition::Create(L"expression"  , expVDesc.c_str(), FdoDataType_String); // NOXLATE
@@ -114,7 +107,6 @@ FdoLiteralValue* ExpressionFunctionLookup::Evaluate(FdoLiteralValueCollection *l
     // make sure we have 2 or more arguments, and that there are 2 plus a multiple of 2
     if (literalValues->GetCount() < 2 || (literalValues->GetCount()-2) % 2 != 0)
     {
-        /*
         MgResources* resources = MgResources::GetInstance();
         assert(NULL != resources);
 
@@ -124,8 +116,6 @@ FdoLiteralValue* ExpressionFunctionLookup::Evaluate(FdoLiteralValueCollection *l
         message = resources->FormatMessage(message, &arguments);
 
         throw FdoExpressionException::Create(message.c_str());
-        */
-        throw FdoExpressionException::Create(L"Incorrect number of arguments for function LOOKUP");
     }
 
     // the first parameter is the key we seek

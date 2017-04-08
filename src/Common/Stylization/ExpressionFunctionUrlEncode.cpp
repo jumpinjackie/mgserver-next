@@ -46,12 +46,8 @@ FdoFunctionDefinition* ExpressionFunctionUrlEncode::GetFunctionDefinition()
 {
     if (!m_functionDefinition)
     {
-        /*
         STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionURLENCODE_Description");
         STRING sValDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionURLENCODE_StringValueDescription");
-        */
-        STRING funcDesc = L"String encoding function";
-        STRING sValDesc = L"String to URL encode";
 
         FdoPtr<FdoArgumentDefinition> arg = FdoArgumentDefinition::Create(L"strValue", sValDesc.c_str(), FdoDataType_String); // NOXLATE
 
@@ -100,7 +96,6 @@ FdoLiteralValue* ExpressionFunctionUrlEncode::Evaluate(FdoLiteralValueCollection
     // make sure we have one argument
     if (literalValues->GetCount() != 1)
     {
-        /*
         MgResources* resources = MgResources::GetInstance();
         assert(NULL != resources);
 
@@ -110,8 +105,6 @@ FdoLiteralValue* ExpressionFunctionUrlEncode::Evaluate(FdoLiteralValueCollection
         message = resources->FormatMessage(message, &arguments);
 
         throw FdoExpressionException::Create(message.c_str());
-        */
-        throw FdoExpressionException::Create(L"Incorrect number of arguments for function URLENCODE");
     }
 
     FdoPtr<FdoLiteralValue> arg = literalValues->GetItem(0);
@@ -122,13 +115,9 @@ FdoLiteralValue* ExpressionFunctionUrlEncode::Evaluate(FdoLiteralValueCollection
     if (len >= 0)
     {
         // must first UTF8 encode
-        /*
         string sutf8;
         const XMLCh* srcX = W2X(str);
         UnicodeString::UTF16toUTF8(srcX, sutf8);
-        */
-        std::string sutf8;
-        UnicodeString::WideCharToMultiByte(str, sutf8);
         size_t utf8lenbytes = sutf8.length();
 
         // now URL encode the result

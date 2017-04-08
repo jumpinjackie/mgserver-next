@@ -45,18 +45,11 @@ FdoFunctionDefinition* ExpressionFunctionArgb::GetFunctionDefinition()
 {
     if (!m_functionDefinition)
     {
-        /*
         STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionARGB_Description");
         STRING aValDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionARGB_AValueDescription");
         STRING rValDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionARGB_RValueDescription");
         STRING gValDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionARGB_GValueDescription");
         STRING bValDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionARGB_BValueDescription");
-        */
-        STRING funcDesc = L"Color generation function";
-        STRING aValDesc = L"Alpha value";
-        STRING rValDesc = L"Red value";
-        STRING gValDesc = L"Green value";
-        STRING bValDesc = L"Blue value";
 
         FdoPtr<FdoArgumentDefinition> arg1 = FdoArgumentDefinition::Create(L"aValue", aValDesc.c_str(), FdoDataType_Int32); // NOXLATE
         FdoPtr<FdoArgumentDefinition> arg2 = FdoArgumentDefinition::Create(L"rValue", rValDesc.c_str(), FdoDataType_Int32); // NOXLATE
@@ -86,7 +79,6 @@ FdoLiteralValue* ExpressionFunctionArgb::Evaluate(FdoLiteralValueCollection* lit
     // make sure we have four arguments
     if (literalValues->GetCount() != 4)
     {
-        /*
         MgResources* resources = MgResources::GetInstance();
         assert(NULL != resources);
 
@@ -96,8 +88,6 @@ FdoLiteralValue* ExpressionFunctionArgb::Evaluate(FdoLiteralValueCollection* lit
         message = resources->FormatMessage(message, &arguments);
 
         throw FdoExpressionException::Create(message.c_str());
-        */
-        throw FdoExpressionException::Create(L"Incorrect number of arguments for function ARGB");
     }
 
     FdoPtr<FdoLiteralValue> arg1 = literalValues->GetItem(0);

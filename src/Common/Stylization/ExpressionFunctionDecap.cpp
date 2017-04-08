@@ -46,10 +46,8 @@ FdoFunctionDefinition* ExpressionFunctionDecap::GetFunctionDefinition()
 {
     if (!m_functionDefinition)
     {
-        //STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionDECAP_Description");
-        //STRING sValDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionDECAP_StringValueDescription");
-        STRING funcDesc = L"String formatting function";
-        STRING sValDesc = L"String to format";
+        STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionDECAP_Description");
+        STRING sValDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionDECAP_StringValueDescription");
 
         FdoPtr<FdoArgumentDefinition> arg = FdoArgumentDefinition::Create(L"strValue", sValDesc.c_str(), FdoDataType_String); // NOXLATE
 
@@ -73,7 +71,6 @@ FdoLiteralValue* ExpressionFunctionDecap::Evaluate(FdoLiteralValueCollection* li
     // make sure we have one argument
     if (literalValues->GetCount() != 1)
     {
-        /*
         MgResources* resources = MgResources::GetInstance();
         assert(NULL != resources);
 
@@ -83,8 +80,6 @@ FdoLiteralValue* ExpressionFunctionDecap::Evaluate(FdoLiteralValueCollection* li
         message = resources->FormatMessage(message, &arguments);
 
         throw FdoExpressionException::Create(message.c_str());
-        */
-        throw FdoExpressionException::Create(L"Incorrect number of arguments for function DECAP");
     }
 
     FdoPtr<FdoLiteralValue> arg = literalValues->GetItem(0);

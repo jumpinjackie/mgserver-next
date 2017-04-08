@@ -19,8 +19,7 @@
 #define GRIDTHEME_H_
 
 #include "MdfModel.h"
-//#include "GridColorRule.h"
-#include "MdfModel/LayerDefinition.pb.h"
+#include "GridColorRule.h"
 #include "Color.h"
 
 ///<summary>

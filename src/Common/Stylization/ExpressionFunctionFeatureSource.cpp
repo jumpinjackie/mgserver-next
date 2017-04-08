@@ -44,8 +44,7 @@ FdoFunctionDefinition* ExpressionFunctionFeatureSource::GetFunctionDefinition()
 {
     if (!m_functionDefinition)
     {
-        //STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionFEATURESOURCE_Description");
-        STRING funcDesc = L"Returns the Feature Source resource id where the current feature originates from";
+        STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionFEATURESOURCE_Description");
 
         FdoPtr<FdoArgumentDefinitionCollection> args = FdoArgumentDefinitionCollection::Create();
         m_functionDefinition = FdoFunctionDefinition::Create(L"FEATURESOURCE", // NOXLATE
@@ -65,7 +64,6 @@ FdoLiteralValue* ExpressionFunctionFeatureSource::Evaluate(FdoLiteralValueCollec
     // make sure we have zero arguments
     if (literalValues->GetCount() != 0)
     {
-        /*
         MgResources* resources = MgResources::GetInstance();
         assert(NULL != resources);
 
@@ -75,8 +73,6 @@ FdoLiteralValue* ExpressionFunctionFeatureSource::Evaluate(FdoLiteralValueCollec
         message = resources->FormatMessage(message, &arguments);
 
         throw FdoExpressionException::Create(message.c_str());
-        */
-        throw FdoExpressionException::Create(L"Incorrect number of arguments for function FEATURESOURCE");
     }
 
     return FDO_SAFE_ADDREF(m_featureSourceIdValue);

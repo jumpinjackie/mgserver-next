@@ -44,8 +44,7 @@ FdoFunctionDefinition* ExpressionFunctionSession::GetFunctionDefinition()
 {
     if (!m_functionDefinition)
     {
-        //STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionSESSION_Description");
-        STRING funcDesc = L"Returns the active session";
+        STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionSESSION_Description");
 
         FdoPtr<FdoArgumentDefinitionCollection> args = FdoArgumentDefinitionCollection::Create();
         m_functionDefinition = FdoFunctionDefinition::Create(L"SESSION", // NOXLATE
@@ -65,7 +64,6 @@ FdoLiteralValue* ExpressionFunctionSession::Evaluate(FdoLiteralValueCollection* 
     // make sure we have zero arguments
     if (literalValues->GetCount() != 0)
     {
-        /*
         MgResources* resources = MgResources::GetInstance();
         assert(NULL != resources);
 
@@ -75,8 +73,6 @@ FdoLiteralValue* ExpressionFunctionSession::Evaluate(FdoLiteralValueCollection* 
         message = resources->FormatMessage(message, &arguments);
 
         throw FdoExpressionException::Create(message.c_str());
-        */
-        throw FdoExpressionException::Create(L"Incorrect number of arguments for function SESSION");
     }
 
     return FDO_SAFE_ADDREF(m_sessionValue);

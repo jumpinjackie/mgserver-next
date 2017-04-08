@@ -44,8 +44,7 @@ FdoFunctionDefinition* ExpressionFunctionLayerDefinition::GetFunctionDefinition(
 {
     if (!m_functionDefinition)
     {
-        //STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionLAYERDEFINITION_Description");
-        STRING funcDesc = L"Returns the Layer Definition resource id used for stylizing the current feature";
+        STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionLAYERDEFINITION_Description");
 
         FdoPtr<FdoArgumentDefinitionCollection> args = FdoArgumentDefinitionCollection::Create();
         m_functionDefinition = FdoFunctionDefinition::Create(L"LAYERDEFINITION", // NOXLATE
@@ -65,7 +64,6 @@ FdoLiteralValue* ExpressionFunctionLayerDefinition::Evaluate(FdoLiteralValueColl
     // make sure we have zero arguments
     if (literalValues->GetCount() != 0)
     {
-        /*
         MgResources* resources = MgResources::GetInstance();
         assert(NULL != resources);
 
@@ -75,8 +73,6 @@ FdoLiteralValue* ExpressionFunctionLayerDefinition::Evaluate(FdoLiteralValueColl
         message = resources->FormatMessage(message, &arguments);
 
         throw FdoExpressionException::Create(message.c_str());
-        */
-        throw FdoExpressionException::Create(L"Incorrect number of arguments for function LAYERDEFINITION");
     }
 
     return FDO_SAFE_ADDREF(m_layerDefinitionIdValue);

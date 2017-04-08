@@ -20,8 +20,7 @@
 
 #include "MdfModel.h"
 #include "Band.h"
-//#include "HillShade.h"
-#include "MdfModel/LayerDefinition.pb.h"
+#include "HillShade.h"
 
 ///<summary>
 /// This class keep a set of Band.

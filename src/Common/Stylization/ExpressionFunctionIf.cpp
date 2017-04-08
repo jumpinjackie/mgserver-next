@@ -80,16 +80,10 @@ FdoFunctionDefinition* ExpressionFunctionIf::GetFunctionDefinition()
 {
     if (!m_functionDefinition)
     {
-        /*
         STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionIF_Description");
         STRING conADesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionIF_ConditionDescription");
         STRING tValDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionIF_TrueValueDescription");
         STRING fValDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionIF_FalseValueDescription");
-        */
-        STRING funcDesc = L"If evaluator for style theming";
-        STRING conADesc = L"Boolean expression (filter) encapsulated in a string";
-        STRING tValDesc = L"Returned if condition is true";
-        STRING fValDesc = L"Returned if condition is false";
 
         // the expression builder treats all numerical types the same, so only use Doubles for numerical arguments
         FdoPtr<FdoArgumentDefinition> arg1expr    = FdoArgumentDefinition::Create(L"condition" , conADesc.c_str(), FdoDataType_String);  // NOXLATE
@@ -120,7 +114,6 @@ FdoLiteralValue* ExpressionFunctionIf::Evaluate(FdoLiteralValueCollection* liter
     // make sure we have three arguments
     if (literalValues->GetCount() != 3)
     {
-        /*
         MgResources* resources = MgResources::GetInstance();
         assert(NULL != resources);
 
@@ -130,8 +123,6 @@ FdoLiteralValue* ExpressionFunctionIf::Evaluate(FdoLiteralValueCollection* liter
         message = resources->FormatMessage(message, &arguments);
 
         throw FdoExpressionException::Create(message.c_str());
-        */
-        throw FdoExpressionException::Create(L"Incorrect number of arguments for function IF");
     }
 
     bool condition = false;

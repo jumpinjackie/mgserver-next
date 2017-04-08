@@ -48,8 +48,7 @@ FdoFunctionDefinition* ExpressionFunctionFeatureId::GetFunctionDefinition()
 {
     if (!m_functionDefinition)
     {
-        //STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionFEATUREID_Description");
-        STRING funcDesc = L"Returns the active feature Id";
+        STRING funcDesc = MgUtil::GetResourceMessage(MgResources::Stylization, L"MgFunctionFEATUREID_Description");
 
         FdoPtr<FdoArgumentDefinitionCollection> args = FdoArgumentDefinitionCollection::Create();
         m_functionDefinition = FdoFunctionDefinition::Create(L"FEATUREID", // NOXLATE
@@ -69,7 +68,6 @@ FdoLiteralValue* ExpressionFunctionFeatureId::Evaluate(FdoLiteralValueCollection
     // make sure we have zero arguments
     if (literalValues->GetCount() != 0)
     {
-        /*
         MgResources* resources = MgResources::GetInstance();
         assert(NULL != resources);
 
@@ -79,8 +77,6 @@ FdoLiteralValue* ExpressionFunctionFeatureId::Evaluate(FdoLiteralValueCollection
         message = resources->FormatMessage(message, &arguments);
 
         throw FdoExpressionException::Create(message.c_str());
-        */
-        throw FdoExpressionException::Create(L"Incorrect number of arguments for function FEATUREID");
     }
 
     if (m_reader)
