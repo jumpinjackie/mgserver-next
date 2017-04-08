@@ -1,12 +1,17 @@
 project(MgRenderers CXX)
 
+include_directories(${FDO_INCLUDE}) # I think this is un-wanted header leakage
+include_directories(${FDO_EXPRENG_INCLUDE}) # I think this is un-wanted header leakage
 include_directories(${MG_OEM_AGG_INCLUDE_DIR})
 include_directories(${MG_OEM_AGG_DIR}/font_freetype)
 include_directories(${FREETYPE_INCLUDE})
 include_directories(${GD_INCLUDE})
+include_directories(${PNG_INCLUDE})
 include_directories(${MG_GRPC_CXX_DIR})
+include_directories(${MG_COMMON_DIR}/MdfModel)
+include_directories(${MG_COMMON_DIR}/Foundation)
 include_directories(${MG_COMMON_DIR}/Renderers)
-include_directories(${MG_COMMON_DIR}/Stylization)
+include_directories(${MG_COMMON_DIR}/Stylization) # I think this is un-wanted header leakage
 
 set(MgRenderers_SOURCES
     MapQuantization.cpp
@@ -45,9 +50,6 @@ set(MgRenderers_SOURCES
 
 link_libraries(freetype)
 link_libraries(${GD_LIBRARY})
-
-set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} /FIMessagesDllExport.h")
-# Suppress protobuf-induced warning spam
-add_definitions(/wd4267 /wd4251 /wd4275)
+link_libraries(png)
 
 add_library(${PROJECT_NAME} SHARED ${MgRenderers_SOURCES})

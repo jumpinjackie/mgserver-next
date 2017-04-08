@@ -3,7 +3,6 @@ project(MgProtoMessages CXX)
 include_directories(${MG_GRPC_CXX_DIR})
 
 set(MgProtoMessages_SOURCES
-    UnicodeString.cpp
     Common.pb.cc
     Fdo.pb.cc
     FeatureService_Messages.pb.cc

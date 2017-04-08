@@ -1,2 +1,5 @@
+add_subdirectory(Foundation)
+add_subdirectory(Geometry)
+add_subdirectory(MdfModel)
 add_subdirectory(Renderers)
 add_subdirectory(Stylization)

@@ -1,9 +1,12 @@
 project(MgStylization CXX)
 
+include_directories(${ACE_INCLUDE}) # HACK: ACE is not a true dependency. Foundation just leaks out ACE headers
 include_directories(${MG_GRPC_CXX_DIR})
-include_directories(${MG_COMMON_DIR}/Core)
-include_directories(${PROJECT_NAME} PRIVATE ${FDO_INCLUDE})
-include_directories(${PROJECT_NAME} PRIVATE ${FDO_EXPRENG_INCLUDE})
+include_directories(${MG_COMMON_DIR}/Foundation)
+include_directories(${MG_COMMON_DIR}/MdfModel)
+include_directories(${FDO_INCLUDE})
+include_directories(${FDO_COMMON_INCLUDE})
+include_directories(${FDO_EXPRENG_INCLUDE})
 
 set(MgStylization_SOURCES
     ExpressionFunctionArgb.cpp
@@ -94,13 +97,12 @@ set(MgStylization_SOURCES
     ThemeParameters.cpp
 )
 
-link_libraries(${PROJECT_NAME} PRIVATE ${FDO_LIBRARY})
-link_libraries(${PROJECT_NAME} PRIVATE ${FDO_EXPRENGINE_LIBRARY})
-link_libraries(protobuf::libprotobuf)
-link_libraries(MgProtoMessages)
+link_libraries(${FDO_LIBRARY})
+link_libraries(${FDO_COMMON_LIBRARY})
+link_libraries(${FDO_EXPRENGINE_LIBRARY})
+link_libraries(MgMdfModel)
+link_libraries(MgFoundation)
 
-set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} /FIMessagesDllExport.h")
-# Suppress protobuf-induced warning spam
-add_definitions(/wd4267 /wd4251 /wd4275)
+add_definitions(-DSTYLIZATION_EXPORTS)
 
 add_library(${PROJECT_NAME} SHARED ${MgStylization_SOURCES})
